@@ -1,0 +1,86 @@
+#sys2 {
+	position: absolute;
+	top: 150px;
+	right: 50px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px 1px 1px 0px;
+	border-radius: 0px 3px 3px 0px;
+	background: #DDD;
+	width: 30px;
+	height: 30px;
+	transition: width 0.5s, height 0.5s, transform 0.5s;
+	-webkit-transition: width 0.5s, height 0.5s, -webkit-transform 0.5s;
+}
+
+#sys2 #w-icon {
+	position: absolute;
+	float: right;
+}
+
+#sys2:hover #w-icon {
+	-webkit-animation: rotating-icon 2s linear infinite;
+}
+
+#sys2 .panel-content {
+	position: relative;
+	float: right;
+	right: 31px;
+	top: -1px;
+	background: #DDD;
+	border: 1px solid black;
+	width: 0px;
+	height: 30px;
+	transition: width 0.5s, height 0.5s, transform 0.5s;
+	-webkit-transition: width 0.5s, height 0.5s, -webkit-transform 0.5s;
+	overflow: hidden;
+}
+
+#sys2:hover .panel-content {
+	width: 200px;
+	height: 200px;
+}
+
+#w-system {
+	position: absolute;
+	top: 50px;
+	right: 50px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #DDD;
+	width: 60px;
+	height: 60px;
+	transition: width 0.5s, height 0.5s, transform 0.5s;
+	-webkit-transition: width 0.5s, height 0.5s, -webkit-transform 0.5s;
+	overflow: hidden;
+}
+
+#w-system:hover {
+	width: 1000px;
+	height: 1000px;
+}
+
+#w-icon {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	font-size: 30px;
+	line-height: 30px;
+	text-align: center;
+	vertical-align: middle;
+	color: #559;
+}
+
+#w-system:hover #w-icon {
+	-webkit-animation: rotating-icon 2s linear infinite;
+}
+
+@
+-webkit-keyframes rotating-icon {from { -webkit-transform:rotate(0deg);
+	
+}
+
+to {
+	-webkit-transform: rotate(360deg);
+}
+}
