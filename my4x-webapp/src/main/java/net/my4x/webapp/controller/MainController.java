@@ -30,9 +30,9 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping("rest/maptiles/{x}/{y}/{z}")
+	@RequestMapping("rest/maptiles/{z}/{x}/{y}")
 	public ResponseEntity<byte[]> maptiles(@PathVariable String x, @PathVariable String y, @PathVariable String z) throws IOException {
-	    InputStream in = MainController.class.getResourceAsStream("/test.png");
+	    InputStream in = MainController.class.getResourceAsStream("/maptiles/"+z+"/test.png");
 
 	    final HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.IMAGE_PNG);
