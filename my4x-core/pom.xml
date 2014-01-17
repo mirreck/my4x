@@ -5,5 +5,13 @@
     <artifactId>my4x</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>my4x-launcher</artifactId>
+  <artifactId>my4x-core</artifactId>
+  
+  <dependencies>
+  <dependency>
+    <groupId>com.github.javafaker</groupId>
+    <artifactId>javafaker</artifactId>
+    <version>0.2</version>
+</dependency>
+  </dependencies>
 </project>

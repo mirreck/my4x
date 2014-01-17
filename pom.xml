@@ -4,9 +4,14 @@
   <artifactId>my4x</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <springframework.version>3.1.0.RELEASE</springframework.version>
+  </properties>
   <modules>
   	<module>my4x-webapp</module>
   	<module>my4x-launcher</module>
+  	<module>my4x-core</module>
+  	<module>my4x-map</module>
   </modules>
 </project>

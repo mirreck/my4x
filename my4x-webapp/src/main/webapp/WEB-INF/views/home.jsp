@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<h2>OK, this app is running.</h2>
-		<div id="map" style="width: 600px; height: 400px"></div>
+		<div id="map" style="width: 1200px; height: 800px"></div>
 
 		<div id="w-system">
 			<div id="w-icon"><i class="icon-gear"></i></div>

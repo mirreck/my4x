@@ -1,25 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>my4x</groupId>
     <artifactId>my4x</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>my4x-webapp</artifactId>
-  <packaging>war</packaging>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <springframework.version>3.1.0.RELEASE</springframework.version>
-  </properties>
+  <artifactId>my4x-map</artifactId>
+  
   <dependencies>
-  
-  <dependency>
-      <groupId>my4x</groupId>
-      <artifactId>my4x-map</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-  
     <!-- SPRING -->
     <dependency>
       <groupId>org.springframework</groupId>

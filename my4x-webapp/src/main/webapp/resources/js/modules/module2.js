@@ -4,13 +4,13 @@ require(["jquery","Leaflet"], function($,L) {
 		var map = L.map('map').setView([0.0, 0.0], 2);
 
 		L.tileLayer(
-				//'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png'
 				'http://localhost:8880/my4x-webapp/rest/maptiles/{z}/{x}/{y}'
 				, {
 			maxZoom: 5,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>'
+			attribution: '&copy; <a href="http://mywebsite.org">M4X </a>'
 		}).addTo(map);
 		
+		$(".leaflet-control-attribution").html('&copy; <a href="http://mywebsite.org">M4X </a>');
 		/*
 
 		L.marker([51.5, -0.09]).addTo(map)
