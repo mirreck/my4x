@@ -28,6 +28,11 @@ public class Color {
             ((green & 0xFF) << 8)  |
             ((blue & 0xFF) << 0);
    }
+
+	public Color darker(double d) {
+		return new Color((int) (this.red * d), (int) (this.green * d),
+				(int) (this.blue * d));
+	}
    
    
 

@@ -79,14 +79,68 @@ public class MapTileServiceImpl implements MapTileService {
       ColorMap colorMap = new ColorMap(heightMap.getWidth(), heightMap.getHeight());
       for (int i = 0; i < heightMap.getWidth(); i++) {
          for (int j = 0; j < heightMap.getHeight(); j++) {
-            Color color = ColorProfile.mapColor(heightMap.getValue(i, j), 150);
+            float value = heightMap.getValue(i, j);
+            Color color = ColorProfile.mapColor(value, 150);
+            int limit = ((int) (value / 200))*200;
+            float remain = Math.abs(value % 200);
+			if(value > 0){
+                if(remain <15 && hasNeighborUnderLimit(heightMap,i,j, limit)){
+                	color = color.darker(0.95) ;
+                } 
+            } else {
+            	if(remain <15 && hasNeighborOverLimit(heightMap,i,j, limit)){
+                	color = color.darker(0.95) ;
+                }
+            }
             colorMap.setValue(i, j, color );
          }
       }
       return colorMap;
    }
 
-   private static HeightMap computeHeightMap(float x,float y, float zoom) {
+	private static boolean hasNeighborOverLimit(HeightMap heightMap, int i,
+			int j, int limit) {
+
+		if (i <= 1 || j <= 1 || i >= heightMap.getWidth() - 1
+				|| j >= heightMap.getHeight() - 1) {
+			return false;
+		}
+		if (heightMap.getValue(i - 1, j - 1) >= limit
+				|| heightMap.getValue(i - 1, j) >= limit
+				|| heightMap.getValue(i - 1, j - 1) >= limit
+				|| heightMap.getValue(i, j - 1) >= limit
+				|| heightMap.getValue(i, j + 1) >= limit
+				|| heightMap.getValue(i + 1, j - 1) >= limit
+				|| heightMap.getValue(i + 1, j) >= limit
+				|| heightMap.getValue(i + 1, j + 1) >= limit) {
+			return true;
+		}
+
+		return false;
+	}
+   
+	private static boolean hasNeighborUnderLimit(HeightMap heightMap, int i,
+			int j, int limit) {
+
+		if (i <= 1 || j <= 1 || i >= heightMap.getWidth() - 1
+				|| j >= heightMap.getHeight() - 1) {
+			return false;
+		}
+		if (heightMap.getValue(i - 1, j - 1) <= limit
+				|| heightMap.getValue(i - 1, j) <= limit
+				|| heightMap.getValue(i - 1, j - 1) <= limit
+				|| heightMap.getValue(i, j - 1) <= limit
+				|| heightMap.getValue(i, j + 1) <= limit
+				|| heightMap.getValue(i + 1, j - 1) <= limit
+				|| heightMap.getValue(i + 1, j) <= limit
+				|| heightMap.getValue(i + 1, j + 1) <= limit) {
+			return true;
+		}
+
+		return false;
+	}
+
+private static HeightMap computeHeightMap(float x,float y, float zoom) {
       HeightMap map = new HeightMap(SIZE, SIZE,x,y, zoom);
       
       PerlinNoise.addPerlinNoise(map, FREQUENCY,-4000,2000);
@@ -96,5 +150,22 @@ public class MapTileServiceImpl implements MapTileService {
       PerlinNoise.addPerlinNoise(map, 500.0f,0,50);
       return map;
    }
+
+	public void resetAllTiles() {
+		LOGGER.debug("resetAllTiles");
+		File file = new File(DEFAULT_DIRECTORY);
+		deleteFiles(file);
+	}
+	
+	private void deleteFiles(File dir){
+		if(dir.isDirectory()){
+			for (File file : dir.listFiles()) {
+				deleteFiles(file);
+			}
+		}
+		LOGGER.debug("delete file:"+dir.getAbsolutePath());
+		dir.delete();
+	}
+	
    
 }

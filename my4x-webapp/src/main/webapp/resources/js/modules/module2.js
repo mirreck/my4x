@@ -1,16 +1,23 @@
 
 require(["jquery","Leaflet"], function($,L) {
-        $('body').append('<p>MODULE2 - MAP - INITIALIZED</p>');
-		var map = L.map('map').setView([0.0, 0.0], 2);
+        $('body').append('<p>MODULE2 - MAP - INITIALIZED:<a id="map-reset" href="#">Reset Map</a></p>');
+		var map = L.map('map').setView([0.0, 0.0], 4);
 
 		L.tileLayer(
-				'http://localhost:8880/my4x-webapp/rest/maptiles/{z}/{x}/{y}'
+				'rest/maptiles/{z}/{x}/{y}'
 				, {
-			maxZoom: 5,
+			minZoom: 2,
+			maxZoom: 7,
 			attribution: '&copy; <a href="http://mywebsite.org">M4X </a>'
 		}).addTo(map);
 		
 		$(".leaflet-control-attribution").html('&copy; <a href="http://mywebsite.org">M4X </a>');
+		$("#map-reset").click(function(){
+			$.get( "rest/resetmap", function( data ) {
+				$( ".result" ).html( data );
+					window.location.reload();
+				});
+		});
 		/*
 
 		L.marker([51.5, -0.09]).addTo(map)

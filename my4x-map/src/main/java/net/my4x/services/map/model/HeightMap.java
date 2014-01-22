@@ -29,7 +29,7 @@ public class HeightMap {
    
    public float getValue(int x, int y){
       if(x <0 || x >= width || y <0 || y >= height){
-         throw new IllegalArgumentException("erreur dans les coordonn�es");
+         throw new IllegalArgumentException("erreur dans les coordonnées:x="+x+" y="+y);
       }
       return data[x*height+y];
    }

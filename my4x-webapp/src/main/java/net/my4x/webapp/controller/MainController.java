@@ -39,6 +39,12 @@ public class MainController {
 	   return new String[] {"a","b"};
 	}
 	
+	@RequestMapping("rest/resetmap")
+	@ResponseBody
+	public String reset(){
+		tilesService.resetAllTiles();
+	   return "Done";
+	}
 	
 	@RequestMapping("rest/maptiles/{z}/{x}/{y}")
 	public ResponseEntity<byte[]> maptiles(@PathVariable String x, @PathVariable String y, @PathVariable String z) throws IOException {
