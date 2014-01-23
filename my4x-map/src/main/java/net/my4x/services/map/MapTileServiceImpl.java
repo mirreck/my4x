@@ -91,7 +91,7 @@ public class MapTileServiceImpl implements MapTileService {
       
       PerlinNoise.addPerlinNoise(map, FREQUENCY,-4000,2000);
       PerlinNoise.addPerlinNoise(map, FREQUENCY2,0,1500);
-      PerlinNoise.addPerlinNoise(map, 25.0f,0,300);
+      PerlinNoise.addPerlinNoise(map, 80.0f,0,1500, new  PerlinNoise.ScaleMode(1000.0f, 1200.0f));
       PerlinNoise.addPerlinNoise(map, 100.0f,0,200);
       PerlinNoise.addPerlinNoise(map, 500.0f,0,50);
       return map;

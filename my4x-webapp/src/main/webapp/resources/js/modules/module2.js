@@ -1,12 +1,19 @@
 
 require(["jquery","Leaflet"], function($,L) {
         $('body').append('<p>MODULE2 - MAP - INITIALIZED</p>');
-		var map = L.map('map').setView([0.0, 0.0], 2);
+		var map = L.map('map').setView([0.0, 0.0], 3);
 
 		L.tileLayer(
 				'http://localhost:8880/my4x-webapp/rest/maptiles/{z}/{x}/{y}'
 				, {
-			maxZoom: 5,
+			minZoom: 2,
+			maxZoom: 7,
+			//continuousWorld: true,
+			noWrap:true,
+			maxBounds:[
+			           [1.0, -1.0],
+			           [1.0, -1.0]
+			       ],
 			attribution: '&copy; <a href="http://mywebsite.org">M4X </a>'
 		}).addTo(map);
 		

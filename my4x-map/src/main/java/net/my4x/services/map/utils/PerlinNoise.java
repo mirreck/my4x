@@ -54,19 +54,19 @@ public class PerlinNoise {
    static { for (int i=0; i < 256 ; i++) p[256+i] = p[i] = permutation[i]; }
    
    
-   public static void addPerlinNoise(HeightMap map, float frequency, float min, float max){
-      for (int i = 0; i < map.getWidth(); i++)
-      {
-         
-       for (int j = 0; j < map.getHeight(); j++)
-       {
-          // -1.0 < diff <1.0
-          float diff = (float) noise(
-                frequency * ((i/map.getZoom())+map.getInitialx()) / (float)map.getWidth(), 
-                frequency * ((j/map.getZoom())+map.getInitialy()) / (float)map.getHeight(), 0);
-          diff = min + (float)((diff + 1.0)/2.0*(max-min));
-          map.setValue(i, j, map.getValue(i, j) + diff);
-       }
+   public static void addPerlinNoise(HeightMap map, float frequency, float min, float max) {
+      addPerlinNoise(map, frequency, min, max, new AddMode());
+   }
+   
+   public static void addPerlinNoise(HeightMap map, float frequency, float min, float max, NoiseMode mode) {
+      for (int i = 0; i < map.getWidth(); i++) {
+         for (int j = 0; j < map.getHeight(); j++) {
+            // -1.0 < diff <1.0
+            float diff = (float) noise(frequency * ((i / map.getZoom()) + map.getInitialx()) / (float) map.getWidth(), frequency
+                  * ((j / map.getZoom()) + map.getInitialy()) / (float) map.getHeight(), 0);
+            diff = min + (float) ((diff + 1.0) / 2.0 * (max - min));
+            map.setValue(i, j, mode.compute(map.getValue(i, j), diff));
+         }
       }
    }
    
@@ -80,5 +80,37 @@ public class PerlinNoise {
        }
       }
    }
+   
+   public static interface NoiseMode {
+      float compute(float oldValue, float diff);
+   }
+   public static class AddMode implements NoiseMode{
+      public float compute(float oldValue, float diff) {
+         return oldValue + diff;
+      }
+   }
+   public static class MergeMode implements NoiseMode{
+      public float compute(float oldValue, float diff) {
+         return Math.max(oldValue,diff);
+      }
+   }
+   
+   public static class ScaleMode implements NoiseMode {
+      float minAlt;
+      float maxAlt;
+      public ScaleMode(float minAlt, float maxAlt) {
+         this.minAlt = minAlt;
+         this.maxAlt = maxAlt;
+      }
+      public float compute(float oldValue, float diff) {
+         if(oldValue < minAlt){
+            return oldValue;
+         } else {
+            return oldValue + (diff * (oldValue -minAlt) / (maxAlt -minAlt));
+         }
+         
+      }
+   }
+   
 
 }
