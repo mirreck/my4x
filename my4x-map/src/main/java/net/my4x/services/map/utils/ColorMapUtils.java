@@ -50,14 +50,79 @@ public class ColorMapUtils {
 
    public static ColorMap colorize(HeightMap heightMap) {
       LOGGER.debug("colorize");
+//      ColorMap colorMap = new ColorMap(heightMap.getWidth(), heightMap.getHeight());
+//      for (int i = 0; i < heightMap.getWidth(); i++) {
+//         for (int j = 0; j < heightMap.getHeight(); j++) {
+//            Color color = ColorProfile.mapColor(heightMap.getValue(i, j), 150);
+//            colorMap.setValue(i, j, color );
+//         }
+//      }
+//      return colorMap;
+//   }
+//   
+//   private static ColorMap computeMapColors(HeightMap heightMap) {
       ColorMap colorMap = new ColorMap(heightMap.getWidth(), heightMap.getHeight());
       for (int i = 0; i < heightMap.getWidth(); i++) {
          for (int j = 0; j < heightMap.getHeight(); j++) {
-            Color color = ColorProfile.mapColor(heightMap.getValue(i, j), 150);
+            float value = heightMap.getValue(i, j);
+            Color color = ColorProfile.mapColor(value, 150);
+            int limit = ((int) (value / 200))*200;
+            float remain = Math.abs(value % 200);
+            if(value > 0){
+                if(remain <15 && hasNeighborUnderLimit(heightMap,i,j, limit)){
+                    color = color.darker(0.95) ;
+                } 
+            } else {
+                if(remain <15 && hasNeighborOverLimit(heightMap,i,j, limit)){
+                    color = color.darker(0.95) ;
+                }
+            }
             colorMap.setValue(i, j, color );
          }
       }
       return colorMap;
    }
+
+    private static boolean hasNeighborOverLimit(HeightMap heightMap, int i,
+            int j, int limit) {
+
+        if (i <= 1 || j <= 1 || i >= heightMap.getWidth() - 1
+                || j >= heightMap.getHeight() - 1) {
+            return false;
+        }
+        if (heightMap.getValue(i - 1, j - 1) >= limit
+                || heightMap.getValue(i - 1, j) >= limit
+                || heightMap.getValue(i - 1, j - 1) >= limit
+                || heightMap.getValue(i, j - 1) >= limit
+                || heightMap.getValue(i, j + 1) >= limit
+                || heightMap.getValue(i + 1, j - 1) >= limit
+                || heightMap.getValue(i + 1, j) >= limit
+                || heightMap.getValue(i + 1, j + 1) >= limit) {
+            return true;
+        }
+
+        return false;
+    }
+   
+    private static boolean hasNeighborUnderLimit(HeightMap heightMap, int i,
+            int j, int limit) {
+
+        if (i <= 1 || j <= 1 || i >= heightMap.getWidth() - 1
+                || j >= heightMap.getHeight() - 1) {
+            return false;
+        }
+        if (heightMap.getValue(i - 1, j - 1) <= limit
+                || heightMap.getValue(i - 1, j) <= limit
+                || heightMap.getValue(i - 1, j - 1) <= limit
+                || heightMap.getValue(i, j - 1) <= limit
+                || heightMap.getValue(i, j + 1) <= limit
+                || heightMap.getValue(i + 1, j - 1) <= limit
+                || heightMap.getValue(i + 1, j) <= limit
+                || heightMap.getValue(i + 1, j + 1) <= limit) {
+            return true;
+        }
+
+        return false;
+    }
    
 }

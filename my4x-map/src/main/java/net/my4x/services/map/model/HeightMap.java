@@ -26,6 +26,7 @@ public class HeightMap extends AbstractMap{
    
    public float getValue(int x, int y){
       this.checkCoordinates(x, y);
+
       return data[x*height+y];
    }
    public void setValue(int x, int y, float value){

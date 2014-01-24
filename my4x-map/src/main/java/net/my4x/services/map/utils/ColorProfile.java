@@ -10,22 +10,18 @@ public class ColorProfile {
    public static int[]   green  ={       76,      226,      255,   255,  209,    255,     255,     236,     150,     255};
    public static int[]   blue   ={      255,      255,      255,   255,  127,    232,     192,     167,      73,     255};
    
+   public static final Color BLACK = new Color(0,0,0);
+   
    public static Color mapColor(float value, float maxvalue) {
-      return new Color(getR(value) , getG(value), getB(value));
+//	   if(value >= -5.0 && value <= 5.0){
+//		   return BLACK;
+//	   }
+      Color color = new Color(getR(value) , getG(value), getB(value));
+//      if(Math.abs(value % 200) <15){
+//    	  return color.darker(0.9);
+//      }
+	return color;
    }
-   // -10000 : 0 76 255
-   // -3900 :30 226 255
-   // -2400 :131 255 255
-   // -1 :229 255 255
-   // 0  :66 209 127
-   
-   
-   
-   // 903 255 255 232
-   // 1206 255 255 192
-   // 1416 255 236 167
-   // 2884 206 150 73
-   // 9000 255 255 255
    public static int getR(float value) {
       return getVal(value, red);
    }

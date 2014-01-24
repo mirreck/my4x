@@ -70,7 +70,11 @@ public class MapTileServiceImpl implements MapTileService {
       wmap.compute(heightMap);
       return wmap;
    }
-   private static HeightMap computeHeightMap(float x,float y, float zoom) {
+
+
+
+
+private static HeightMap computeHeightMap(float x,float y, float zoom) {
       HeightMap map = new HeightMap(SIZE, SIZE,x,y, zoom);
       
       PerlinNoise.addPerlinNoise(map, FREQUENCY,-4000,2000);
@@ -80,5 +84,22 @@ public class MapTileServiceImpl implements MapTileService {
       PerlinNoise.addPerlinNoise(map, 500.0f,0,50);
       return map;
    }
+
+	public void resetAllTiles() {
+		LOGGER.debug("resetAllTiles");
+		File file = new File(DEFAULT_DIRECTORY);
+		deleteFiles(file);
+	}
+	
+	private void deleteFiles(File dir){
+		if(dir.isDirectory()){
+			for (File file : dir.listFiles()) {
+				deleteFiles(file);
+			}
+		}
+		LOGGER.debug("delete file:"+dir.getAbsolutePath());
+		dir.delete();
+	}
+	
    
 }

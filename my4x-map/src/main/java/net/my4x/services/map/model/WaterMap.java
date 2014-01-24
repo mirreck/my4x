@@ -92,7 +92,15 @@ public class WaterMap extends AbstractMap {
          
       }
       return false;
-   } 
+   }
+//   private lowestNeighbor(int x, int y, HeightMap hMap){
+//      float height = hMap.getValue(x, y);
+//      
+//      return null;
+//   }
+   private class Point {
+      int x,y;
+   }
 
    private int getFlow(int x, int y){
       this.checkCoordinates(x, y);
