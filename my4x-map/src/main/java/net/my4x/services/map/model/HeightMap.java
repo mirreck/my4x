@@ -2,22 +2,19 @@ package net.my4x.services.map.model;
 
 import java.util.Arrays;
 
-public class HeightMap {
+public class HeightMap extends AbstractMap{
    
    private float[] data;
 
-   private int height;
-   private int width;
    private float initialx;
    private float initialy;
    private float zoom = 1.0f;
    
    
    public HeightMap(int width, int height, float initialx, float initialy){
+      super(width,height);
       data = new float[width*height];
       Arrays.fill(data, 0.0f);
-      this.width = width;
-      this.height = height;
       this.initialx = initialx;
       this.initialy = initialy;
    }
@@ -28,9 +25,7 @@ public class HeightMap {
    }
    
    public float getValue(int x, int y){
-      if(x <0 || x >= width || y <0 || y >= height){
-         throw new IllegalArgumentException("erreur dans les coordonn�es");
-      }
+      this.checkCoordinates(x, y);
       return data[x*height+y];
    }
    public void setValue(int x, int y, float value){
@@ -39,14 +34,6 @@ public class HeightMap {
 
    public float[] getData() {
       return data;
-   }
-
-   public int getHeight() {
-      return height;
-   }
-
-   public int getWidth() {
-      return width;
    }
 
    public float getInitialx() {

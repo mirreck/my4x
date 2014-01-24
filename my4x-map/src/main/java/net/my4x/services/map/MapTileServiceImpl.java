@@ -1,18 +1,14 @@
 package net.my4x.services.map;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
-
-import net.my4x.services.map.model.Color;
 import net.my4x.services.map.model.ColorMap;
 import net.my4x.services.map.model.HeightMap;
-import net.my4x.services.map.utils.ColorProfile;
+import net.my4x.services.map.model.WaterMap;
+import net.my4x.services.map.utils.ColorMapUtils;
 import net.my4x.services.map.utils.PerlinNoise;
 
 import org.slf4j.Logger;
@@ -34,58 +30,46 @@ public class MapTileServiceImpl implements MapTileService {
    
    public InputStream getTileAsStream(int x, int y, int zoom) {
       LOGGER.debug("Generate TILE :x={} y={}", x, y);
-      File file = new File(DEFAULT_DIRECTORY + zoom + "/tilex" + x + "y" + y + ".png");
+      String filename = "tilex" + x + "y" + y + ".png";
+      File dir = new File(DEFAULT_DIRECTORY + zoom +"/");
       float mapZoom = (float) Math.pow(2.0, zoom);
+      return exportMapImage(dir, filename, x/mapZoom, y/mapZoom, mapZoom);
+      
+   }
+
+   private InputStream exportMapImage(File dir, String filename,float x, float y, float zoom) {
+
+      File file = new File(dir,filename);
+      if (!file.exists() || !file.isFile()) {
+         file.mkdirs();
+         
+         HeightMap heightMap = computeHeightMap(x*SIZE,y*SIZE, zoom);
+         ColorMap colorMap = ColorMapUtils.colorize(heightMap);
+         ColorMapUtils.exportMapImage(colorMap, file);
+         File waterfile = new File(dir,"water_"+filename);
+         WaterMap waterMap = computeWater(heightMap);
+         ColorMap waterColorMap = ColorMapUtils.colorize(waterMap);
+         ColorMapUtils.exportMapImage(waterColorMap, waterfile);
+      }
+      
       try {
-         if (!file.exists() || !file.isFile()) {
-            file.mkdirs();
-            file.createNewFile();
-            exportMapImage(file, x/mapZoom, y/mapZoom, mapZoom);
-         }
          return new FileInputStream(file);
       }
-      catch (IOException e) {
+      catch (FileNotFoundException e) {
          e.printStackTrace();
          throw new RuntimeException("could not create new tile",e);
       }
       
    }
 
-   private void exportMapImage(File file,float x, float y, float zoom) {
 
-      HeightMap heightMap = computeHeightMap(x*SIZE,y*SIZE, zoom);
-      ColorMap colorMap = computeMapColors(heightMap);
-      exportMapImage(colorMap, file);
+
+   private WaterMap computeWater(HeightMap heightMap) {
+      LOGGER.debug("computeWater");
+      WaterMap wmap = new WaterMap(heightMap);
+      wmap.compute(heightMap);
+      return wmap;
    }
-
-   private void exportMapImage(ColorMap colorMap, File file) {
-      try {
-         BufferedImage image = new BufferedImage(colorMap.getWidth(), colorMap.getHeight(), BufferedImage.TYPE_INT_ARGB);
-         Graphics2D g2d = (Graphics2D) image.getGraphics();
-         g2d.setColor(new java.awt.Color(0, 0, 0, 0));
-         g2d.fillRect(0, 0, 100, 100);
-         for (int i = 0; i < colorMap.getWidth(); i++) {
-             for (int j = 0; j < colorMap.getHeight(); j++) {
-                image.setRGB(i, j, colorMap.getValue(i, j).getRGB());
-             }
-         }
-         ImageIO.write(image, "png", file);
-     } catch (IOException e) {
-         e.printStackTrace();
-     }
-   }
-
-   private static ColorMap computeMapColors(HeightMap heightMap) {
-      ColorMap colorMap = new ColorMap(heightMap.getWidth(), heightMap.getHeight());
-      for (int i = 0; i < heightMap.getWidth(); i++) {
-         for (int j = 0; j < heightMap.getHeight(); j++) {
-            Color color = ColorProfile.mapColor(heightMap.getValue(i, j), 150);
-            colorMap.setValue(i, j, color );
-         }
-      }
-      return colorMap;
-   }
-
    private static HeightMap computeHeightMap(float x,float y, float zoom) {
       HeightMap map = new HeightMap(SIZE, SIZE,x,y, zoom);
       
