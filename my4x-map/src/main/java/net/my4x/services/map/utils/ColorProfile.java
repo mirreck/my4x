@@ -12,7 +12,7 @@ public class ColorProfile {
    
    public static final Color BLACK = new Color(0,0,0);
    
-   public static Color mapColor(float value, float maxvalue) {
+   public static Color mapColor(float value) {
 //	   if(value >= -5.0 && value <= 5.0){
 //		   return BLACK;
 //	   }

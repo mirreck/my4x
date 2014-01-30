@@ -9,7 +9,7 @@ import net.my4x.services.map.model.ColorMap;
 import net.my4x.services.map.model.HeightMap;
 import net.my4x.services.map.model.WaterMap;
 import net.my4x.services.map.utils.ColorMapUtils;
-import net.my4x.services.map.utils.PerlinNoise;
+import net.my4x.services.map.utils.NoiseGenerator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class MapTileServiceImpl implements MapTileService {
    private WaterMap computeWater(HeightMap heightMap) {
       LOGGER.debug("computeWater");
       WaterMap wmap = new WaterMap(heightMap);
-      wmap.compute(heightMap);
+      wmap.compute();
       return wmap;
    }
 
@@ -77,11 +77,11 @@ public class MapTileServiceImpl implements MapTileService {
 private static HeightMap computeHeightMap(float x,float y, float zoom) {
       HeightMap map = new HeightMap(SIZE, SIZE,x,y, zoom);
       
-      PerlinNoise.addPerlinNoise(map, FREQUENCY,-4000,2000);
-      PerlinNoise.addPerlinNoise(map, FREQUENCY2,0,1500);
-      PerlinNoise.addPerlinNoise(map, 80.0f,0,1500, new  PerlinNoise.ScaleMode(1000.0f, 1200.0f));
-      PerlinNoise.addPerlinNoise(map, 100.0f,0,200);
-      PerlinNoise.addPerlinNoise(map, 500.0f,0,50);
+      NoiseGenerator.addPerlinNoise(map, FREQUENCY,-4000,2000);
+      NoiseGenerator.addPerlinNoise(map, FREQUENCY2,0,1500);
+      NoiseGenerator.addPerlinNoise(map, 80.0f,0,1500, new  NoiseGenerator.ScaleMode(1000.0f, 1200.0f));
+      NoiseGenerator.addPerlinNoise(map, 100.0f,0,200);
+      NoiseGenerator.addPerlinNoise(map, 500.0f,0,50);
       return map;
    }
 

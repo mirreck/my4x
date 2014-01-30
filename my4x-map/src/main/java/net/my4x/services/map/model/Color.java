@@ -2,6 +2,8 @@ package net.my4x.services.map.model;
 
 public class Color {
 
+   public static final Color RED = new Color(255,0,0);
+   
    private int a =255;
    private int red;
    private int green;
