@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class HeightMap extends AbstractMap{
    
-   private float[] data;
+   private int[] h;
 
    private float initialx;
    private float initialy;
@@ -13,8 +13,8 @@ public class HeightMap extends AbstractMap{
    
    public HeightMap(int width, int height, float initialx, float initialy){
       super(width,height);
-      data = new float[width*height];
-      Arrays.fill(data, 0.0f);
+      h = new int[width*height];
+      Arrays.fill(h, 0);
       this.initialx = initialx;
       this.initialy = initialy;
    }
@@ -24,17 +24,17 @@ public class HeightMap extends AbstractMap{
       this.zoom = zoom;
    }
    
-   public float getValue(int x, int y){
+   public int getValue(int x, int y){
       this.checkCoordinates(x, y);
 
-      return data[x*height+y];
+      return h[x*height+y];
    }
-   public void setValue(int x, int y, float value){
-      data[x*height+y] = value;
+   public void setValue(int x, int y, int value){
+      h[x*height+y] = value;
    }
 
-   public float[] getData() {
-      return data;
+   public int[] getData() {
+      return h;
    }
 
    public float getInitialx() {

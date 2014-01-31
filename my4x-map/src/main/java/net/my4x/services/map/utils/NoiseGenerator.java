@@ -48,7 +48,7 @@ public class NoiseGenerator {
             float diff = (float) algo.noise(frequency * ((i / map.getZoom()) + map.getInitialx()) / (float) map.getWidth(), frequency
                   * ((j / map.getZoom()) + map.getInitialy()) / (float) map.getHeight());
             diff = min + (float) ((diff + 1.0) / 2.0 * (max - min));
-            map.setValue(i, j, mode.compute(map.getValue(i, j), diff));
+            map.setValue(i, j,(int) mode.compute(map.getValue(i, j), diff));
          }
       }
    }
@@ -93,6 +93,9 @@ public class NoiseGenerator {
          }
          
       }
+   }
+   public static void removeLakeUnder(int min){
+      
    }
    
 

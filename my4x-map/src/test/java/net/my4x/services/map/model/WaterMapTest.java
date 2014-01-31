@@ -14,7 +14,7 @@ public class WaterMapTest {
       HeightMap hmap = new HeightMap(100, 100, 0.0f, 0.0f);
       for (int i = 0; i < hmap.width; i++) {
          for (int j = 0; j < hmap.height; j++) {
-            float h = (float) Math.sqrt((i-hmap.width/2)*(i-hmap.width/2) + (j-hmap.width/2)*(j-hmap.width/2));
+            int h = (int) Math.sqrt((i-hmap.width/2)*(i-hmap.width/2) + (j-hmap.width/2)*(j-hmap.width/2));
             h = 35 -h;
             hmap.setValue(i, j, 10*h);
          }
@@ -29,6 +29,10 @@ public class WaterMapTest {
       File waterfile = new File("C:\\tmp\\GEN\\test_water.png");
       ColorMap waterColorMap = ColorMapUtils.colorize(wmap);
       ColorMapUtils.exportMapImage(waterColorMap, waterfile);
+      
+      
+      file = new File("C:\\tmp\\GEN\\test_map_merged.png");
+      ColorMapUtils.exportMapImage(ColorMapUtils.colorize(hmap).appendLayer(waterColorMap), file);
       
    }
 

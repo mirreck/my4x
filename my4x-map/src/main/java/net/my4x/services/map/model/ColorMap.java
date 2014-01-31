@@ -47,4 +47,15 @@ public class ColorMap extends AbstractMap {
       blue[x*height+y] = b;
       alpha[x*height+y] = a;
    }
+   
+   public ColorMap appendLayer(ColorMap layer){
+      for (int i = 0; i < red.length; i++) {
+         if(layer.alpha[i] > 250){
+            red[i] = layer.red[i];
+            green[i] = layer.green[i];
+            blue[i] = layer.blue[i];
+         }
+      }
+      return this;
+   }
 }
