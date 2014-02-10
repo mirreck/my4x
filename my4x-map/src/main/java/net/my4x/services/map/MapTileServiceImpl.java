@@ -29,24 +29,36 @@ public class MapTileServiceImpl implements MapTileService {
    private String tilesDirectory;
    
    public InputStream getTileAsStream(int x, int y, int zoom) {
-      LOGGER.debug("Generate TILE :x={} y={}", x, y);
-      String filename = "tilex" + x + "y" + y + ".png";
+      LOGGER.debug("Load TILE :x={} y={}", x, y);
       File dir = new File(DEFAULT_DIRECTORY + zoom +"/");
       float mapZoom = (float) Math.pow(2.0, zoom);
-      return exportMapImage(dir, filename, x/mapZoom, y/mapZoom, mapZoom);
+      return exportMapImage(dir, fileName(x,y), x/mapZoom, y/mapZoom, mapZoom);
       
    }
+   public InputStream getWaterTileAsStream(int x, int y, int zoom){
+      LOGGER.debug("Load TILE :x={} y={}", x, y);
+      File dir = new File(DEFAULT_DIRECTORY + zoom +"/");
+      float mapZoom = (float) Math.pow(2.0, zoom);
+      return exportMapImage(dir, waterfileName(x,y), x/mapZoom, y/mapZoom, mapZoom);
+   }
 
+   private String fileName(int x, int y){
+      return "tile-x" + x + "y" + y + ".png";
+   }
+   private String waterfileName(int x, int y){
+      return "water-tile-x" + x + "y" + y + ".png";
+   }
+   
    private InputStream exportMapImage(File dir, String filename,float x, float y, float zoom) {
 
       File file = new File(dir,filename);
       if (!file.exists() || !file.isFile()) {
+         LOGGER.debug("Generate TILE :x={} y={}", x, y);
          file.mkdirs();
-         
          HeightMap heightMap = computeHeightMap(x*SIZE,y*SIZE, zoom);
          ColorMap colorMap = ColorMapUtils.colorize(heightMap);
          ColorMapUtils.exportMapImage(colorMap, file);
-         File waterfile = new File(dir,"water_"+filename);
+         File waterfile = new File(dir,"water-"+filename);
          WaterMap waterMap = computeWater(heightMap);
          ColorMap waterColorMap = ColorMapUtils.colorize(waterMap);
          ColorMapUtils.exportMapImage(waterColorMap, waterfile);

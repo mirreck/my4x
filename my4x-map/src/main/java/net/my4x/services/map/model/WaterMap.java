@@ -3,6 +3,7 @@ package net.my4x.services.map.model;
 import java.util.Arrays;
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +70,7 @@ public class WaterMap extends AbstractMap {
          this.resetFlow(x, y);
          return false;
       } else {
-         Point p = lowestNeighbor(x, y);
+         Point p = heightMap.lowestNeighbor(x, y);
          if(p.h < height){
             this.addFlow(p.x, p.y, this.getFlow(x, y));
             this.resetFlow(x, y);
@@ -132,29 +133,10 @@ public class WaterMap extends AbstractMap {
 
    
    
-   private Point lowestNeighbor(int x, int y){
-      List<Pos> pts = neighbours(x, y);
-      Point lowest = null;
-      for (Pos pos : pts) {
-         Point point = new Point(pos);
-         if(lowest == null || point.h < lowest.h){
-            lowest = point;
-         }
-      }
-      return lowest;
-   }
+
    
    
-   private class Point extends Pos{
-      int h;
-      private Point(Pos pos) {
-         this(pos.x,pos.y);
-      }
-      private Point(int x, int y) {
-         super(x,y);
-         this.h = heightMap.getValue(x, y);
-      }
-   }
+
 
    private int getFlow(int x, int y){
       this.checkCoordinates(x, y);

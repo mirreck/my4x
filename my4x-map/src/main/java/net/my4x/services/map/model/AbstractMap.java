@@ -38,14 +38,6 @@ public abstract class AbstractMap {
       return res;
       
    }
-   public class Pos {
-      public final int x,y;
-      protected Pos(int x, int y) {
-         super();
-         this.x = x;
-         this.y = y;
-      }
-   }
    
    
 }

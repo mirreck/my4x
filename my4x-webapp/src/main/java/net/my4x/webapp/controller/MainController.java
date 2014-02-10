@@ -62,4 +62,21 @@ public class MainController {
 	       in.close();
 	    }
 	}
+	
+	   @RequestMapping("rest/maptiles-water/{z}/{x}/{y}")
+	    public ResponseEntity<byte[]> waterMaptiles(@PathVariable String x, @PathVariable String y, @PathVariable String z) throws IOException {
+	       LOGGER.debug("Loading tile :x={} y={}",x,y);
+	       int tileX = Integer.parseInt(x);
+	       int tileY = Integer.parseInt(y);
+	       int tileZ = Integer.parseInt(z);
+	       InputStream in =  tilesService.getWaterTileAsStream(tileX, tileY, tileZ);
+	      
+	        final HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.IMAGE_PNG);
+	        try {
+	        return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+	        } finally {
+	           in.close();
+	        }
+	    }
 }

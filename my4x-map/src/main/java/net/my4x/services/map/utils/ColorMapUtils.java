@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import net.my4x.services.map.model.AbstractMap.Pos;
 import net.my4x.services.map.model.Color;
 import net.my4x.services.map.model.ColorMap;
 import net.my4x.services.map.model.HeightMap;
+import net.my4x.services.map.model.Pos;
 import net.my4x.services.map.model.WaterMap;
 import net.my4x.services.map.model.ZoneMap;
 
@@ -84,25 +84,6 @@ public class ColorMapUtils {
       }
       return colorMap;
    }
-
-//   public static ColorMap colorize(WaterMap waterMap) {
-//      LOGGER.debug("colorize WaterMap");
-//      ColorMap colorMap = new ColorMap(waterMap.getWidth(), waterMap.getHeight());
-//      for (int i = 0; i < waterMap.getWidth(); i++) {
-//         for (int j = 0; j < waterMap.getHeight(); j++) {
-//            int level = waterMap.getLevel(i, j);
-//            if (level > 0) {
-////               Color color = ColorProfile.mapColor(-1*level);
-////               colorMap.setValue(i, j, color);
-//               colorMap.setValue(i, j, 0, 255, 255,255);
-//            }
-//            else {
-//               colorMap.setValue(i, j, 0, 0, 255, waterMap.getFinalFlow(i, j));
-//            }
-//         }
-//      }
-//      return colorMap;
-//   }
    
    
    public static ColorMap colorize(HeightMap heightMap) {

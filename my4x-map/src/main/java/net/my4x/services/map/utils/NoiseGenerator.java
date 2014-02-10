@@ -94,9 +94,7 @@ public class NoiseGenerator {
          
       }
    }
-   public static void removeLakeUnder(int min){
-      
-   }
+
    
 
 }
