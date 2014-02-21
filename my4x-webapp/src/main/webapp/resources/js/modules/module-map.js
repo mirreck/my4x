@@ -25,6 +25,96 @@ require(["jquery","Leaflet"], function($,L) {
 					window.location.reload();
 				});
 		});
+		function hexCoordinates(x, y, size){
+			var posx = size*(x*1.5);
+			var posy = size*(y*2*0.866+0.866*(x%2));
+			return [
+		            [posx-size*1.0, posy+size*0.0],
+		            [posx-size*0.5, posy+size*0.866],
+		            [posx+size*0.5, posy+size*0.866],
+		            [posx+size*1.0, posy+size*0.0],
+		            [posx+size*0.5, posy-size*0.866],
+		            [posx-size*0.5, posy-size*0.866]
+		        ];
+		}
+		
+		var states = [
+//		              {
+//		    "type": "Feature",
+//		    "properties": {"party": "Republican"},
+//		    "geometry": {
+//		        "type": "Polygon",
+//		        "coordinates": [hexCoordinates(0.0,0.0,1.0)]
+//		    }
+//		}, {
+//		    "type": "Feature",
+//		    "properties": {"party": "Democrat"},
+//		    "geometry": {
+//		        "type": "Polygon",
+//		        "coordinates": [hexCoordinates(1.0,0.0,1.0)]
+//		    }
+//		}
+		];
+		for ( var i = 0; i < 10; i++) {
+			for ( var j = 0; j < 10; j++) {
+				states[states.length] = {
+					    "type": "Feature",
+					    "properties": {"party": "Democrat"},
+					    "geometry": {
+					        "type": "Polygon",
+					        "coordinates": [hexCoordinates(i,j,2.0)]
+					    }
+					};
+			}
+		}
+		function highlightFeature(e) {
+		    var layer = e.target;
+
+		    layer.setStyle({
+		        weight: 1,
+		        color: '#666',
+		        dashArray: '',
+		        fillOpacity: 0.7
+		    });
+
+		    if (!L.Browser.ie && !L.Browser.opera) {
+		        layer.bringToFront();
+		    }
+		}
+		function focusFeature(e) {
+		    var layer = e.target;
+
+		    layer.setStyle({
+		        weight: 1,
+		        color: '#456',
+		        dashArray: '',
+		        fillOpacity: 0.1
+		    });
+
+		    if (!L.Browser.ie && !L.Browser.opera) {
+		        layer.bringToFront();
+		    }
+		}
+		function onEachFeature(feature, layer) {
+		    layer.on({
+		        mouseover: highlightFeature,
+		        mouseout: resetHighlight,   
+		        click: focusFeature
+		    });
+		}
+		var geojson = L.geoJson(states, {
+		    style: function(feature) {
+		        switch (feature.properties.party) {
+		            case 'Republican': return {color: "#ff0000", weight: 1, fillOpacity: 0.2};
+		            case 'Democrat':   return {color: "#0000ff", weight: 1, fillOpacity: 0.2};
+		        }
+		    },
+		    onEachFeature: onEachFeature
+		}).addTo(map);
+
+		function resetHighlight(e) {
+		    geojson.resetStyle(e.target);
+		}
 		/*
 
 		L.marker([51.5, -0.09]).addTo(map)
