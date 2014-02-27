@@ -1,7 +1,9 @@
 package net.my4x.services.map.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractMap {
    protected final int height;
@@ -22,9 +24,6 @@ public abstract class AbstractMap {
          throw new IllegalArgumentException("erreur dans les coordonn�es");
       }
    }
-   public boolean pointExists(int x, int y){
-      return x >= 0 && x < width && y >= 0 && y < height;
-   }
    
    public List<Pos> neighbours(int x,int y){
       List<Pos> res = new ArrayList<Pos>();
@@ -36,8 +35,30 @@ public abstract class AbstractMap {
          }
       }
       return res;
-      
    }
    
+   public Map<Direction, Pos> neighboursWithDirection(int x,int y){
+      Map<Direction, Pos> res = new HashMap<Direction, Pos>();
+      for (Direction direction : Direction.values()) {
+         Pos next = direction.nextPoint(x, y);
+         if(posExists(next)){
+            res.put(direction, next);
+         }
+      }
+      return res;
+   }
+   
+   public boolean pointExists(int x, int y){
+      return x >= 0 && x < width && y >= 0 && y < height;
+   }
+   public boolean posExists(Pos pos){
+      return pos != null && pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height;
+   }
+   public boolean isBorder(Pos pos){
+      return pos.x == 0 
+          || pos.x == width-1 
+          || pos.y == 0 
+          || pos.y == height-1;
+   }
    
 }

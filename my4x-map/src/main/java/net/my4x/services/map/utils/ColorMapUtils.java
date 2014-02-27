@@ -92,7 +92,7 @@ public class ColorMapUtils {
       ColorMap colorMap = new ColorMap(heightMap.getWidth(), heightMap.getHeight());
       for (int i = 0; i < heightMap.getWidth(); i++) {
          for (int j = 0; j < heightMap.getHeight(); j++) {
-            float value = heightMap.getValue(i, j);
+            float value = heightMap.getHeight(i, j);
             Color color = ColorProfile.mapColor(value);
             int limit = ((int) (value / 200)) * 200;
             if (value > 0) {
@@ -114,7 +114,7 @@ public class ColorMapUtils {
    private static boolean hasNeighborOverLimit(HeightMap heightMap, int i, int j, int limit) {
       List<Pos> pts = heightMap.neighbours(i, j);
       for (Pos pos : pts) {
-         if (heightMap.getValue(pos.x, pos.y) >= limit) {
+         if (heightMap.getHeight(pos.x, pos.y) >= limit) {
             return true;
          }
       }
@@ -125,7 +125,7 @@ public class ColorMapUtils {
 
       List<Pos> pts = heightMap.neighbours(i, j);
       for (Pos pos : pts) {
-         if (heightMap.getValue(pos.x, pos.y) <= limit) {
+         if (heightMap.getHeight(pos.x, pos.y) <= limit) {
             return true;
          }
       }

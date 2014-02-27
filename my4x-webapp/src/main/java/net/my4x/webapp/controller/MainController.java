@@ -1,6 +1,7 @@
 package net.my4x.webapp.controller;
 
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,16 +29,10 @@ public class MainController {
    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
    
 	@RequestMapping("home")
-    public ModelAndView step2() {
+    public ModelAndView home() {
 		ModelAndView mav = new ModelAndView("home");
         return mav;
     }
-	
-	@RequestMapping("rest/data/{id}")
-	@ResponseBody
-	public String[] data(@PathVariable String id){
-	   return new String[] {"a","b"};
-	}
 	
 	@RequestMapping("rest/resetmap")
 	@ResponseBody
@@ -52,7 +47,7 @@ public class MainController {
 	   int tileX = Integer.parseInt(x);
 	   int tileY = Integer.parseInt(y);
 	   int tileZ = Integer.parseInt(z);
-	   InputStream in =  tilesService.getTileAsStream(tileX, tileY, tileZ);
+	   InputStream in =  new FileInputStream(tilesService.getHeightTile(tileX, tileY, tileZ));
 	  
 	    final HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.IMAGE_PNG);
@@ -69,7 +64,7 @@ public class MainController {
 	       int tileX = Integer.parseInt(x);
 	       int tileY = Integer.parseInt(y);
 	       int tileZ = Integer.parseInt(z);
-	       InputStream in =  tilesService.getWaterTileAsStream(tileX, tileY, tileZ);
+	       InputStream in =  new FileInputStream(tilesService.getWaterTile(tileX, tileY, tileZ));
 	      
 	        final HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.IMAGE_PNG);

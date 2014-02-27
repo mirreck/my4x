@@ -3,6 +3,7 @@ package net.my4x.services.map;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import net.my4x.services.map.model.ColorMap;
@@ -12,7 +13,6 @@ import net.my4x.services.map.utils.ColorMapUtils;
 import net.my4x.services.map.utils.HeightMapUtils;
 import net.my4x.services.map.utils.NoiseGenerator;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +27,13 @@ public class MapTileServiceImpl implements MapTileService {
    private static final String DEFAULT_DIRECTORY = "C:/tmp/GEN/TILES/";
    private static final Logger LOGGER = LoggerFactory.getLogger(MapTileServiceImpl.class);
 
+   private enum TileType { HEIGHT("png"), WATER("png"), DATA("data"); 
+      String extension; 
+      TileType(String ext){
+         extension = ext;
+      }
+   } 
+   
    @Value("${service.map.tiles.directory:" + DEFAULT_DIRECTORY + "}")
    private String tilesDirectory;
 
@@ -43,12 +50,67 @@ public class MapTileServiceImpl implements MapTileService {
       }
    }
    
-   public InputStream getTileAsStream(int x, int y, int zoom) {
+   public File getHeightTile(int x, int y, int zoom) {
       LOGGER.debug("Load TILE :x={} y={}", x, y);
       Projection p = new Projection(x,y,zoom);
-      
-      return exportMapImage(tilesDir(zoom), fileName(x, y), p);
+      File file = tileFile(TileType.HEIGHT, p);
+      if(file != null && file.exists()){
+         return file;
+      }
+      try {
+         return generateHeightTile(file, p);
+      }
+      catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+   }
 
+   public File getWaterTile(int x, int y, int zoom) {
+      LOGGER.debug("Load TILE :x={} y={}", x, y);
+      Projection p = new Projection(x, y, zoom);
+      File file = tileFile(TileType.WATER, p);
+      if (file != null && file.exists()) {
+         return file;
+      }
+      try {
+         return generateWaterTile(file, p);
+      }
+      catch (IOException e) {
+         throw new RuntimeException(e);
+      }
+   }
+   
+   private HeightMap getHeightData(Projection p) throws IOException {
+      File file = tileFile(TileType.DATA, p);
+      if(file != null && file.exists()){
+         return HeightMapUtils.load(file);
+      }
+      return generateHeightData(file, p);
+   }
+   
+   
+   private HeightMap generateHeightData(File file, Projection p) {
+      LOGGER.debug("generateHeightData TILE :x={} y={}", p.x, p.y);
+      HeightMap map = computeHeightMap(p.x, p.y, p.zoom);
+      HeightMapUtils.save(map, file);
+      return map;
+   }
+
+   private File generateWaterTile(File file, Projection p) throws IOException {
+      LOGGER.debug("generateWaterTile TILE :x={} y={}", p.x, p.y);
+      HeightMap heightMap = getHeightData(p);
+      WaterMap waterMap = computeWater(heightMap);
+      ColorMap waterColorMap = ColorMapUtils.colorize(waterMap);
+      saveColorMap(file, waterColorMap);
+      return file;
+   }
+
+   private File generateHeightTile(File file, Projection p) throws IOException {
+      LOGGER.debug("generateHeightTile TILE :x={} y={}", p.x, p.y);
+      HeightMap heightMap = getHeightData(p);
+      ColorMap waterColorMap = ColorMapUtils.colorize(heightMap);
+      saveColorMap(file, waterColorMap);
+      return file;
    }
 
    public InputStream getWaterTileAsStream(int x, int y, int zoom) {
@@ -57,17 +119,20 @@ public class MapTileServiceImpl implements MapTileService {
       HeightMap heightMap = loadHeightMap(p);
       WaterMap waterMap = computeWater(heightMap);
       ColorMap waterColorMap = ColorMapUtils.colorize(waterMap);
-      float mapZoom = (float) Math.pow(2.0, zoom);
-      return exportMapImage(tilesDir(zoom), waterfileName(x, y), p);
+
+      File file = new File(tilesDir(zoom), waterfileName(x, y));
+      
+      return exportAsStream(file, waterColorMap);
+   }
+   
+   private File tileFile(TileType type, Projection p){
+      return  new File(new File(DEFAULT_DIRECTORY + p.zoom + "/"),"tile-"+type.name()+"-x" + p.x + "y" + p.y + "."+type.extension);
    }
  
    private File tilesDir(int zoom){
       return  new File(DEFAULT_DIRECTORY + zoom + "/");
    }
    
-   private String fileName(int x, int y) {
-      return "tile-x" + x + "y" + y + ".png";
-   }
 
    private String dataFileName(int x, int y) {
       return "tile-data-x" + x + "y" + y + ".data";
@@ -77,21 +142,19 @@ public class MapTileServiceImpl implements MapTileService {
       return "tile-water-x" + x + "y" + y + ".png";
    }
 
-   private InputStream exportMapImage(File dir, String filename, Projection p) {
-      //return new FileInputStream(new File(dir,filename));
-      
-      
-      File file = new File(dir, filename);
+   private void saveColorMap(File file, ColorMap colorMap) throws IOException {
       if (!file.exists() || !file.isFile()) {
-         LOGGER.debug("Generate TILE :x={} y={}", p.mapX, p.mapY);
-         file.mkdirs();
-         HeightMap heightMap = computeHeightMap(p.mapX * SIZE, p.mapY * SIZE, p.mapZoom);
-         ColorMap colorMap = ColorMapUtils.colorize(heightMap);
+         file.getParentFile().mkdirs();
+         file.createNewFile();
          ColorMapUtils.exportMapImage(colorMap, file);
-         File waterfile = new File(dir, "water-" + filename);
-         WaterMap waterMap = computeWater(heightMap);
-         ColorMap waterColorMap = ColorMapUtils.colorize(waterMap);
-         ColorMapUtils.exportMapImage(waterColorMap, waterfile);
+      }
+   }
+   
+   
+   private InputStream exportAsStream(File file, ColorMap colorMap) {
+      if (!file.exists() || !file.isFile()) {
+         file.getParentFile().mkdirs();
+         ColorMapUtils.exportMapImage(colorMap, file);
       }
       try {
          return new FileInputStream(file);
@@ -100,9 +163,9 @@ public class MapTileServiceImpl implements MapTileService {
          e.printStackTrace();
          throw new RuntimeException("could not create new tile", e);
       }
-
    }
-
+   
+  
    private WaterMap computeWater(HeightMap heightMap) {
       LOGGER.debug("computeWater");
       WaterMap wmap = new WaterMap(heightMap);

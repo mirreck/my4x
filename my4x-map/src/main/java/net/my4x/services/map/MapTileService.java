@@ -1,11 +1,11 @@
 package net.my4x.services.map;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
 
 public interface MapTileService {
-	InputStream getTileAsStream(int x, int y, int zoom);
-
+	File getHeightTile(int x, int y, int zoom);
 	void resetAllTiles();
 
-   InputStream getWaterTileAsStream(int tileX, int tileY, int tileZ);
+	File getWaterTile(int tileX, int tileY, int tileZ);
 }

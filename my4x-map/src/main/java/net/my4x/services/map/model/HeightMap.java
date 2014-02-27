@@ -3,6 +3,8 @@ package net.my4x.services.map.model;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 public class HeightMap extends AbstractMap implements Iterable<Point>{
@@ -27,7 +29,7 @@ public class HeightMap extends AbstractMap implements Iterable<Point>{
       this.zoom = zoom;
    }
    
-   public int getValue(int x, int y){
+   public int getHeight(int x, int y){
       this.checkCoordinates(x, y);
 
       return h[x*height+y];
@@ -61,7 +63,7 @@ public class HeightMap extends AbstractMap implements Iterable<Point>{
               return curX*height+curY < h.length;
           }
           public Point next(){
-              Point point = new Point(curX,curY,getValue(curX, curY));
+              Point point = new Point(curX,curY,getHeight(curX, curY));
               curX++;
               if(curX >= width){
                  curX = 0;
@@ -80,18 +82,40 @@ public class HeightMap extends AbstractMap implements Iterable<Point>{
       List<Pos> pts = neighbours(x, y);
       Point lowest = null;
       for (Pos pos : pts) {
-         Point point = new Point(pos, getValue(x, y));
+         Point point = new Point(pos, getHeight(x, y));
          if(lowest == null || point.h < lowest.h){
             lowest = point;
          }
       }
       return lowest;
    }
+   
+   public Direction lowestNeighborDirection(int x, int y){
+      Map<Direction, Pos> pts = neighboursWithDirection(x, y);
+      int min = getHeight(x,y);
+      Direction res = Direction.NONE;
+      for (Entry<Direction,Pos> entry : pts.entrySet()) {
+         Pos pos = entry.getValue();
+         int value = getHeight(pos.x, pos.y);
+         if(value < min){
+            min = value;
+            res = entry.getKey();
+         }
+      }
+      return res;
+   }
 
    public void removeLakeUnder(int min){
       for (Point point : this) {
          
       }
+   }
+
+   public Point point(Pos pos) {
+      if(pos == null){
+         return null;
+      }
+      return new Point(pos,getHeight(pos.x, pos.y));
    }
    
 }
