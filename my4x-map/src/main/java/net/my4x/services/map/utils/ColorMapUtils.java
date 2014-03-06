@@ -73,13 +73,21 @@ public class ColorMapUtils {
       for (int i = 0; i < waterMap.getWidth(); i++) {
          for (int j = 0; j < waterMap.getHeight(); j++) {
             int level = waterMap.getLevel(i, j);
-          if (level > 0) {
-               Color color = ColorProfile.mapColor(-10*level);
+            if (level > 0) {
+               Color color = ColorProfile.mapColor(-1 * level);
                colorMap.setValue(i, j, color);
+            } else {
+               colorMap.setValue(i, j, 131, 255, 255, 0);
             }
-            else {
-               colorMap.setValue(i, j, 0, 0, 255, waterMap.getFinalFlow(i, j));
-            }
+//            else {
+//               if (waterMap.getFinalFlow(i, j) > 1) {
+//                  colorMap.setValue(i, j, 131, 255, 255, 255);
+//               }
+//               else {
+//                  colorMap.setValue(i, j, 131, 255, 255, 0);
+//               }
+//
+//            }
          }
       }
       return colorMap;

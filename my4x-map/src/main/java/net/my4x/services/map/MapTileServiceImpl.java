@@ -48,6 +48,11 @@ public class MapTileServiceImpl implements MapTileService {
          this.mapX = x / mapZoom;
          this.mapY = y / mapZoom;
       }
+      @Override
+      public String toString() {
+         return "Projection [x=" + x + ", y=" + y + ", zoom=" + zoom + ", mapX=" + mapX + ", mapY=" + mapY + ", mapZoom=" + mapZoom
+               + "]";
+      }
    }
    
    public File getHeightTile(int x, int y, int zoom) {
@@ -89,12 +94,7 @@ public class MapTileServiceImpl implements MapTileService {
    }
    
    
-   private HeightMap generateHeightData(File file, Projection p) {
-      LOGGER.debug("generateHeightData TILE :x={} y={}", p.x, p.y);
-      HeightMap map = computeHeightMap(p.x, p.y, p.zoom);
-      HeightMapUtils.save(map, file);
-      return map;
-   }
+
 
    private File generateWaterTile(File file, Projection p) throws IOException {
       LOGGER.debug("generateWaterTile TILE :x={} y={}", p.x, p.y);
@@ -113,17 +113,6 @@ public class MapTileServiceImpl implements MapTileService {
       return file;
    }
 
-   public InputStream getWaterTileAsStream(int x, int y, int zoom) {
-      LOGGER.debug("Load TILE :x={} y={}", x, y);
-      Projection p = new Projection(x,y,zoom);
-      HeightMap heightMap = loadHeightMap(p);
-      WaterMap waterMap = computeWater(heightMap);
-      ColorMap waterColorMap = ColorMapUtils.colorize(waterMap);
-
-      File file = new File(tilesDir(zoom), waterfileName(x, y));
-      
-      return exportAsStream(file, waterColorMap);
-   }
    
    private File tileFile(TileType type, Projection p){
       return  new File(new File(DEFAULT_DIRECTORY + p.zoom + "/"),"tile-"+type.name()+"-x" + p.x + "y" + p.y + "."+type.extension);
@@ -173,25 +162,22 @@ public class MapTileServiceImpl implements MapTileService {
       return wmap;
    }
 
-   private  HeightMap loadHeightMap(Projection p) {
-      String fileName = dataFileName(p.x, p.y);
-      File file = new File(tilesDir(p.zoom), fileName);
-      if (!file.exists() || !file.isFile()) {
-         HeightMap heightMap = computeHeightMap(p.mapX * SIZE, p.mapY * SIZE, p.mapZoom);
-         HeightMapUtils.save(heightMap, file);
-         return heightMap;
-      }
-      return HeightMapUtils.load(file);
+   private HeightMap generateHeightData(File file, Projection p) {
+      LOGGER.debug("generateHeightData TILE :x={} y={}", p.x, p.y);
+      HeightMap map = computeHeightMap(p.mapX, p.mapY, p.mapZoom);
+      HeightMapUtils.save(map, file);
+      return map;
    }
+   
    
    private HeightMap computeHeightMap(float x, float y, float zoom) {
       HeightMap map = new HeightMap(SIZE, SIZE, x, y, zoom);
 
       NoiseGenerator.addPerlinNoise(map, FREQUENCY, -4000, 2000);
       NoiseGenerator.addPerlinNoise(map, FREQUENCY2, 0, 1500);
-      NoiseGenerator.addPerlinNoise(map, 80.0f, 0, 1500, new NoiseGenerator.ScaleMode(1000.0f, 1200.0f));
+      NoiseGenerator.addPerlinNoise(map, 80.0f, 0, 500, new NoiseGenerator.ScaleMode(1000.0f, 1200.0f));
       NoiseGenerator.addPerlinNoise(map, 100.0f, 0, 200);
-      NoiseGenerator.addPerlinNoise(map, 500.0f, 0, 50);
+      //NoiseGenerator.addPerlinNoise(map, 500.0f, 0, 50);
       return map;
    }
 

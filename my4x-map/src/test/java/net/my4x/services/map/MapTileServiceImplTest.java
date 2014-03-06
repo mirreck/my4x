@@ -13,13 +13,18 @@ public class MapTileServiceImplTest {
       service = new MapTileServiceImpl();
    }
    
-   @Ignore
+   
    @Test
    public void testGetHeightTile() {
       service.resetAllTiles();
+      service.getHeightTile(0, 0, 3);
       service.getHeightTile(0, 0, 4);
+      
+      service.getHeightTile(1, 0, 4);
+      service.getHeightTile(2, 0, 4);
    }
 
+   @Ignore
    @Test
    public void testGetWaterTile() {
       service.resetAllTiles();

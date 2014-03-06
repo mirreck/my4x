@@ -11,9 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-// FROM : http://mrl.nyu.edu/~perlin/noise/
-// AND http://www.float4x4.net/index.php/2010/06/generating-realistic-and-playable-terrain-height-maps/
-//JAVA REFERENCE IMPLEMENTATION OF IMPROVED NOISE - COPYRIGHT 2002 KEN PERLIN.
 public class NoiseGenerator {
    
    private static final Logger LOGGER = LoggerFactory.getLogger(ColorMapUtils.class);
@@ -42,11 +39,13 @@ public class NoiseGenerator {
    }
    
    public static void addPerlinNoise(HeightMap map, float frequency, float min, float max, NoiseMode mode) {
+      LOGGER.debug("addPerlinNoise x = {}, y = {}, zoom={}",new Object[]{map.getInitialx(),map.getInitialy(),map.getZoom()});
       for (int i = 0; i < map.getWidth(); i++) {
          for (int j = 0; j < map.getHeight(); j++) {
             // -1.0 < diff <1.0
-            float diff = (float) algo.noise(frequency * ((i / map.getZoom()) + map.getInitialx()) / (float) map.getWidth(), frequency
-                  * ((j / map.getZoom()) + map.getInitialy()) / (float) map.getHeight());
+            float x = frequency * (i / map.getZoom() / (float) map.getWidth()+ map.getInitialx());
+            float y = frequency * (j / map.getZoom() / (float) map.getHeight()+ map.getInitialy());
+            float diff = (float) algo.noise(x, y);
             diff = min + (float) ((diff + 1.0) / 2.0 * (max - min));
             map.setValue(i, j,(int) mode.compute(map.getHeight(i, j), diff));
          }

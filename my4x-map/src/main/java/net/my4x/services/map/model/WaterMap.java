@@ -2,6 +2,7 @@ package net.my4x.services.map.model;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 
 import org.slf4j.Logger;
@@ -70,11 +71,13 @@ public class WaterMap extends AbstractMap {
       LOGGER.debug("computeFlows ...");
       
       //computeFlow(width/2, height/2);
-      
+      Random rnd = new Random();
       
       for (int i = 0; i < width; i++) {
          for (int j = 0; j < height; j++) {
-            computeFlow(i, j);
+            if(rnd.nextInt(100)> 95){
+               computeFlow(i, j);
+            }
          }
       }
    }
