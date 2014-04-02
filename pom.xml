@@ -13,5 +13,6 @@
   	<module>my4x-launcher</module>
   	<module>my4x-core</module>
   	<module>my4x-map</module>
+  	<module>my4x-dungeon</module>
   </modules>
 </project>

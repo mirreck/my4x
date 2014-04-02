@@ -1,0 +1,139 @@
+package net.my4x.services.dungeon.digger;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.my4x.services.dungeon.model.Direction;
+import net.my4x.services.dungeon.model.Dungeon;
+import net.my4x.services.dungeon.model.Level;
+import net.my4x.services.dungeon.model.Pos;
+import net.my4x.services.dungeon.model.Level.TileType;
+
+import org.apache.commons.lang.math.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Digger {
+   
+   private static final Logger LOGGER = LoggerFactory.getLogger(Digger.class);
+   
+   private Pos position = new Pos(2,2);
+   
+   private int z = 0;
+   private Direction dir = Direction.N;
+
+   private DiggerAction previousAction = DiggerAction.DIG;
+   private int occurence = 0;
+   
+   private Dungeon dungeon;
+  
+   
+   
+   public Digger(Dungeon d){
+      this.dungeon = d;
+      this.position = new Pos(0, d.getLevel(z).getWidth()/2);
+      dir = Direction.E;
+   }
+   
+   
+   public void work() {
+      currentLevel().setValue(position, TileType.ENTRACE);
+      DiggerAction action = nextAction();
+      LOGGER.debug("nextAction="+action);
+      while (action != DiggerAction.STOP) {
+         action.performAction(this);
+         action = nextAction();
+         LOGGER.debug("nextAction="+action);
+      }
+      LOGGER.debug("digger finished at ="+this.getPosition());
+      currentLevel().setValue(position, TileType.DOOR);
+      
+   }
+   
+   public Level currentLevel(){
+      return dungeon.getLevel(z);
+   }
+   public Level lowerLevel(){
+      return dungeon.getLevel(z-1);
+   }
+   public Level upperLevel(){
+      return dungeon.getLevel(z+1);
+   }
+   
+   
+   public Pos getPosition(){
+      return position;
+   }
+   
+  
+   
+
+   
+   private DiggerAction nextAction(){
+      
+//      if(DiggerAction.DIG.actionAvailable(this)){
+//         return DiggerAction.DIG;
+//      }
+      
+      List<DiggerOrder> list = orders();
+      int sum = 0;
+      for (DiggerOrder order : list) {
+         sum += order.getOccurence();
+      }
+      if(sum == 0){
+         return DiggerAction.STOP;
+      }
+      int random = RandomUtils.nextInt(sum);
+      
+      for (DiggerOrder order : list) {
+         random -= order.getOccurence();
+         if(random < 0){
+            previousAction = order.getAction();
+            occurence = 0;
+            return order.getAction();
+         }
+      }
+      return DiggerAction.STOP;
+   }
+   
+   private List<DiggerOrder> orders() {
+      DiggerAction[] values = DiggerAction.values();
+      List<DiggerOrder> li = new ArrayList<DiggerOrder>();
+      for (DiggerAction action : values) {
+         if(action.getDefaultOccurence() > 0 && action.actionAvailable(this)){
+            li.add(new DiggerOrder(action));
+         }
+      }
+      if(li.isEmpty() && DiggerAction.DIGDOWN.actionAvailable(this)){
+         li.add(new DiggerOrder(DiggerAction.DIGDOWN,10));
+      }
+      
+      if(li.isEmpty() && DiggerAction.DIGUP.actionAvailable(this)){
+         li.add(new DiggerOrder(DiggerAction.DIGUP,10));
+      }
+      return li;
+   }
+
+
+
+
+   public int getZ() {
+      return z;
+   }
+
+
+   public Direction getDir() {
+      return dir;
+   }
+
+
+   public void setPosition(Pos position) {
+      this.position = position;
+   }
+
+
+   public void setZ(int z) {
+      this.z = z;
+   }
+
+}
