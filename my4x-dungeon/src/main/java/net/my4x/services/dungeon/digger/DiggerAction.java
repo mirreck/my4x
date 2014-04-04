@@ -1,70 +1,73 @@
 package net.my4x.services.dungeon.digger;
 
+import net.my4x.services.dungeon.model.Direction;
 import net.my4x.services.dungeon.model.Level;
 import net.my4x.services.dungeon.model.Level.TileType;
 import net.my4x.services.dungeon.model.Pos;
 
 
 public enum DiggerAction {
-   DIG(100) {
+   DIG_NORTH(30) {
       @Override
       public boolean actionAvailable(Digger dig) {
-         return dig.currentLevel().digable(dig.getPosition(), dig.getDir());
+         return dig.currentLevel().digable(dig.getPosition(), Direction.N);
       }
-
       @Override
       public void performAction(Digger dig) {
-         Pos ahead = dig.currentLevel().dig(dig.getPosition(), dig.getDir());
+         Pos ahead = dig.currentLevel().dig(dig.getPosition(), Direction.N);
          dig.setPosition(ahead);
+         dig.setDir(Direction.N);
          
       }
-   },  DIG180(10) {
+   },
+   DIG_SOUTH(30) {
       @Override
       public boolean actionAvailable(Digger dig) {
-         return dig.currentLevel().digable(dig.getPosition(), dig.getDir().left().left());
+         return dig.currentLevel().digable(dig.getPosition(), Direction.S);
       }
-
       @Override
       public void performAction(Digger dig) {
-         Pos ahead = dig.currentLevel().dig(dig.getPosition(), dig.getDir().left().left());
+         Pos ahead = dig.currentLevel().dig(dig.getPosition(), Direction.S);
          dig.setPosition(ahead);
-         
+         dig.setDir(Direction.S);
       }
-   }, DIGROOM(100) {
+   },
+   DIG_WEST(30) {
       @Override
       public boolean actionAvailable(Digger dig) {
-         return dig.currentLevel().roomdigable(dig.getPosition(), dig.getDir());
+         return dig.currentLevel().digable(dig.getPosition(), Direction.O);
+      }
+      @Override
+      public void performAction(Digger dig) {
+         Pos ahead = dig.currentLevel().dig(dig.getPosition(), Direction.O);
+         dig.setPosition(ahead);
+         dig.setDir(Direction.O);
+      }
+   },
+   DIG_EAST(30) {
+      @Override
+      public boolean actionAvailable(Digger dig) {
+         return dig.currentLevel().digable(dig.getPosition(), Direction.E);
+      }
+      @Override
+      public void performAction(Digger dig) {
+         Pos ahead = dig.currentLevel().dig(dig.getPosition(), Direction.E);
+         dig.setPosition(ahead);
+         dig.setDir(Direction.E);
+      }
+   },
+   DIGROOM(100) {
+      @Override
+      public boolean actionAvailable(Digger dig) {
+         return dig.currentLevel().roomdigable(dig.getPosition(), dig.getDir())>2;
       }
       @Override
       public void performAction(Digger dig) {
          Pos ahead = dig.currentLevel().digroom(dig.getPosition(), dig.getDir());
          dig.setPosition(ahead);
       }
-   },DIGLEFT(30) {
-      @Override
-      public boolean actionAvailable(Digger dig) {
-         return dig.currentLevel().digable(dig.getPosition(), dig.getDir().left());
-      }
-
-      @Override
-      public void performAction(Digger dig) {
-         Pos ahead = dig.currentLevel().dig(dig.getPosition(), dig.getDir().left());
-         dig.setPosition(ahead);
-         
-      }
-   }, DIGRIGHT(30) {
-      @Override
-      public boolean actionAvailable(Digger dig) {
-         return dig.currentLevel().digable(dig.getPosition(), dig.getDir().right());
-      }
-
-      @Override
-      public void performAction(Digger dig) {
-         Pos ahead = dig.currentLevel().dig(dig.getPosition(), dig.getDir().right());
-         dig.setPosition(ahead);
-         
-      }
-   }, DIGDOWN(0) {
+   },
+   DIGDOWN(0) {
       @Override
       public boolean actionAvailable(Digger dig) {
          Level lowerLevel = dig.lowerLevel();

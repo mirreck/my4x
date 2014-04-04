@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 
 public class Level {
    
-   public enum TileType { ROCK('R'), SOLIDWALL('W'), WALL('w'), FLOOR(' '), DOOR('D'),ENTRACE('E'), STAIRS('S'), ROOM('X'); 
+   
+   private static final Logger LOGGER = LoggerFactory.getLogger(Level.class);
+   
+   public enum TileType { ROCK('R'), SOLIDWALL('Z'), WALL('W'), FLOOR(' '), DOOR('D'),ENTRACE('E'), STAIRS('S'), ROOM('X'); 
       public final char code;  
       TileType(char code){
          this.code = code;
@@ -25,21 +28,54 @@ public class Level {
       }
    }
    
+//   public enum WallShape{NONE('?'),A('A'),B('B'),C('C'),D('D'),AB('a'),AC('b'),BD('c'),CD('d'),ABD('╔'),ABC('╚'),ACD('╝'),BCD('╗'),ABCD('O');
+//      public final char code;  
+//      WallShape(char code){
+//         this.code = code;
+//      }
+//      public static WallShape fromCode(String val) {
+//         for (WallShape type : WallShape.values()) {
+//            if(type.name().equals(val)){
+//               return type;
+//            }
+//         }
+//         LOGGER.debug("code not found :"+val);
+//         return NONE;
+//      }
+//   }
+   
+   public enum WallShape{NONE('?'),N('═'),S('═'),E('║'),W('║'),NS('═'),NE('╔'),NW('╚'),SE('╗'),SW('╝'),EW('║'),NSE('╦'),NSW('╩'),NEW('╠'),SEW('╣'),NSEW('╬');
+   public final char code;  
+   WallShape(char code){
+      this.code = code;
+   }
+   public static WallShape fromCode(String val) {
+      for (WallShape type : WallShape.values()) {
+         if(type.name().equals(val)){
+            return type;
+         }
+      }
+      LOGGER.debug("code not found :"+val);
+      return NONE;
+   }
+}
+   
+   
    private int width;
    private int height;
-   
+   private int level;
    private TileType[][] tileMap;
    
-   private static final Logger LOGGER = LoggerFactory.getLogger(Level.class);
    
-   public Level(int width, int height){
+   public Level(int width, int height, int level){
       this.width = width;
       this.height = height;
       tileMap = new TileType[width][height];
       for (int i = 0; i < height; i++) {
          Arrays.fill(tileMap[i], TileType.ROCK);
       }
-      randomize();
+      this.level = level; 
+      //randomize();
    }
    
    // for json serialization
@@ -59,7 +95,25 @@ public class Level {
       }
       return tileMap[pos.x][pos.y];
    }
+   public TileType getValue(int x, int y){
+      return tileMap[x][y];
+   }
    
+   private boolean isWall(Pos pos){
+      if(!reachable(pos)){
+         return false;
+      }
+      TileType tileType = tileMap[pos.x][pos.y];
+      return tileType == TileType.WALL ||tileType == TileType.SOLIDWALL;
+   }
+   
+   private WallShape shape(Pos pos){
+      boolean n = isWall(pos.north())  ;
+      boolean s = isWall(pos.south())  ;
+      boolean e = isWall(pos.east())  ;
+      boolean w = isWall(pos.west())  ;
+      return WallShape.fromCode((n?"N":"")+(s?"S":"")+(e?"E":"")+(w?"W":""));
+   }
    public void setValue(int x, int y, TileType v){
       //LOGGER.info("set {} {} {}",new Object[]{x,y,v});
       tileMap[x][y] = v;
@@ -73,35 +127,39 @@ public class Level {
    
    
    public Pos dig(Pos pos, Direction dir){
+      
       Pos ahead = dir.next(pos);
       setValue(ahead, TileType.FLOOR);
+      wallsAround(pos);
       wallsAround(ahead);
       return ahead;
    }
-   public void wallsAround(Pos pos){
+
+   public void wallsAround(Pos pos) {
       Pos[] neighbors = pos.neighbors();
       for (Pos position : neighbors) {
-         if(reachable(position) && getValue(position)  == TileType.ROCK){
-            wall(position);
+         if (reachable(position)) {
+            TileType value = getValue(position);
+            if (value == TileType.ROCK || value == TileType.SOLIDWALL || value == TileType.WALL) {
+               wall(position);
+            }
          }
-         
+
       }
    }
    public void wall(Pos pos){
       TileType type = TileType.WALL;
-      Pos[] neighbors2 = {pos.plusXY(1,1), pos.plusXY(-1,1), pos.plusXY(1,-1), pos.plusXY(-1,-1)};
-      for (Pos p : neighbors2) {
-         if(reachable(p) && getValue(p)  != TileType.ROCK){
-            type = TileType.SOLIDWALL;
-         }
-      }
-      boolean ns = reachable(pos.plusX(1)) && getValue(pos.plusX(1))  != TileType.ROCK;
-      ns &= reachable(pos.plusX(-1)) && getValue(pos.plusX(-1))  != TileType.ROCK;
-      boolean oe = reachable(pos.plusY(1)) && getValue(pos.plusY(1))  != TileType.ROCK;
-      oe &= reachable(pos.plusY(-1)) && getValue(pos.plusY(-1))  != TileType.ROCK;
-      
-      if(ns && oe){
-         type = TileType.SOLIDWALL;
+      WallShape shape = shape(pos);
+      if(shape == WallShape.N
+         || shape == WallShape.S
+         || shape == WallShape.E
+         || shape == WallShape.W
+         || shape == WallShape.SEW
+         || shape == WallShape.NEW
+         || shape == WallShape.NSE
+         || shape == WallShape.NSW
+         ) {
+         type = TileType.WALL;
       }
       setValue(pos, type);
    }
@@ -117,22 +175,42 @@ public class Level {
       Pos left = dir.left().next(ahead);
       Pos right = dir.right().next(ahead);
       Pos next = dir.next(ahead);
-      //LOGGER.info("digable {} {} A={}, L={}, R={}",new Object[]{pos,dir,ahead,left,right});
+      //LOGGER.info("digable {} {} A={}:{}, L={}, R={}",new Object[]{pos,dir,ahead,digable(ahead),isNotFloor(left),isNotFloor(right)});
       return   digable(ahead) 
-            && isNotFloor(left) 
-            && isNotFloor(right) 
-            && isNotFloor(next);
+            && !isFloor(left) 
+            && !isFloor(right);
       
    }
    
-   public boolean isNotFloor(Pos pos){
-      return  !reachable(pos) || getValue(pos)  != TileType.FLOOR;
+   public boolean isFloor(Pos pos){
+      return  reachable(pos) && getValue(pos)  == TileType.FLOOR;
+   }
+   private boolean isWallCorner(Pos pos){
+      if(!reachable(pos)){
+         return false;
+      }
+      WallShape shape = shape(pos);
+      if(shape == WallShape.NW
+            || shape == WallShape.NE
+            || shape == WallShape.SE
+            || shape == WallShape.SW
+            ) {
+            return true;
+         }
+      return false;
+   }
+   public boolean digable(Pos pos){
+      if(isWallCorner(pos)){
+            return false;
+         //LOGGER.info("digable {} => {} / {}",new Object[]{pos, reachable(pos), getValue(pos)});
+      }
+      return reachable(pos)
+            && !isBorder(pos)
+            && (getValue(pos)  == TileType.ROCK || getValue(pos) == TileType.WALL);
    }
    
-   public boolean digable(Pos pos){
-      //LOGGER.info("digable {} => {} / {}",new Object[]{pos, reachable(pos), getValue(pos)});
-      return reachable(pos) 
-            && (getValue(pos)  == TileType.ROCK || getValue(pos) == TileType.WALL);
+   private boolean isBorder(Pos pos){
+      return pos.y == 0 || pos.y == width-1 || pos.x == 0 || pos.x  == height-1;
    }
    
    public boolean reachable(Pos pos){
@@ -152,10 +230,16 @@ public class Level {
    
    public String toString(){
       StringBuilder sb = new StringBuilder();
-      for (TileType[] line : tileMap) {
+      for (int i = 0; i < height; i++) {
          sb.append("\n[");
-         for (TileType tile : line) {
-            sb.append(tile.code);
+         for (int j = 0; j < width; j++) {
+            Pos pos = new Pos(i,j);
+            //if(isWall(pos)) {
+            if(getValue(pos) == TileType.WALL) {
+               sb.append(shape(pos).code);
+            } else{
+               sb.append(getValue(pos).code);
+            }
          }
          sb.append("]");
       }
@@ -171,28 +255,58 @@ public class Level {
       return height;
    }
 
-   public boolean roomdigable(Pos position, Direction dir) {
-      for (int i = 1; i <=4; i++) {
-         for (int j = -2; j <= 2; j++) {
-            if(!digable(dir.next(position, i, j))){
-               return false;
-            };
+   public int roomdigable(Pos position, Direction dir) {
+      int size = 3;
+      int maxsize = 0;
+      for(;maxsize < 5; maxsize++){
+         for (int i = 1; i <=size+1; i++) {
+            for (int j = -1*(size/2)-1; j <= size/2+1; j++) {
+               if(!digable(dir.next(position, i, j))){
+                  return maxsize;
+               };
+            }
          }
+         LOGGER.info("digable size= {} ",size);
+         maxsize = size;
+         size ++;
       }
+      
      
-      return true;
+      return maxsize;
    }
 
    public Pos digroom(Pos position, Direction dir) {
-      for (int i = 1; i <= 3; i++) {
-         for (int j = -1; j <= 1; j++) {
+      setValue(position, TileType.DOOR);
+      setValue(dir.next(position, 0, 1), TileType.SOLIDWALL);
+      setValue(dir.next(position, 0, -1), TileType.SOLIDWALL);
+      int size = roomdigable(position, dir);
+      int halfsize = size/2;
+      for (int i = 1; i <= size; i++) {
+         for (int j = -1*halfsize; j <= halfsize; j++) {
             Pos pos = dir.next(position, i, j);
             setValue(pos, TileType.ROOM);
             wallsAround(pos);
          }
       }
+      
+      Pos exit = dir.next(position,halfsize+1, halfsize+1);
+      if(roomdigable(exit, dir.right()) > 2){
+         setValue(exit, TileType.DOOR);
+         return exit;
+      }
+      exit = dir.next(position, halfsize+1, -1-halfsize);
+      if(roomdigable(exit, dir.left()) >2){
+         setValue(exit, TileType.DOOR);
+         return exit;
+      }
+     exit = dir.next(position, size+1, 0);
+     setValue(exit, TileType.DOOR);
+     return exit;
+      
+   }
 
-      return dir.next(position, 3, 0);
+   public int getLevel() {
+      return level;
    }
 
 

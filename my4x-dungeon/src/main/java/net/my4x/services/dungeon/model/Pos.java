@@ -24,6 +24,19 @@ public class Pos {
       };
    }
 
+   public Pos north(){
+      return plusY(1);
+   }
+   public Pos south(){
+      return plusY(-1);
+   }
+   public Pos west(){
+      return plusX(-1);
+   }
+   public Pos east(){
+      return plusX(1);
+   }
+   
    public Pos plusX(int x){
       return new Pos(this.x+x,this.y);
    }

@@ -25,7 +25,7 @@ public class Dungeon {
       this.maxY = maxY;
       levels = new HashMap<Integer, Level>(); 
       for (int i = minLevel; i <= maxLevel; i++) {
-         levels.put(new Integer(i), new Level(maxX - minX, maxY - minY));
+         levels.put(new Integer(i), new Level(maxX - minX, maxY - minY,i));
       }
    }
 

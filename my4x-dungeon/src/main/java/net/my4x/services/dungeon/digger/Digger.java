@@ -20,9 +20,9 @@ public class Digger {
    private Pos position = new Pos(2,2);
    
    private int z = 0;
-   private Direction dir = Direction.N;
+   private Direction dir = Direction.S;
 
-   private DiggerAction previousAction = DiggerAction.DIG;
+   private DiggerAction previousAction = DiggerAction.DIG_NORTH;
    private int occurence = 0;
    
    private Dungeon dungeon;
@@ -31,13 +31,17 @@ public class Digger {
    
    public Digger(Dungeon d){
       this.dungeon = d;
-      this.position = new Pos(0, d.getLevel(z).getWidth()/2);
-      dir = Direction.E;
+      this.position = new Pos(d.getLevel(z).getHeight()-1, d.getLevel(z).getWidth()/2);
+      dir = Direction.O;
    }
    
    
    public void work() {
       currentLevel().setValue(position, TileType.ENTRACE);
+//      while(DiggerAction.DIGROOM.actionAvailable(this)){
+//         DiggerAction.DIGROOM.performAction(this);
+//      }
+      
       DiggerAction action = nextAction();
       LOGGER.debug("nextAction="+action);
       while (action != DiggerAction.STOP) {
@@ -71,30 +75,69 @@ public class Digger {
    
    private DiggerAction nextAction(){
       
-//      if(DiggerAction.DIG.actionAvailable(this)){
-//         return DiggerAction.DIG;
-//      }
-      
-      List<DiggerOrder> list = orders();
-      int sum = 0;
-      for (DiggerOrder order : list) {
-         sum += order.getOccurence();
+      if(DiggerAction.DIGROOM.actionAvailable(this)){
+         return DiggerAction.DIGROOM;
       }
-      if(sum == 0){
+      Direction curdir = this.dir;
+      this.dir = curdir.left();
+      if(DiggerAction.DIGROOM.actionAvailable(this)){
+         return DiggerAction.DIGROOM;
+      }
+      this.dir = curdir.right();
+      if(DiggerAction.DIGROOM.actionAvailable(this)){
+         return DiggerAction.DIGROOM;
+      }
+      this.dir = curdir;
+      List<DiggerAction> list = actions();
+      LOGGER.debug("nextActions="+list.size());
+      if(list.size() == 0){
          return DiggerAction.STOP;
+      } else {
+         int random = RandomUtils.nextInt(list.size());
+         return list.get(random);
       }
-      int random = RandomUtils.nextInt(sum);
       
-      for (DiggerOrder order : list) {
-         random -= order.getOccurence();
-         if(random < 0){
-            previousAction = order.getAction();
-            occurence = 0;
-            return order.getAction();
+      
+//      LOGGER.debug("nextActions="+list.toArray());
+//      int sum = 0;
+//      for (DiggerOrder order : list) {
+//         sum += order.getOccurence();
+//      }
+//      if(sum == 0){
+//         return DiggerAction.STOP;
+//      }
+//      int random = RandomUtils.nextInt(sum);
+//      
+//      for (DiggerOrder order : list) {
+//         random -= order.getOccurence();
+//         if(random < 0){
+//            previousAction = order.getAction();
+//            occurence = 0;
+//            return order.getAction();
+//         }
+//      }
+//      return DiggerAction.STOP;
+   }
+   
+   private List<DiggerAction> actions() {
+      DiggerAction[] values = DiggerAction.values();
+      List<DiggerAction> li = new ArrayList<DiggerAction>();
+      for (DiggerAction action : values) {
+         if(action.getDefaultOccurence() > 0 && action.actionAvailable(this)){
+            li.add(action);
          }
       }
-      return DiggerAction.STOP;
+      if(li.isEmpty() && DiggerAction.DIGDOWN.actionAvailable(this)){
+         li.add(DiggerAction.DIGDOWN);
+      }
+      
+      if(li.isEmpty() && DiggerAction.DIGUP.actionAvailable(this)){
+         li.add(DiggerAction.DIGUP);
+      }
+      return li;
    }
+
+   
    
    private List<DiggerOrder> orders() {
       DiggerAction[] values = DiggerAction.values();
@@ -134,6 +177,11 @@ public class Digger {
 
    public void setZ(int z) {
       this.z = z;
+   }
+
+
+   public void setDir(Direction dir) {
+      this.dir = dir;
    }
 
 }

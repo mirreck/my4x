@@ -18,7 +18,7 @@ public class DungeonServiceImpl implements DungeonService {
    }
 
    public Dungeon generate() {
-      Dungeon d = new Dungeon(-1, 0, -10, 10, -10, 10);
+      Dungeon d = new Dungeon(-2, 0, -10, 10, -10, 10);
       Digger digger = new Digger(d);
       digger.work();
       return d;
