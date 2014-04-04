@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import net.my4x.services.map.model.Color;
 import net.my4x.services.map.model.ColorMap;
+import net.my4x.services.map.model.Direction;
 import net.my4x.services.map.model.HeightMap;
 import net.my4x.services.map.model.Pos;
 import net.my4x.services.map.model.WaterMap;
@@ -98,6 +99,8 @@ public class ColorMapUtils {
       LOGGER.debug("colorize HeightMap");
 
       ColorMap colorMap = new ColorMap(heightMap.getWidth(), heightMap.getHeight());
+      heightMap.computeDirections();
+      int maxgradient = 0;
       for (int i = 0; i < heightMap.getWidth(); i++) {
          for (int j = 0; j < heightMap.getHeight(); j++) {
             float value = heightMap.getHeight(i, j);
@@ -113,9 +116,24 @@ public class ColorMapUtils {
                   color = color.darker(0.95);
                }
             }
+            // add shadow
+            int xgradient = heightMap.ygradient(i, j);
+            if(xgradient > maxgradient){
+               maxgradient = xgradient;
+            }
+            
+            if(xgradient > 60 ){
+               color = color.darker(0.95);
+               //color = color.darker(1-(xgradient /10000.0));
+               //color = color.RED;
+            }
+//            if(heightMap.direction(i, j) == Direction.NE || heightMap.direction(i, j) == Direction.NO){
+//               color = color.darker(0.95);
+//            }
             colorMap.setValue(i, j, color);
          }
       }
+      LOGGER.debug("colorize maxgradient="+maxgradient);
       return colorMap;
    }
 

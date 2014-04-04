@@ -172,11 +172,18 @@ public class MapTileServiceImpl implements MapTileService {
    
    private HeightMap computeHeightMap(float x, float y, float zoom) {
       HeightMap map = new HeightMap(SIZE, SIZE, x, y, zoom);
-
-      NoiseGenerator.addPerlinNoise(map, FREQUENCY, -4000, 2000);
-      NoiseGenerator.addPerlinNoise(map, FREQUENCY2, 0, 1500);
-      NoiseGenerator.addPerlinNoise(map, 80.0f, 0, 500, new NoiseGenerator.ScaleMode(1000.0f, 1200.0f));
-      NoiseGenerator.addPerlinNoise(map, 100.0f, 0, 200);
+      map.setBaseHeight(-5000);
+      int facteur = 6000;
+      int frequency = 3;
+      for (int i = 0; i < 4; i++) {
+         NoiseGenerator.addPerlinNoise(map, frequency, 0, facteur);
+         facteur /= 2;
+         frequency *=2;
+      }
+//      NoiseGenerator.addPerlinNoise(map, FREQUENCY, -4000, 2000);
+//      NoiseGenerator.addPerlinNoise(map, FREQUENCY2, 0, 1500);
+//      NoiseGenerator.addPerlinNoise(map, 80.0f, 0, 500, new NoiseGenerator.ScaleMode(1000.0f, 1200.0f));
+//      NoiseGenerator.addPerlinNoise(map, 100.0f, 0, 200);
       //NoiseGenerator.addPerlinNoise(map, 500.0f, 0, 50);
       return map;
    }

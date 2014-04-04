@@ -18,7 +18,7 @@ public class WaterMap extends AbstractMap {
    private boolean[] flag;
    private HeightMap heightMap;
    
-   private Direction[] directions;
+   //private Direction[] directions;
 
    private static final Logger LOGGER = LoggerFactory.getLogger(WaterMap.class);
    
@@ -29,17 +29,17 @@ public class WaterMap extends AbstractMap {
       totalflow = new int[width*height];
       level = new int[width*height];
       flag = new boolean[width*height];
-      directions = new Direction[width*height];
+      //directions = new Direction[width*height];
       Arrays.fill(flow, 1);
       Arrays.fill(totalflow, 0);
       Arrays.fill(level, 0);
       Arrays.fill(flag, false);
-      Arrays.fill(directions, Direction.NONE);
+      //Arrays.fill(directions, Direction.NONE);
    }
    
-   private Direction direction(int x, int y){
-      return directions[x*height+y];
-   }
+//   private Direction direction(int x, int y){
+//      return directions[x*height+y];
+//   }
    
    private boolean hasFlag(int x, int y){
       return flag[x*height+y];
@@ -52,20 +52,20 @@ public class WaterMap extends AbstractMap {
    }
    
    public void compute(){
-      computeDirections();
+      heightMap.computeDirections();
       computeFlows();
    }
    
    
-   private void computeDirections(){
-      LOGGER.debug("computeDirections ...");
-      for (int i = 0; i < width; i++) {
-         for (int j = 0; j < height; j++) {
-            directions[i*height+j] = heightMap.lowestNeighborDirection(i, j);
-            //LOGGER.debug("direction ...{} : {} : "+directions[i*height+j],i,j);
-         }
-      }
-   }
+//   private void computeDirections(){
+//      LOGGER.debug("computeDirections ...");
+//      for (int i = 0; i < width; i++) {
+//         for (int j = 0; j < height; j++) {
+//            directions[i*height+j] = heightMap.lowestNeighborDirection(i, j);
+//            //LOGGER.debug("direction ...{} : {} : "+directions[i*height+j],i,j);
+//         }
+//      }
+//   }
    
    private void computeFlows(){
       LOGGER.debug("computeFlows ...");
@@ -82,13 +82,13 @@ public class WaterMap extends AbstractMap {
       }
    }
    private void computeFlow(int x, int y){
-      Direction dir = direction(x,y);
+      Direction dir = heightMap.direction(x,y);
       Pos nextPos = dir.nextPoint(x, y);
       Point nextPoint = heightMap.point(nextPos);
       //System.out.print("Flow "+x+" "+y);
       while( dir != Direction.NONE && !heightMap.isBorder(nextPos) && nextPoint.h > 0){
          this.totalflow[nextPos.x*height+nextPos.y] += 1;
-         dir = direction(nextPos.x,nextPos.y);
+         dir = heightMap.direction(nextPos.x,nextPos.y);
          if(dir != Direction.NONE){
             nextPos = dir.nextPoint(nextPos.x,nextPos.y);
             nextPoint = heightMap.point(nextPos);

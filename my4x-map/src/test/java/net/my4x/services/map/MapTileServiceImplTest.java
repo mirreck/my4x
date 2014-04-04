@@ -17,11 +17,10 @@ public class MapTileServiceImplTest {
    @Test
    public void testGetHeightTile() {
       service.resetAllTiles();
-      service.getHeightTile(0, 0, 3);
-      service.getHeightTile(0, 0, 4);
-      
-      service.getHeightTile(1, 0, 4);
-      service.getHeightTile(2, 0, 4);
+      service.getHeightTile(0, 0, 1);
+      service.getHeightTile(0, 0, 2);
+      service.getHeightTile(1, 0, 2);
+      service.getHeightTile(2, 0, 2);
    }
 
    @Ignore

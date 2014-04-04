@@ -1,7 +1,5 @@
 package net.my4x.services.map.model;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 
 import net.my4x.services.map.utils.ColorMapUtils;

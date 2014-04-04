@@ -19,7 +19,7 @@ public class WaterMapTest {
             hmap.setValue(i, j, 10*h);
          }
       }
-      NoiseGenerator.addPerlinNoise(hmap, 15.0f,0,250);
+      //NoiseGenerator.addPerlinNoise(hmap, 15.0f,0,250);
       WaterMap wmap = new WaterMap(hmap);
       wmap.compute();
       
