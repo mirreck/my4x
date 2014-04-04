@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'FontExtend';
+  src: url('../font/fontextend-webfont.eot');
+  src: url('../font/fontextend-webfont.woff') format('woff'), url('../font/fontextend-webfont.ttf') format('truetype'), url('../font/fontextend-webfont.svg#fontextend') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon-door:before {
+  font-family: FontExtend !important;
+  content: "d";
+}
+
+.icon-stairs-up:before {
+  font-family: FontExtend !important;
+  content: "U";
+}
+
+.icon-stairs-down:before {
+  font-family: FontExtend !important;
+  content: "D";
+}
