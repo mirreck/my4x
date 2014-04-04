@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.my4x.services.dungeon.DungeonService;
+import net.my4x.services.dungeon.model.Dungeon;
 import net.my4x.services.map.MapTileService;
 
 import org.apache.commons.io.IOUtils;
@@ -26,6 +28,9 @@ public class MainController {
    @Autowired
    private MapTileService tilesService;
    
+   @Autowired
+   private DungeonService dungeonService;
+   
    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
    
 	@RequestMapping("home")
@@ -33,6 +38,15 @@ public class MainController {
 		ModelAndView mav = new ModelAndView("home");
         return mav;
     }
+	
+	
+   @RequestMapping("rest/dungeon/{id}")
+   @ResponseBody
+   public Dungeon dungeon(@PathVariable String id) {
+
+      return dungeonService.generate();
+   }
+	
 	
 	@RequestMapping("rest/resetmap")
 	@ResponseBody

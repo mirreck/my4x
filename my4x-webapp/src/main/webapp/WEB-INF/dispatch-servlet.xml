@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
   <import resource="classpath:spring/map-context.xml" />
+  <import resource="classpath:spring/dungeon-context.xml" />
 
 
 	<context:annotation-config />

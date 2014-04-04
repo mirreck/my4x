@@ -1,5 +1,5 @@
 
-require(["jquery","Leaflet"], function($,L) {
+require(["jquery","Leaflet","modules/jquery-keyboard-plugin"], function($,L) {
 
         $('body').append('<p>MODULE2 - MAP - INITIALIZED:<a id="map-reset" href="#">Reset Map</a></p>');
 		var map = L.map('map').setView([0.0, 0.0], 4);
@@ -18,19 +18,19 @@ require(["jquery","Leaflet"], function($,L) {
 			attribution: '&copy; <a href="http://mywebsite.org">M4X </a>'
 		}).addTo(map);
 		
-		L.tileLayer(
-				'rest/maptiles-water/{z}/{x}/{y}'
-				, {
-			minZoom: 2,
-			maxZoom: 7,
-			//continuousWorld: true,
-			noWrap:true,
-			maxBounds:[
-			           [1.0, -1.0],
-			           [1.0, -1.0]
-			       ],
-			attribution: '&copy; <a href="http://mywebsite.org">M4X </a>'
-		}).addTo(map);
+//		L.tileLayer(
+//				'rest/maptiles-water/{z}/{x}/{y}'
+//				, {
+//			minZoom: 2,
+//			maxZoom: 7,
+//			//continuousWorld: true,
+//			noWrap:true,
+//			maxBounds:[
+//			           [1.0, -1.0],
+//			           [1.0, -1.0]
+//			       ],
+//			attribution: '&copy; <a href="http://mywebsite.org">M4X </a>'
+//		}).addTo(map);
 		
 		
 		$(".leaflet-control-attribution").html('&copy; <a href="http://mywebsite.org">M4X </a>');

@@ -10,7 +10,7 @@ requirejs.config({
   }
 });
 
-require(["jquery","modules/module1","modules/module-map","Leaflet"], function($) {
+require(["jquery","modules/module1","modules/module-map","modules/module-indoor-map","Leaflet"], function($) {
     //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
     $(function() {
         $('body').append('<p>REQUIREJS INITIALIZED</p>');
