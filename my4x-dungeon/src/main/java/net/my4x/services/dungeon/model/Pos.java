@@ -1,13 +1,20 @@
 package net.my4x.services.dungeon.model;
 
 public class Pos {
+   
+   public Pos(int x, int y, int z) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+   }
+
+   
    public Pos(int x, int y) {
-      super();
       this.x = x;
       this.y = y;
    }
 
-   public int x = 0,y  = 0;
+   public int x = 0,y  = 0, z = 0;
    
    public Pos[] neighbors(){
       return new Pos[]{

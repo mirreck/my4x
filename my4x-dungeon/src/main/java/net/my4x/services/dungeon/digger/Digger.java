@@ -7,7 +7,7 @@ import net.my4x.services.dungeon.model.Direction;
 import net.my4x.services.dungeon.model.Dungeon;
 import net.my4x.services.dungeon.model.Level;
 import net.my4x.services.dungeon.model.Pos;
-import net.my4x.services.dungeon.model.Level.TileType;
+import net.my4x.services.dungeon.model.TileType;
 
 import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
@@ -37,17 +37,20 @@ public class Digger {
    
    
    public void work() {
+      currentLevel().setValue(new Pos(dungeon.getLevel(z).getHeight()-1,0), TileType.ENTRACE);
+      
+      
       currentLevel().setValue(position, TileType.ENTRACE);
 //      while(DiggerAction.DIGROOM.actionAvailable(this)){
 //         DiggerAction.DIGROOM.performAction(this);
 //      }
       
       DiggerAction action = nextAction();
-      LOGGER.debug("nextAction="+action);
+      //LOGGER.debug("nextAction="+action);
       while (action != DiggerAction.STOP) {
          action.performAction(this);
          action = nextAction();
-         LOGGER.debug("nextAction="+action);
+         //LOGGER.debug("nextAction="+action);
       }
       LOGGER.debug("digger finished at ="+this.getPosition());
       currentLevel().setValue(position, TileType.DOOR);
@@ -89,7 +92,7 @@ public class Digger {
       }
       this.dir = curdir;
       List<DiggerAction> list = actions();
-      LOGGER.debug("nextActions="+list.size());
+      //LOGGER.debug("nextActions="+list.size());
       if(list.size() == 0){
          return DiggerAction.STOP;
       } else {
