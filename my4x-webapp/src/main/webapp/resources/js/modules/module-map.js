@@ -1,9 +1,9 @@
 
 require(["jquery","Leaflet","modules/jquery-keyboard-plugin"], function($,L) {
-
+	if ($("#map").length) {
+	
         $('body').append('<p>MODULE2 - MAP - INITIALIZED:<a id="map-reset" href="#">Reset Map</a></p>');
 		var map = L.map('map').setView([0.0, 0.0], 4);
-
 		L.tileLayer(
 				'rest/maptiles/{z}/{x}/{y}'
 				, {
@@ -159,4 +159,5 @@ require(["jquery","Leaflet","modules/jquery-keyboard-plugin"], function($,L) {
 
 		map.on('click', onMapClick);
 */
+		}
 });

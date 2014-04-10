@@ -15,14 +15,14 @@ define(['jquery'], function($) {
 	  return this.each(function() {
 		  $( this ).keydown(function(event){
 			  
-			  console.log('keydown :'+event.which);
+			  //console.log('keydown :'+event.which);
 			  if (event.which == keyCode && typeof callback == 'function') {
 				  event.preventDefault();
 			    }
 		  });
 		  $( this ).keyup(function(event){
 			 
-			  console.log('keyup :'+event.which);
+			  //console.log('keyup :'+event.which);
 			  if (event.which == keyCode && typeof callback == 'function') {
 				  event.preventDefault();
 			        callback.call(this);
@@ -30,7 +30,7 @@ define(['jquery'], function($) {
 		  });
 		  $( this ).keypress(function(event){
 			  
-			  console.log('keypress( :'+event.which);
+			  //console.log('keypress( :'+event.which);
 			  if (event.which == keyCode && typeof callback == 'function') {
 				  event.preventDefault();
 			    }

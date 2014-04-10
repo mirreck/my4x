@@ -1,0 +1,102 @@
+		div#indoormap {
+			float:left;
+		}
+		
+		
+		div#indoormap div {
+			-webkit-transition: all .2s;
+			-moz-transition: all .2s;
+			-o-transition: all .2s;
+			transition: all .2s;
+		}
+		
+		div.indoorback{
+			transform: scale(0.75);
+			-moz-transform: scale(0.75);
+			-webkit-transform: scale(0.75);
+			-ms-transform: scale(0.75);
+			opacity:0.3;
+			filter: alpha(opacity=30);
+		}
+		div.indoorcurrent{
+			transform: scale(1.0);
+			-moz-transform: scale(1.0);
+			-webkit-transform: scale(1.0);
+			-ms-transform: scale(1.0);
+			opacity:1.0;
+			filter: alpha(opacity=100);
+		}
+		div.indoorfront{
+			transform: scale(1.25);
+			-moz-transform: scale(1.25);
+			-webkit-transform: scale(1.25);
+			-ms-transform: scale(1.25);
+			opacity:0.0;
+			filter: alpha(opacity=0);
+		}
+		
+		div.indoortile{
+			-moz-user-select: none;
+			height: 100px; 
+			width: 100px;
+			font-size: 100px;
+			line-height: 100px;
+			
+		}
+		div.indoortile img{
+			max-width: none !important;
+		}
+		div.indoormap {
+			position:relative;
+			
+		}
+		div.indoormap, div.indoorfloor{
+			height: 700px; 
+			width: 700px;
+			display:block;
+			overflow: hidden;
+		}
+		
+		
+		div.indoortile, div.indoorfloor{
+			position: absolute;
+			left: 0px;
+			top: 0px;
+		}
+		div.currenttile{
+			background-color : #F00 !important;
+		}
+		.tile_floor {
+			background-color : #AAE;
+		}
+		.tile_room {
+			background-color : #BBF;
+		}
+		.tile_wall {
+			background-color : #999;
+		}
+		.tile_rock {
+			background-color : #555;
+		}
+		div#indoorminimap{
+			position:relative;
+			float:left;
+			padding:10px;
+		}
+		table.mini {
+    		border-spacing: 0px;
+    		border-collapse: collapse;
+			border :none;
+			padding:0px;
+			spacing:0px;
+		}
+		
+		table.mini td {
+			height: 5px; 
+			width: 5px;
+			font-size: 5px;
+			line-height: 5px;
+			border :none;
+			padding:0px;
+		}
+		

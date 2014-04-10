@@ -1,3 +1,34 @@
+.azur{
+	color: #0000FF;
+}
+.gueules{
+	color: #FF0000;
+}
+.orange{
+	color: #FF8000;
+}
+.sinople {
+	color: #00C000;
+}
+.pourpre{
+	color: #89395E;
+}
+.sanguine{
+	color: #C00000;
+}
+.mure{
+	color: #800040;
+}
+.sable{
+	color: #000000;
+}
+.argent{
+	color: #e0e0e0;
+}
+.or{
+	color: #ffe000;
+}
+
 #sys2 {
 	position: absolute;
 	top: 150px;
@@ -83,4 +114,4 @@
 to {
 	-webkit-transform: rotate(360deg);
 }
-}
+

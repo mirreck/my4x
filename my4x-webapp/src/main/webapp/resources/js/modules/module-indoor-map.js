@@ -2,8 +2,8 @@
 require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
 	
 	var currentfloor = 0;
-	var currentx = 0;
-	var currenty = 0;
+	var currentx = 3;
+	var currenty = 3;
 	var mapx = 0;
 	var mapy = 0;
 	var jsonData = null;
@@ -28,30 +28,42 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
 		moveTo(currentx,currenty);
 		currentfloor = newfloor;
 	}
+	function inlimits(x,min,max){
+		if(x < min){
+			return min;
+		}
+		if(x> max){
+			return max;
+		}
+		return x;
+	}
+	
 	function moveTo(x,y){
 		
 		level = jsonData.levels[currentfloor];
-		if(x < 1){
-			x = currentx = 1;
-			mapx = 0;
+		targettile = level.tiles[x*level.width+y];
+		currenttile = level.tiles[currentx*level.width+currenty];
+		if(reachable(currenttile) && !reachable(targettile)){
+			return;
 		}
-		if(y < 1){
-			y = currenty = 1;
-			mapy = 0;
-		}
+		x = inlimits(x,0,level.width-1);
+		y = inlimits(y,0,level.height-1);
+		
+		
 		if(x - mapx < 0){
 			mapx = x;
 		} else if(x - mapx > 5){
 			mapx = x-5;
 		}
 		
-		if(y - mapy < 0){
-			mapy = y;
-		} else if(y - mapy > 5){
-			mapy = y-5;
+		if((level.height-y) - mapy < 0){
+			mapy = (level.height-y);
+		} else if((level.height-y) - mapy > 5){
+			mapy = (level.height-y)-5;
 		}
-		
+		console.log( " currenttile: " +currenttile);
 		console.log( " MOVE TO: " +x+" "+y);
+		console.log( " targettile: " +targettile);
 		console.log( " MAP MOVE: " +mapx+" "+mapy);
 		$( "#indoormap .indoorfloor .container").css("transform","translate( "+(mapy*-100)+"px,"+(mapx*-100)+"px)");
 		console.log( " TILE TO: " +'#indoormap #tile_'+currentfloor+'_'+y+'_'+x);
@@ -59,8 +71,96 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
 		$( '#indoormap #tile_'+currentfloor+'_'+y+'_'+x).addClass( "currenttile" );
 		currentx = x;
 		currenty = y;
+	};
+	function reachable(tile){
+		return tile ==' ' || tile =='X';
+	}
+	function tileStyle(tile){
+		var styleclass = "tile_wall";
+		if(tile == 'R'){
+			styleclass = "tile_rock";
+		}
+		if(tile == ' '){
+			styleclass = "tile_floor";
+		}
+		if(tile == 'X'){
+			styleclass = "tile_room";
+		} 
+		return styleclass;
 	}
 	
+	function tileContent(tile){
+		var content = "";
+		if(tile == 'S'){
+			content = '<i class="icon-ex-stairs-down"></i>';
+		}
+		if(tile == 'D'){
+			content = '<i class="icon-ex-door"></i>';
+		} 
+		return content;
+	}
+	function init(json){
+		for (var i=0;i<json.levels.length;i++){
+				var level = json.levels[i];
+				$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
+				$( "#floor_"+i ).data( "level", i);
+				console.log( " WIDTH: " + level.width);
+				console.log( " H: " + level.height);
+				
+				for (var y=level.height-1;y>=0;y--)
+				{
+					for (var x=0; x<level.width;x++)
+					{
+						var styleclass = tileStyle(level.tiles[y*level.width+x]);
+						var content = tileContent(level.tiles[y*level.width+x]);
+						
+						$( "#floor_"+i+" .container" ).append( '<div id="tile_'+i+'_'+x+'_'+y+'" class="indoortile '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+					}
+				}
+			}
+	};
+	function initmini(json){
+		for (var i=0;i<json.levels.length;i++){
+				var level = json.levels[i];
+				$( "#indoorminimap" ).append( '<div id="minifloor_'+i+'">'+level.level+'</div>' );
+				var table = $('<table>').addClass('mini');
+				for (var y=level.height-1;y>=0;y--)
+				{
+				
+					var row = $('<tr>');
+			   
+					for (var x=0; x<level.width;x++)
+					{
+					
+						var style = tileStyle(level.tiles[y*level.width+x]);
+						var content = tileContent(level.tiles[y*level.width+x]);
+						var td = $('<td>').addClass(style);
+						td.append(content);
+						row.append(td);
+					}
+					table.append(row);
+				}	
+				$( "#minifloor_"+i ).append(table); 
+			}
+	};
+	
+	
+	
+	$.getJSON( "rest/dungeon/5", { id: "5" } )
+		.done(function( json ) {
+			console.log( "JSON Level: " + Object.keys(json.levels).length );
+			setData(json);
+			init(json);
+			initmini(json);
+			
+			setCurrentFloor(0);
+		})
+		.fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "Request Failed: " + err );
+		});
+	
+	// SET key events
 	
 	$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
 		currentx--;
@@ -92,53 +192,5 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
 		setCurrentFloor(currentfloor);
 		}
 	);
-	
-	$.getJSON( "rest/dungeon/5", { id: "5" } )
-		.done(function( json ) {
-			console.log( "JSON Level: " + Object.keys(json.levels).length );
-			setData(json);
-			for (var i=0;i<json.levels.length;i++){
-			//var i = 0;
-			//for (key in json.levels) {
-				console.log( " KEY: " +i);
-				var level = json.levels[i];
-				$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
-				$( "#floor_"+i ).data( "level", i);
-				console.log( " WIDTH: " + level.width);
-				console.log( " H: " + level.height);
-				for (var x=0; x<level.width;x++)
-				{
-					for (var y=0;y<level.height;y++)
-					{
-						var styleclass = "tile_wall";
-						if(level.tiles[x*level.width+y] == 'R'){
-							styleclass = "tile_rock";
-						}
-						if(level.tiles[x*level.width+y] == ' '){
-							styleclass = "tile_floor";
-						}
-						if(level.tiles[x*level.width+y] == 'X'){
-							styleclass = "tile_room";
-						} 
-						var content = "";
-						if(level.tiles[x*level.width+y] == 'S'){
-							content = '<i class="icon-stairs-down"></i>';
-						}
-						if(level.tiles[x*level.width+y] == 'D'){
-							content = '<i class="icon-door"></i>';
-						}
-						
-						$( "#floor_"+i+" .container" ).append( '<div id="tile_'+i+'_'+x+'_'+y+'" class="indoortile '+styleclass+'" style="left: '+x*100+'px;top: '+y*100+'px;">'+content+'</i></div>' );
-					}
-				}
-			}
-			setCurrentFloor(0);
-		})
-		.fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "Request Failed: " + err );
-		});
-	
-	
 	
 });

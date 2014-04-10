@@ -6,17 +6,46 @@
   font-style: normal;
 }
 
-.icon-door:before {
+[class^="icon-ex-"],
+[class*=" icon-ex-"] {
   font-family: FontExtend !important;
+  vertical-align: text-top;
+}
+
+.icon-ex-door:before {
   content: "d";
 }
 
-.icon-stairs-up:before {
-  font-family: FontExtend !important;
+.icon-ex-stairs-up:before {
   content: "U";
 }
 
-.icon-stairs-down:before {
-  font-family: FontExtend !important;
+.icon-ex-stairs-down:before {
   content: "D";
+}
+
+.fa-stack {
+    display: inline-block;
+    height: 1em;
+    font-size:1em;
+    line-height: 1em;
+    position: relative;
+    vertical-align: text-top;
+    width: 1em;
+}
+.fa-stack i {
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.icon-ex-ecu:before {
+  content: "e";
+}
+.icon-ex-ecup:before {
+  content: "p";
+}
+.icon-ex-ecuc:before {
+  content: "c";
 }
