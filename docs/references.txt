@@ -1,0 +1,37 @@
+TECHS
+
+http://requirejs.org/
+
+https://github.com/Leaflet/Leaflet
+http://leafletjs.com/
+
+http://www.w3schools.com/cssref/css3_pr_transition.asp
+
+http://fortawesome.github.io/Font-Awesome/examples/
+http://www.webdesignerdepot.com/2012/01/how-to-make-your-own-icon-webfont/
+http://www.freefontconverter.com/
+
+MAP :
+http://linuxfr.org/news/je-cree-mon-jeu-video-e10-generation-procedurale-de-carte-partie-1
+http://www.gamedev.net/topic/415060-gradient-from-a-height-map/
+
+
+Dungeon map
+http://pcg.wikidot.com/pcg-algorithm:dungeon-generation
+http://angband.oook.cz/forum/showthread.php?t=927
+http://donjon.bin.sh/adnd/dungeon/
+http://tvtropes.org/pmwiki/pmwiki.php/Main/RandomlyGeneratedLevels
+http://www.roguebasin.com/index.php?title=Dungeon-Building_Algorithm
+
+MOBILE:
+
+http://blog.valtech.fr/2011/04/18/passez-vos-applications-html5-sur-android/
+
+
+reference :
+
+http://www.asciitable.com/
+
+STORY :
+
+http://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes
