@@ -10,9 +10,9 @@ requirejs.config({
   }
 });
 
-require(["jquery","modules/module1","modules/module-map","modules/module-indoor-map","Leaflet"], function($) {
-    //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
+require(["jquery","modules/module-characters","modules/module-map","modules/module-indoor-map","Leaflet"], function($) {
     $(function() {
-        $('body').append('<p>REQUIREJS INITIALIZED</p>');
+        //$('body').append('<p>REQUIREJS INITIALIZED</p>');
+        console.log('REQUIREJS INITIALIZED');
     });
 });

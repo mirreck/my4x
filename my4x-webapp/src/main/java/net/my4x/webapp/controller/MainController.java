@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.my4x.population.model.Family;
+import net.my4x.population.service.PersonnageService;
 import net.my4x.services.dungeon.DungeonService;
 import net.my4x.services.dungeon.model.Dungeon;
 import net.my4x.services.map.MapTileService;
@@ -31,6 +33,9 @@ public class MainController {
    @Autowired
    private DungeonService dungeonService;
    
+   @Autowired
+   private PersonnageService personnageService;
+   
    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
    
 	@RequestMapping("home")
@@ -38,15 +43,38 @@ public class MainController {
 		ModelAndView mav = new ModelAndView("home");
         return mav;
     }
+
+   @RequestMapping("map")
+   public String map() {
+      return "map";
+   }
+   
+   @RequestMapping("indoor")
+   public String indoor() {
+      return "indoor";
+   }
+	   
 	
 	
    @RequestMapping("rest/dungeon/{id}")
    @ResponseBody
    public Dungeon dungeon(@PathVariable String id) {
 
-      return dungeonService.generate();
+      Dungeon dun = dungeonService.generate();
+      
+      LOGGER.debug("generated:"+dun.toString());
+      
+      return dun;
    }
 	
+   @RequestMapping("rest/family/{id}")
+   @ResponseBody
+   public Family family(@PathVariable String id) {
+      
+      return personnageService.generateFamilly();
+   }
+   
+   
 	
 	@RequestMapping("rest/resetmap")
 	@ResponseBody

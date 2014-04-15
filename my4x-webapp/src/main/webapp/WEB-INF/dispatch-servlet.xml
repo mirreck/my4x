@@ -8,6 +8,7 @@
 
   <import resource="classpath:spring/map-context.xml" />
   <import resource="classpath:spring/dungeon-context.xml" />
+  <import resource="classpath:spring/population-context.xml" />
 
 
 	<context:annotation-config />

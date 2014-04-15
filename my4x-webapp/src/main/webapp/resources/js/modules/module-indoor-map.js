@@ -1,5 +1,5 @@
 
-require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
+require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	
 	var currentfloor = 0;
 	var currentx = 3;
@@ -7,6 +7,113 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
 	var mapx = 0;
 	var mapy = 0;
 	var jsonData = null;
+
+	$(".indoormap").each(function(){
+		var map = $(this);
+		init(map);
+	});
+	
+	
+	function init(mapdiv){
+		$.getJSON( "rest/dungeon/5", { id: "5" } )
+			.done(function( json ) {
+				console.log( "JSON Level: " + Object.keys(json.levels).length );
+				init_callback(json);
+			})
+			.fail(function( jqxhr, textStatus, error ) {
+				var err = textStatus + ", " + error;
+				console.log( "Request Failed: " + err );
+			});
+	}
+	
+	function init_map(json){
+		for (var i=0;i<json.levels.length;i++){
+			var level = json.levels[i];
+			$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
+			$( "#floor_"+i ).data( "level", i);
+			console.log( " WIDTH: " + level.width);
+			console.log( " H: " + level.height);
+			
+			for (var y=level.height-1;y>=0;y--)
+			{
+				for (var x=0; x<level.width;x++)
+				{
+					var styleclass = tileStyle(level.tiles[y*level.width+x]);
+					var content = tileContent(level.tiles[y*level.width+x]);
+					
+					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+i+'_'+x+'_'+y+'" class="indoortile '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+				}
+			}
+		}
+	};
+	function init_minimap(json){
+		for (var i=0;i<json.levels.length;i++){
+			var level = json.levels[i];
+			$( "#indoorminimap" ).append( '<div id="minifloor_'+i+'">'+level.level+'</div>' );
+			var table = $('<table>').addClass('mini');
+			for (var y=level.height-1;y>=0;y--)
+			{
+				
+				var row = $('<tr>');
+				
+				for (var x=0; x<level.width;x++)
+				{
+					
+					var style = tileStyle(level.tiles[y*level.width+x]);
+					var content = tileContent(level.tiles[y*level.width+x]);
+					var td = $('<td>').addClass(style);
+					td.append(content);
+					row.append(td);
+				}
+				table.append(row);
+			}	
+			$( "#minifloor_"+i ).append(table); 
+		}
+	};
+	
+	
+	function init_callback(json){
+		setData(json);
+		init_map(json);
+		init_minimap(json);
+		
+		setCurrentFloor(0);
+		init_key_events();
+	}
+	// SET key events
+	function init_key_events(){
+		$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
+			currentx--;
+			moveTo(currentx,currenty);
+			}
+		);
+		$( "body" ).keyboardEvent($.KeyCodes.DOWN, function(){
+			currentx++;
+			moveTo(currentx,currenty);
+			}
+		);
+		$( "body" ).keyboardEvent($.KeyCodes.LEFT, function(){
+			currenty--;
+			moveTo(currentx,currenty);
+			}
+		);
+		$( "body" ).keyboardEvent($.KeyCodes.RIGHT, function(){
+			currenty++;
+			moveTo(currentx,currenty);
+			}
+		);
+		$( "body" ).keyboardEvent($.KeyCodes.PLUS, function(){
+			currentfloor++;
+			setCurrentFloor(currentfloor);
+			}
+		);
+		$( "body" ).keyboardEvent($.KeyCodes.MINUS, function(){
+			currentfloor--;
+			setCurrentFloor(currentfloor);
+			}
+		);
+	}
+	
 	function setData(data){
 		jsonData = data;
 	}
@@ -99,98 +206,5 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,L) {
 		} 
 		return content;
 	}
-	function init(json){
-		for (var i=0;i<json.levels.length;i++){
-				var level = json.levels[i];
-				$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
-				$( "#floor_"+i ).data( "level", i);
-				console.log( " WIDTH: " + level.width);
-				console.log( " H: " + level.height);
-				
-				for (var y=level.height-1;y>=0;y--)
-				{
-					for (var x=0; x<level.width;x++)
-					{
-						var styleclass = tileStyle(level.tiles[y*level.width+x]);
-						var content = tileContent(level.tiles[y*level.width+x]);
-						
-						$( "#floor_"+i+" .container" ).append( '<div id="tile_'+i+'_'+x+'_'+y+'" class="indoortile '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
-					}
-				}
-			}
-	};
-	function initmini(json){
-		for (var i=0;i<json.levels.length;i++){
-				var level = json.levels[i];
-				$( "#indoorminimap" ).append( '<div id="minifloor_'+i+'">'+level.level+'</div>' );
-				var table = $('<table>').addClass('mini');
-				for (var y=level.height-1;y>=0;y--)
-				{
-				
-					var row = $('<tr>');
-			   
-					for (var x=0; x<level.width;x++)
-					{
-					
-						var style = tileStyle(level.tiles[y*level.width+x]);
-						var content = tileContent(level.tiles[y*level.width+x]);
-						var td = $('<td>').addClass(style);
-						td.append(content);
-						row.append(td);
-					}
-					table.append(row);
-				}	
-				$( "#minifloor_"+i ).append(table); 
-			}
-	};
-	
-	
-	
-	$.getJSON( "rest/dungeon/5", { id: "5" } )
-		.done(function( json ) {
-			console.log( "JSON Level: " + Object.keys(json.levels).length );
-			setData(json);
-			init(json);
-			initmini(json);
-			
-			setCurrentFloor(0);
-		})
-		.fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "Request Failed: " + err );
-		});
-	
-	// SET key events
-	
-	$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
-		currentx--;
-		moveTo(currentx,currenty);
-		}
-	);
-	$( "body" ).keyboardEvent($.KeyCodes.DOWN, function(){
-		currentx++;
-		moveTo(currentx,currenty);
-		}
-	);
-	$( "body" ).keyboardEvent($.KeyCodes.LEFT, function(){
-		currenty--;
-		moveTo(currentx,currenty);
-		}
-	);
-	$( "body" ).keyboardEvent($.KeyCodes.RIGHT, function(){
-		currenty++;
-		moveTo(currentx,currenty);
-		}
-	);
-	$( "body" ).keyboardEvent($.KeyCodes.PLUS, function(){
-		currentfloor++;
-		setCurrentFloor(currentfloor);
-		}
-	);
-	$( "body" ).keyboardEvent($.KeyCodes.MINUS, function(){
-		currentfloor--;
-		setCurrentFloor(currentfloor);
-		}
-	);
 	
 });
