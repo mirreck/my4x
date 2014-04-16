@@ -17,7 +17,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	function init(mapdiv){
 		$.getJSON( "rest/dungeon/5", { id: "5" } )
 			.done(function( json ) {
-				console.log( "JSON Level: " + Object.keys(json.levels).length );
+				//console.log( "JSON Level: " + Object.keys(json.levels).length );
 				init_callback(json);
 			})
 			.fail(function( jqxhr, textStatus, error ) {
@@ -31,8 +31,8 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			var level = json.levels[i];
 			$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
 			$( "#floor_"+i ).data( "level", i);
-			console.log( " WIDTH: " + level.width);
-			console.log( " H: " + level.height);
+			//console.log( " WIDTH: " + level.width);
+			//console.log( " H: " + level.height);
 			
 			for (var y=level.height-1;y>=0;y--)
 			{
@@ -83,22 +83,22 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	// SET key events
 	function init_key_events(){
 		$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
-			currentx--;
+			currentx = inlimits(currentx-1,0,level.width-1);
 			moveTo(currentx,currenty);
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.DOWN, function(){
-			currentx++;
+			currentx = inlimits(currentx+1,0,level.width-1);
 			moveTo(currentx,currenty);
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.LEFT, function(){
-			currenty--;
+			currenty = inlimits(currenty-1,0,level.height-1);
 			moveTo(currentx,currenty);
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.RIGHT, function(){
-			currenty++;
+			currenty = inlimits(currenty+1,0,level.height-1);
 			moveTo(currentx,currenty);
 			}
 		);
@@ -153,21 +153,23 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		if(reachable(currenttile) && !reachable(targettile)){
 			return;
 		}
-		x = inlimits(x,0,level.width-1);
-		y = inlimits(y,0,level.height-1);
+		//x = inlimits(x,0,level.width-1);
+		//y = inlimits(y,0,level.height-1);
+		 //y = level.height -y;
+		 mapx = inlimits(x,0,level.width-1);
+		 mapy = inlimits(y,0,level.height-1);
 		
-		
-		if(x - mapx < 0){
-			mapx = x;
-		} else if(x - mapx > 5){
-			mapx = x-5;
-		}
-		
-		if((level.height-y) - mapy < 0){
-			mapy = (level.height-y);
-		} else if((level.height-y) - mapy > 5){
-			mapy = (level.height-y)-5;
-		}
+//		if(x - mapx < 0){
+//			mapx = x;
+//		} else if(x - mapx > 5){
+//			mapx = x-5;
+//		}
+//		
+//		if((level.height-y) - mapy < 0){
+//			mapy = (level.height-y);
+//		} else if((level.height-y) - mapy > 5){
+//			mapy = (level.height-y)-5;
+//		}
 		console.log( " currenttile: " +currenttile);
 		console.log( " MOVE TO: " +x+" "+y);
 		console.log( " targettile: " +targettile);

@@ -53,7 +53,10 @@ public class MainController {
    public String indoor() {
       return "indoor";
    }
-	   
+   @RequestMapping("family")
+   public String family() {
+      return "family";
+   }   
 	
 	
    @RequestMapping("rest/dungeon/{id}")

@@ -1,0 +1,20 @@
+.family-tree {
+	position:relative;
+}
+.family-tree canvas {
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:-1;
+}
+.leaf-container{
+	display:inline-block;
+	margin : 20px;
+}
+.generation{
+	width:100%;
+	text-align: center;
+}
+.deceased{
+	background-color:#DDD;
+}
