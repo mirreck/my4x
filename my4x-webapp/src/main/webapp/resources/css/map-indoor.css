@@ -63,7 +63,7 @@
 			left: 0px;
 			top: 0px;
 		}
-		div.currenttile{
+		td.currenttile, div.currenttile{
 			background-color : #F00 !important;
 		}
 		.tile_floor {

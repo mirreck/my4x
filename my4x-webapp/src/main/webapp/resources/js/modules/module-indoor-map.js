@@ -1,6 +1,8 @@
 
 require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	
+	var currentPosition ={"x":0,"y":0,"z":0};
+	
 	var currentfloor = 0;
 	var currentx = 3;
 	var currenty = 3;
@@ -53,15 +55,12 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			var table = $('<table>').addClass('mini');
 			for (var y=level.height-1;y>=0;y--)
 			{
-				
 				var row = $('<tr>');
-				
 				for (var x=0; x<level.width;x++)
 				{
-					
 					var style = tileStyle(level.tiles[y*level.width+x]);
 					var content = tileContent(level.tiles[y*level.width+x]);
-					var td = $('<td>').addClass(style);
+					var td = $('<td>').addClass(style).attr("id","mini_"+x+"_"+y+"_"+i);
 					td.append(content);
 					row.append(td);
 				}
@@ -85,37 +84,69 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
 			currentx = inlimits(currentx-1,0,level.width-1);
 			moveTo(currentx,currenty);
+			currentPosition = checkPosition(movePos(currentPosition, 0,1, 0));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.DOWN, function(){
 			currentx = inlimits(currentx+1,0,level.width-1);
 			moveTo(currentx,currenty);
+			currentPosition = checkPosition(movePos(currentPosition, 0,-1, 0));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.LEFT, function(){
 			currenty = inlimits(currenty-1,0,level.height-1);
+			currentPosition = checkPosition(movePos(currentPosition, -1,0, 0));
 			moveTo(currentx,currenty);
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.RIGHT, function(){
 			currenty = inlimits(currenty+1,0,level.height-1);
 			moveTo(currentx,currenty);
+			currentPosition = checkPosition(movePos(currentPosition, 1,0, 0));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.PLUS, function(){
 			currentfloor++;
 			setCurrentFloor(currentfloor);
+			currentPosition = checkPosition(movePos(currentPosition, 0,0, 1));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.MINUS, function(){
 			currentfloor--;
 			setCurrentFloor(currentfloor);
+			currentPosition = checkPosition(movePos(currentPosition, 0,0, -1));
 			}
 		);
 	}
 	
 	function setData(data){
 		jsonData = data;
+	}
+	
+	function movePos(pos, diffx,diffy, diffz){
+		return {"x" : pos.x+diffx, "y": pos.y +diffy, "z": pos.z +diffz};
+	}
+	
+	function checkPosition(pos){
+		if(pos.z < jsonData.minLevel
+			|| pos.z > jsonData.maxLevel){
+			console.log("rejectz:"+pos.x+" "+pos.y+" "+pos.z);
+			return currentPosition;
+		}
+		level = jsonData.levels[pos.z];
+		if(pos.x < 0 || pos.x >= level.width){
+			console.log("rejectx:"+pos.x+" "+pos.y+" "+pos.z);
+			return currentPosition;
+		}
+		if(pos.y < 0 || pos.y >= level.height){
+			console.log("rejecty:"+pos.x+" "+pos.y+" "+pos.z);
+			return currentPosition;
+		}
+		return pos;
+	}
+	function updateMini(pos){
+		$("td.currenttile").removeClass( "currenttile" );
+		$("#mini_"+pos.x+"_"+pos.y+"_"+pos.z).addClass( "currenttile" );
 	}
 	function setCurrentFloor(newfloor){
 		console.log( " FLOOR: " +newfloor);
@@ -180,6 +211,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		$( '#indoormap #tile_'+currentfloor+'_'+y+'_'+x).addClass( "currenttile" );
 		currentx = x;
 		currenty = y;
+		updateMini(currentPosition);
 	};
 	function reachable(tile){
 		return tile ==' ' || tile =='X';
