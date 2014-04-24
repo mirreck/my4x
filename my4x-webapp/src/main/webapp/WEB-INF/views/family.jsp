@@ -7,9 +7,6 @@
 	
 			<div id="family-tree-1" class="family-tree">
 			<canvas id="canvas"></canvas>
-			<div id="generation_3" class="generation"></div>
-			<div id="generation_2" class="generation"></div>
-			<div id="generation_1" class="generation"></div>
 			<div id="generation_0" class="generation"></div>
 		</div>
 	

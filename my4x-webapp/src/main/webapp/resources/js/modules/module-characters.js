@@ -36,7 +36,7 @@ require(["jquery"], function($) {
 			}
 			var container = $('<div class="leaf-container"></div>');
 			container.append(leaf);
-			$("#generation_"+perso.generation).append(container);
+			getGenerationdiv(perso.generation,treediv).append(container);
 			
 			console.log( "Perso: " + perso.firstName+" "+perso.lastName );
 		}
@@ -46,6 +46,25 @@ require(["jquery"], function($) {
 		});
 		initCanvas(json,treediv);
 	};
+	function getGenerationdiv(gen,treediv){
+		if($("#generation_"+gen).length > 0){
+			return $("#generation_"+gen);
+		} else {
+			//console.log("add generation layer*"+gen+"*");
+			if(gen > 0){
+				prev = getGenerationdiv(gen-1,treediv);
+				console.log("gen found:"+prev.attr("id")+"*");
+				var generation = $('<div id="generation_'+gen+'" class="generation"></div>');
+				generation.insertBefore(prev);
+				return generation;
+			} else {
+				var generation = $('<div id="generation_'+gen+'" class="generation"></div>');
+				treediv.append(generation);
+				return generation;
+			}
+			
+		}
+	}
 	function initCanvas(json,treediv){
 		resizeCanvas(treediv);
 		for (var i=0;i<json.personnages.length;i++){
@@ -76,6 +95,9 @@ require(["jquery"], function($) {
 	function box(eltid){
 		element = $("#"+eltid);
 		var pos = element.position();
+		if(pos == undefined){
+			console.debug('erreur de recherche de '+eltid);
+		}
 		return {x : pos.left,
 			y : pos.top,
 			w : element.outerWidth(),
@@ -93,6 +115,7 @@ require(["jquery"], function($) {
             ctx.beginPath();
             ctx.moveTo(boxa.x + boxa.w,boxa.y+boxa.h/2);
             ctx.lineTo(boxb.x,boxa.y+boxa.h/2);
+            ctx.strokeStyle = 'black';
             ctx.stroke();
 		}
 	}
@@ -110,6 +133,7 @@ require(["jquery"], function($) {
         ctx.lineTo(startx,inty);
         ctx.lineTo(boxc.x+boxc.w/2,inty);
         ctx.lineTo(boxc.x+boxc.w/2,boxc.y);
+        ctx.strokeStyle = 'black';
         ctx.stroke();
 	}
 	

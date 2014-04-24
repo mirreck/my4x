@@ -9,9 +9,16 @@
 }
 .leaf-container{
 	display:inline-block;
+	white-space:normal;
+	clear: right;
 	margin : 20px;
+    width: 140px;
+    /*text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);*/
 }
 .generation{
+	
+	white-space:nowrap;
+    clear: both;
 	width:100%;
 	text-align: center;
 }

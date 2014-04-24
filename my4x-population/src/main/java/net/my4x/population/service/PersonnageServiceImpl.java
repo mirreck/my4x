@@ -54,7 +54,8 @@ public class PersonnageServiceImpl implements PersonnageService {
       p.setGeneration(generation);
       if(deathYear < currentYear) {
          p.setDeathDate(faker.randomDate(deathYear-1, deathYear));
-      } else {
+      }
+      if(birthYear > (currentYear-100)){
          generateParents(p, family);
       }
       family.add(p);
