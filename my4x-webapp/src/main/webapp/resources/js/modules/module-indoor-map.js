@@ -2,12 +2,11 @@
 require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	
 	var currentPosition ={"x":0,"y":0,"z":0};
-	
-	var currentfloor = 0;
-	var currentx = 3;
-	var currenty = 3;
 	var mapx = 0;
 	var mapy = 0;
+	var localmapx = 1;
+	var localmapy = 1;
+	
 	var jsonData = null;
 
 	$(".indoormap").each(function(){
@@ -43,7 +42,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 					var styleclass = tileStyle(level.tiles[y*level.width+x]);
 					var content = tileContent(level.tiles[y*level.width+x]);
 					
-					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+i+'_'+x+'_'+y+'" class="indoortile '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="fa-stack '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
 				}
 			}
 		}
@@ -82,39 +81,27 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	// SET key events
 	function init_key_events(){
 		$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
-			currentx = inlimits(currentx-1,0,level.width-1);
-			moveTo(currentx,currenty);
-			currentPosition = checkPosition(movePos(currentPosition, 0,1, 0));
+			updateToPosition(checkPosition(movePos(currentPosition, 0,1, 0)));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.DOWN, function(){
-			currentx = inlimits(currentx+1,0,level.width-1);
-			moveTo(currentx,currenty);
-			currentPosition = checkPosition(movePos(currentPosition, 0,-1, 0));
+			updateToPosition(checkPosition(movePos(currentPosition, 0,-1, 0)));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.LEFT, function(){
-			currenty = inlimits(currenty-1,0,level.height-1);
-			currentPosition = checkPosition(movePos(currentPosition, -1,0, 0));
-			moveTo(currentx,currenty);
+			updateToPosition(checkPosition(movePos(currentPosition, -1,0, 0)));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.RIGHT, function(){
-			currenty = inlimits(currenty+1,0,level.height-1);
-			moveTo(currentx,currenty);
-			currentPosition = checkPosition(movePos(currentPosition, 1,0, 0));
+			updateToPosition(checkPosition(movePos(currentPosition, 1,0, 0)));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.PLUS, function(){
-			currentfloor++;
-			setCurrentFloor(currentfloor);
-			currentPosition = checkPosition(movePos(currentPosition, 0,0, 1));
+			updateToPosition(checkPosition(movePos(currentPosition, 0,0, 1)));
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.MINUS, function(){
-			currentfloor--;
-			setCurrentFloor(currentfloor);
-			currentPosition = checkPosition(movePos(currentPosition, 0,0, -1));
+			updateToPosition(checkPosition(movePos(currentPosition, 0,0, -1)));
 			}
 		);
 	}
@@ -124,32 +111,37 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	}
 	
 	function movePos(pos, diffx,diffy, diffz){
+		
 		return {"x" : pos.x+diffx, "y": pos.y +diffy, "z": pos.z +diffz};
 	}
 	
 	function checkPosition(pos){
 		if(pos.z < jsonData.minLevel
 			|| pos.z > jsonData.maxLevel){
-			console.log("rejectz:"+pos.x+" "+pos.y+" "+pos.z);
+			//console.log("rejectz:"+pos.x+" "+pos.y+" "+pos.z);
 			return currentPosition;
 		}
 		level = jsonData.levels[pos.z];
 		if(pos.x < 0 || pos.x >= level.width){
-			console.log("rejectx:"+pos.x+" "+pos.y+" "+pos.z);
+			//console.log("rejectx:"+pos.x+" "+pos.y+" "+pos.z);
 			return currentPosition;
 		}
 		if(pos.y < 0 || pos.y >= level.height){
-			console.log("rejecty:"+pos.x+" "+pos.y+" "+pos.z);
+			//console.log("rejecty:"+pos.x+" "+pos.y+" "+pos.z);
 			return currentPosition;
 		}
+		var targettile = level.tiles[pos.y*level.width+pos.x];
+		var currenttile = level.tiles[currentPosition.y*level.width+currentPosition.x];
+		if( reachable(currenttile) && !reachable(targettile)){
+			console.log("reject bad tile:"+pos.x+" "+pos.y+" "+pos.z);
+			return currentPosition;
+		}
+		//console.log( " OK: "+pos.x+" "+pos.y+" "+pos.z+"=>"+targettile);
 		return pos;
 	}
-	function updateMini(pos){
-		$("td.currenttile").removeClass( "currenttile" );
-		$("#mini_"+pos.x+"_"+pos.y+"_"+pos.z).addClass( "currenttile" );
-	}
+
 	function setCurrentFloor(newfloor){
-		console.log( " FLOOR: " +newfloor);
+		
 		$( "#indoormap .indoorfloor" ).each(function(){
 			var floorlevel = parseInt($(this).data( "level" ));
 			if(floorlevel < newfloor){
@@ -163,7 +155,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 				$(this).removeClass( "indoorback indoorcurrent" );
 			}
 		});
-		moveTo(currentx,currenty);
+		updateToPosition(currentPosition);
 		currentfloor = newfloor;
 	}
 	function inlimits(x,min,max){
@@ -175,46 +167,52 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		}
 		return x;
 	}
+
 	
-	function moveTo(x,y){
+	function updateToPosition(nextPosition){
+		level = jsonData.levels[nextPosition.z];
 		
-		level = jsonData.levels[currentfloor];
-		targettile = level.tiles[x*level.width+y];
-		currenttile = level.tiles[currentx*level.width+currenty];
-		if(reachable(currenttile) && !reachable(targettile)){
-			return;
+		var diffx = nextPosition.x - currentPosition.x;
+		var diffy = nextPosition.y - currentPosition.y;
+		localmapx +=diffx;
+		localmapy +=diffy;
+		
+		if(localmapx < 1){
+			localmapx = 1;
+			mapx = nextPosition.x - localmapx;
+		} else if(localmapx > 5){
+			localmapx = 5;
+			mapx = nextPosition.x - localmapx;
 		}
-		//x = inlimits(x,0,level.width-1);
-		//y = inlimits(y,0,level.height-1);
-		 //y = level.height -y;
-		 mapx = inlimits(x,0,level.width-1);
-		 mapy = inlimits(y,0,level.height-1);
 		
-//		if(x - mapx < 0){
-//			mapx = x;
-//		} else if(x - mapx > 5){
-//			mapx = x-5;
-//		}
-//		
-//		if((level.height-y) - mapy < 0){
-//			mapy = (level.height-y);
-//		} else if((level.height-y) - mapy > 5){
-//			mapy = (level.height-y)-5;
-//		}
-		console.log( " currenttile: " +currenttile);
-		console.log( " MOVE TO: " +x+" "+y);
-		console.log( " targettile: " +targettile);
-		console.log( " MAP MOVE: " +mapx+" "+mapy);
-		$( "#indoormap .indoorfloor .container").css("transform","translate( "+(mapy*-100)+"px,"+(mapx*-100)+"px)");
-		console.log( " TILE TO: " +'#indoormap #tile_'+currentfloor+'_'+y+'_'+x);
+		if(localmapy < 1){
+			localmapy = 1;
+			mapy = nextPosition.y - localmapy;
+		} else if(localmapy > 5){
+			localmapy = 5;
+			mapy = nextPosition.y - localmapy;
+		}
+		 
+		 $( "#indoormap .indoorfloor .container").css("transform","translate( "+(mapx*-100)+"px,"+((level.height-6-mapy)*-100)+"px)");
+		 
+		updateMini(nextPosition);
+		updateMain(nextPosition);
+		
+		currentPosition = nextPosition;
+	};
+	
+	function updateMini(pos){
+		$("td.currenttile").removeClass( "currenttile" );
+		$("#mini_"+pos.x+"_"+pos.y+"_"+pos.z).addClass( "currenttile" );
+	};
+	function updateMain(pos){
+		// compute map move
+		$( '#indoormap .currenttile #user').remove();
 		$( '#indoormap .currenttile').removeClass( "currenttile" );
-		$( '#indoormap #tile_'+currentfloor+'_'+y+'_'+x).addClass( "currenttile" );
-		currentx = x;
-		currenty = y;
-		updateMini(currentPosition);
+		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+pos.z).addClass( "currenttile" ).append('<i id="user" class="icon-user">');
 	};
 	function reachable(tile){
-		return tile ==' ' || tile =='X';
+		return tile ==' ' || tile =='X'|| tile =='S'|| tile =='D';
 	}
 	function tileStyle(tile){
 		var styleclass = "tile_wall";

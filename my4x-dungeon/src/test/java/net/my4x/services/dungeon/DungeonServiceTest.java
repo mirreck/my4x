@@ -20,7 +20,7 @@ public class DungeonServiceTest {
    
    @Test
    public void test() {
-      Dungeon dun = service.generate();
+      Dungeon dun = service.load();
       LOGGER.debug(dun.toString());
    }
 

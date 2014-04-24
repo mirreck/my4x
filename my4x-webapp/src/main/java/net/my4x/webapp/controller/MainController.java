@@ -45,25 +45,27 @@ public class MainController {
     }
 
    @RequestMapping("map")
-   public String map() {
+   public String mapHome() {
       return "map";
    }
    
    @RequestMapping("indoor")
-   public String indoor() {
+   public String indoorHome() {
       return "indoor";
    }
    @RequestMapping("family")
-   public String family() {
+   public String familyHome() {
       return "family";
    }   
 	
 	
    @RequestMapping("rest/dungeon/{id}")
    @ResponseBody
-   public Dungeon dungeon(@PathVariable String id) {
+   public Dungeon dungeon(@PathVariable("id") String id) {
 
-      Dungeon dun = dungeonService.generate();
+      LOGGER.debug("generating dungeon:"+id);
+      
+      Dungeon dun = dungeonService.load();
       
       LOGGER.debug("generated:"+dun.toString());
       
@@ -72,7 +74,7 @@ public class MainController {
 	
    @RequestMapping("rest/family/{id}")
    @ResponseBody
-   public Family family(@PathVariable String id) {
+   public Family family(@PathVariable("id") String id) {
       
       return personnageService.generateFamilly();
    }
