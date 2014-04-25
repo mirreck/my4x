@@ -3,7 +3,7 @@ package net.my4x.population.model;
 public class BlasonElement {
    private HeradicFigure figure;
    private HeraldicColor color = HeraldicColor.SABLE;
-   private BlasonElement(HeradicFigure figure, HeraldicColor color) {
+   public BlasonElement(HeradicFigure figure, HeraldicColor color) {
       super();
       this.figure = figure;
       this.color = color;

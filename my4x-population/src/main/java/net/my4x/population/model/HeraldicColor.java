@@ -12,14 +12,14 @@ public enum HeraldicColor {
    ARGENT("e0e0e0"),
    OR("ffe000");
    
-  private String code;
+   private String code;
 
-  private HeraldicColor(String code){
-     this.code = code;
-  }
+   private HeraldicColor(String code) {
+      this.code = code;
+   }
 
-public String getCode() {
-   return code;
-}
+   public String getCode() {
+      return code;
+   }
   
 }

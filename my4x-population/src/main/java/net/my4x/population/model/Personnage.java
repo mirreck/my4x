@@ -15,6 +15,7 @@ public class Personnage {
    // optional
    private Date deathDate = null;
    private Blason blason = null;
+   private String surname; 
    
    private String coupleUuid;
    
@@ -120,5 +121,13 @@ public class Personnage {
 
    public void setCoupleUuid(String coupleUuid) {
       this.coupleUuid = coupleUuid;
+   }
+
+   public String getSurname() {
+      return surname;
+   }
+
+   public void setSurname(String surname) {
+      this.surname = surname;
    }
 }

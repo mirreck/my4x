@@ -7,9 +7,11 @@
 	left:0;
 	z-index:-1;
 }
-.leaf-container{
+.brotherhood-container,.couple-container,.leaf-container{
 	display:inline-block;
 	white-space:normal;
+}
+.leaf-container{
 	clear: right;
 	margin : 20px;
     width: 140px;

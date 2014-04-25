@@ -40,12 +40,12 @@
     width: 100%;
 }
 
-.icon-ex-ecu:before {
+.icon-ex-ecubase:before {
   content: "e";
 }
-.icon-ex-ecup:before {
+.icon-ex-ecuparti:before {
   content: "p";
 }
-.icon-ex-ecuc:before {
+.icon-ex-ecucoupe:before {
   content: "c";
 }
