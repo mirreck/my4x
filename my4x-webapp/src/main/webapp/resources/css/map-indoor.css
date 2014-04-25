@@ -4,10 +4,10 @@
 		
 		
 		div#indoormap div {
-			-webkit-transition: all .2s;
-			-moz-transition: all .2s;
-			-o-transition: all .2s;
-			transition: all .2s;
+			-webkit-transition: translate .2s, scale 1s, opacity 1s;
+			-moz-transition: translate .2s, scale 1s, opacity 1s;
+			-o-transition: translate .2s, scale 1s, opacity 1s;
+			transition: translate .2s, scale 1s, opacity 1s;
 		}
 		
 		div.indoorback{

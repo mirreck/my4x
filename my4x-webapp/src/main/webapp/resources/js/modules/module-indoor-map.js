@@ -30,8 +30,10 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	function init_map(json){
 		for (var i=0;i<json.levels.length;i++){
 			var level = json.levels[i];
+			level.index = i;
 			$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
 			$( "#floor_"+i ).data( "level", i);
+			$( "#floor_"+i ).attr( "data-level", level.level);
 			//console.log( " WIDTH: " + level.width);
 			//console.log( " H: " + level.height);
 			
@@ -41,16 +43,20 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 				{
 					var styleclass = tileStyle(level.tiles[y*level.width+x]);
 					var content = tileContent(level.tiles[y*level.width+x]);
-					
 					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="fa-stack '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
 				}
 			}
 		}
+		
+		$('#indoormap > div ').sort(function(a, b){
+			return parseInt($(a).attr( "data-level")) > parseInt($(b).attr("data-level")) ? 1 : -1;
+		}).appendTo('#indoormap');
 	};
 	function init_minimap(json){
 		for (var i=0;i<json.levels.length;i++){
 			var level = json.levels[i];
 			$( "#indoorminimap" ).append( '<div id="minifloor_'+i+'">'+level.level+'</div>' );
+			$( "#minifloor_"+i ).attr( "data-level", level.level);
 			var table = $('<table>').addClass('mini');
 			for (var y=level.height-1;y>=0;y--)
 			{
@@ -67,6 +73,9 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			}	
 			$( "#minifloor_"+i ).append(table); 
 		}
+		$('#indoorminimap > div ').sort(function(a, b){
+		    return parseInt($(a).attr( "data-level")) < parseInt($(b).attr("data-level")) ? 1 : -1;
+		}).appendTo('#indoorminimap');
 	};
 	
 	
@@ -121,7 +130,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			//console.log("rejectz:"+pos.x+" "+pos.y+" "+pos.z);
 			return currentPosition;
 		}
-		level = jsonData.levels[pos.z];
+		level = getLevel(pos.z);
 		if(pos.x < 0 || pos.x >= level.width){
 			//console.log("rejectx:"+pos.x+" "+pos.y+" "+pos.z);
 			return currentPosition;
@@ -139,22 +148,27 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		//console.log( " OK: "+pos.x+" "+pos.y+" "+pos.z+"=>"+targettile);
 		return pos;
 	}
-
+	function getLevel(z){
+		for (var i=0;i<jsonData.levels.length;i++){
+			var level = jsonData.levels[i];
+			if(level.level == z){
+				return level;
+			}
+		}
+		return null;
+	}
 	function setCurrentFloor(newfloor){
 		
-		$( "#indoormap .indoorfloor" ).each(function(){
-			var floorlevel = parseInt($(this).data( "level" ));
-			if(floorlevel < newfloor){
-				$(this).addClass( "indoorback" );
-				$(this).removeClass( "indoorfront indoorcurrent" );
-			} else if(floorlevel == newfloor){
-				$(this).addClass( "indoorcurrent" );
-				$(this).removeClass( "indoorfront indoorback" );
-			} else {
-				$(this).addClass( "indoorfront" );
-				$(this).removeClass( "indoorback indoorcurrent" );
+		for (var i=0;i<jsonData.levels.length;i++){
+			var level = jsonData.levels[i];
+			if(level.level < newfloor){
+				$( "#floor_"+i ).addClass( "indoorback" ).removeClass( "indoorfront indoorcurrent" );
+			} else if(level.level == newfloor){
+				$( "#floor_"+i ).addClass( "indoorcurrent" ).removeClass( "indoorfront indoorback" );
+			} else if(level.level > newfloor){
+				$( "#floor_"+i ).addClass( "indoorfront" ).removeClass( "indoorback indoorcurrent" );
 			}
-		});
+		}
 		updateToPosition(currentPosition);
 		currentfloor = newfloor;
 	}
@@ -170,8 +184,11 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 
 	
 	function updateToPosition(nextPosition){
-		level = jsonData.levels[nextPosition.z];
-		
+		console.log("updateToPosition nextPosition:"+nextPosition.x+" "+nextPosition.y+" "+nextPosition.z);
+		level = getLevel(nextPosition.z);
+		if(nextPosition.z != currentPosition.z){
+			setCurrentFloor(nextPosition.z);
+		}
 		var diffx = nextPosition.x - currentPosition.x;
 		var diffy = nextPosition.y - currentPosition.y;
 		localmapx +=diffx;
@@ -201,15 +218,15 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		currentPosition = nextPosition;
 	};
 	
-	function updateMini(pos){
+	function updateMini(pos, index){
 		$("td.currenttile").removeClass( "currenttile" );
-		$("#mini_"+pos.x+"_"+pos.y+"_"+pos.z).addClass( "currenttile" );
+		$("#mini_"+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" );
 	};
-	function updateMain(pos){
+	function updateMain(pos, index){
 		// compute map move
 		$( '#indoormap .currenttile #user').remove();
 		$( '#indoormap .currenttile').removeClass( "currenttile" );
-		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+pos.z).addClass( "currenttile" ).append('<i id="user" class="icon-user">');
+		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).append('<i id="user" class="icon-user">');
 	};
 	function reachable(tile){
 		return tile ==' ' || tile =='X'|| tile =='S'|| tile =='D';

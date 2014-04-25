@@ -32,8 +32,8 @@ public class Level {
          Arrays.fill(tileMap[i], TileType.ROCK);
       }
       this.level = level;
-      setValue(new Pos(width/2,height-1), TileType.NORTH);
-      setValue(new Pos(width/2,0), TileType.SOUTH);
+//      setValue(new Pos(width/2,height-1), TileType.NORTH);
+//      setValue(new Pos(width/2,0), TileType.SOUTH);
 //      //randomize();
 //      for (int i = 0; i < height; i++) {
 //         LOGGER.debug("line :"+lineToString(tileMap[i]));
