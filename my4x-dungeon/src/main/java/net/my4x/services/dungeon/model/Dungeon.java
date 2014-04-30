@@ -8,27 +8,20 @@ public class Dungeon {
    
    private int minLevel;
    private int maxLevel;
-   private int minX;
-   private int maxX;
-   private int minY;
-   private int maxY;
    
    private Pos entrace;
    
    private Map<Integer, Level> levels;
    
-   public Dungeon(int minLevel, int maxLevel, int minX, int maxX, int minY, int maxY) {
+   public Dungeon(int minLevel, int maxLevel, int width, int height) {
       super();
       this.minLevel = minLevel;
       this.maxLevel = maxLevel;
-      this.minX = minX;
-      this.maxX = maxX;
-      this.minY = minY;
-      this.maxY = maxY;
       levels = new HashMap<Integer, Level>();
-      entrace = new Pos(0,0);
+      entrace = new Pos(width/2,0,0);
+      int index = 1;
       for (int i = minLevel; i <= maxLevel; i++) {
-         levels.put(new Integer(i), new Level(maxX - minX, maxY - minY,i));
+         levels.put(new Integer(i), new Level(width, width,i,index++));
       }
    }
 
@@ -44,35 +37,16 @@ public class Dungeon {
       return maxLevel;
    }
 
-   public int getMinX() {
-      return minX;
-   }
-
-   public int getMaxX() {
-      return maxX;
-   }
-
-   public int getMinY() {
-      return minY;
-   }
-
-   public int getMaxY() {
-      return maxY;
-   }
-
-
-
-   @Override
-   public String toString() {
-      return "Dungeon [minLevel=" + minLevel + ", maxLevel=" + maxLevel + ", minX=" + minX + ", maxX=" + maxX + ", minY=" + minY
-            + ", maxY=" + maxY + ", levels=" + levels + "]";
-   }
-
    public Collection<Level> getLevels() {
       return levels.values();
    }
 
    public Pos getEntrace() {
       return entrace;
+   }
+
+   @Override
+   public String toString() {
+      return "Dungeon [minLevel=" + minLevel + ", maxLevel=" + maxLevel + ", entrace=" + entrace + ", levels=" + levels + "]";
    }
 }

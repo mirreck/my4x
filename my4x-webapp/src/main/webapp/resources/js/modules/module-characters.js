@@ -1,4 +1,4 @@
-require(["jquery"], function($) {
+require(["jquery","jqueryui"], function($,$ui) {
 	
 	$(".family-tree").each(function(){
 		var treediv = $(this);
@@ -35,10 +35,13 @@ require(["jquery"], function($) {
 				leaf.append('<span>' + perso.firstName+' '+perso.lastName+'<span>');
 				leaf.append('<br /><span class="smalltext">' + perso.strBirthDate+'- &dagger; '+perso.strDeathDate+'</span>');
 			}
-			if(perso.surname != null){
-				leaf.append('<br /><span class="smalltext">' + perso.surname+'<span>');
-			}
+			
 			var container = $('<div class="leaf-container"></div>');
+			if(perso.surname != null){
+				container.attr("title",perso.surname);
+				//leaf.append('<br /><span class="smalltext">' + perso.surname+'<span>');
+			}
+			
 			container.append(leaf);
 			
 			if(perso.coupleUuid != null){
@@ -67,6 +70,8 @@ require(["jquery"], function($) {
 			initCanvas(json,treediv);
 		});
 		initCanvas(json,treediv);
+		//$( treediv ).tooltip({ hide: {duration: 1000000 } });
+		$( treediv ).tooltip();
 	};
 	function buildEcu(blason){
 		

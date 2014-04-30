@@ -7,6 +7,11 @@
 	left:0;
 	z-index:-1;
 }
+
+.ui-tooltip {
+	font-size:10px;
+	padding: 2px 8px;
+}
 .brotherhood-container,.couple-container,.leaf-container{
 	display:inline-block;
 	white-space:normal;

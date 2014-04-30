@@ -17,7 +17,7 @@ public class DungeonServiceImpl implements DungeonService {
    
    @PostConstruct
    public void init(){
-      instance = new Dungeon(-2, 0, -10, 10, -10, 10);
+      instance = new Dungeon(0, 0, 10, 10);
       Digger digger = new Digger(instance);
       digger.work();
    }

@@ -27,6 +27,16 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			});
 	}
 	
+	function init_callback(json){
+		setData(json);
+		init_map(json);
+		init_minimap(json);
+		updateToPosition({"x":json.entrace.x,"y":json.entrace.y,"z":json.entrace.z});
+		setCurrentFloor(json.entrace.z);
+		init_key_events();
+	}
+	
+	
 	function init_map(json){
 		for (var i=0;i<json.levels.length;i++){
 			var level = json.levels[i];
@@ -79,14 +89,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	};
 	
 	
-	function init_callback(json){
-		setData(json);
-		init_map(json);
-		init_minimap(json);
-		
-		setCurrentFloor(0);
-		init_key_events();
-	}
+
 	// SET key events
 	function init_key_events(){
 		$( "body" ).keyboardEvent($.KeyCodes.UP, function(){

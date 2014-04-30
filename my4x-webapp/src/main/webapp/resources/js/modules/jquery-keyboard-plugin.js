@@ -20,14 +20,14 @@ define(['jquery'], function($) {
 			    }
 		  });
 		  $( this ).keyup(function(event){
-			  console.log('keyup :'+event.which);
+			  //console.log('keyup :'+event.which);
 			  if (event.which == keyCode && typeof callback == 'function') {
 				  callback.call(this);
 				  event.preventDefault();
 			    }
 		  });
 		  $( this ).keypress(function(event){
-			  console.log('keypress( :'+event.which);
+			  //console.log('keypress( :'+event.which);
 			  if (event.which == keyCode && typeof callback == 'function') {
 			    event.preventDefault();
 			  }
@@ -36,4 +36,4 @@ define(['jquery'], function($) {
 	  
 
   };
-})
+});

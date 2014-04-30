@@ -35,3 +35,14 @@ http://www.asciitable.com/
 STORY :
 
 http://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes
+
+MISC:
+
+http://semver.org/
+http://www.labanquedublason2.com/votre_blason.php3
+
+JS:
+
+http://bower.io/
+https://github.com/yeoman/yeoman/wiki/Getting-Started
+http://gruntjs.com/

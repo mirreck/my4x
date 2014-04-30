@@ -7,7 +7,7 @@ import net.my4x.services.dungeon.model.realtime.Action;
 import net.my4x.services.dungeon.model.realtime.Status;
 
 @Service
-public class RealtimeDungeonServiceImpl implements RealtimeDungeonService{
+public class RealtimeIndoorServiceImpl implements RealtimeIndoorService{
 
    private Status currentStatus = null;
    

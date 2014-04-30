@@ -31,7 +31,7 @@ public class Digger {
    
    public Digger(Dungeon d){
       this.dungeon = d;
-      this.position = new Pos(d.getLevel(z).getHeight()-1, d.getLevel(z).getWidth()/2);
+      this.position = d.getEntrace();
       dir = Direction.O;
    }
    

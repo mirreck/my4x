@@ -3,6 +3,7 @@ requirejs.config({
   paths: {
 	    "Leaflet" : "../lib/leaflet/leaflet",
 	    "jquery": "lib/jquery-1.8.3.min",
+	    "jqueryui": "../lib/jquery-ui/js/jquery-ui-1.10.4.custom",
         "jquery.bootstrap": "../lib/bootstrap/js/bootstrap.min"
   },
    shim: {
@@ -12,6 +13,9 @@ requirejs.config({
     "jquery.bootstrap": {
         deps: ["jquery"]
     }
+  },
+  "jqueryui": {
+      deps: ["jquery"]
   }
 });
 
