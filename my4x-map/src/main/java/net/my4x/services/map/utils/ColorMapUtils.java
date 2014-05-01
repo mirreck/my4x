@@ -116,17 +116,17 @@ public class ColorMapUtils {
                   color = color.darker(0.95);
                }
             }
-            // add shadow
-            int xgradient = heightMap.ygradient(i, j);
-            if(xgradient > maxgradient){
-               maxgradient = xgradient;
-            }
-            
-            if(xgradient > 60 ){
-               color = color.darker(0.95);
-               //color = color.darker(1-(xgradient /10000.0));
-               //color = color.RED;
-            }
+//            // add shadow
+//            int xgradient = heightMap.ygradient(i, j);
+//            if(xgradient > maxgradient){
+//               maxgradient = xgradient;
+//            }
+//            
+//            if(xgradient > 60 ){
+//               color = color.darker(0.95);
+//               //color = color.darker(1-(xgradient /10000.0));
+//               //color = color.RED;
+//            }
 //            if(heightMap.direction(i, j) == Direction.NE || heightMap.direction(i, j) == Direction.NO){
 //               color = color.darker(0.95);
 //            }
