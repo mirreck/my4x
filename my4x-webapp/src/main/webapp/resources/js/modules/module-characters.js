@@ -70,6 +70,7 @@ require(["jquery","jqueryui"], function($,$ui) {
 			initCanvas(json,treediv);
 		});
 		initCanvas(json,treediv);
+		// for debugging
 		//$( treediv ).tooltip({ hide: {duration: 1000000 } });
 		$( treediv ).tooltip();
 	};
@@ -130,7 +131,20 @@ require(["jquery","jqueryui"], function($,$ui) {
 	}
 	
 	function treeCanvas(treediv){
-		return treediv.find("canvas");
+		var canvas = treediv.find("canvas");
+		if(canvas.length == 0){
+			console.log("new canvas");
+			newcanvas = $('<canvas></canvas>');
+			treediv.prepend(newcanvas);
+			newcanvas.zIndex(treediv.zIndex()-1);
+			 var w = treediv.outerWidth(true);
+			 var h = treediv.outerHeight(true);
+			 newcanvas.css("width",w+"px").attr("width",w);
+			 newcanvas.css("height",h+"px").attr("height",h); 
+			return newcanvas;
+		} else {
+			return canvas;	
+		}
 	}
 	function treeCanvasCtx(treediv){
 		return treeCanvas(treediv)[0].getContext("2d");
@@ -163,11 +177,8 @@ require(["jquery","jqueryui"], function($,$ui) {
 		var boxb = box(parentb);
 		if(boxb.x > boxa.x) {
 		    var ctx=treeCanvasCtx(treediv);
-            ctx.beginPath();
-            ctx.moveTo(boxa.x + boxa.w,boxa.y+boxa.h/2);
-            ctx.lineTo(boxb.x,boxa.y+boxa.h/2);
-            ctx.strokeStyle = 'black';
-            ctx.stroke();
+		    lines(ctx, [{x:boxa.x + boxa.w,			y:boxa.y+boxa.h/2},
+		                {x:boxb.x,			y:boxa.y+boxa.h/2}]);
 		}
 	}
 	
@@ -175,17 +186,28 @@ require(["jquery","jqueryui"], function($,$ui) {
 		var boxa = box(parenta);
 		var boxb = box(parentb);
 		var boxc = box(child);
+		var startx = boxa.x+boxa.w + (boxb.x- boxa.x-boxa.w)/2;
+		var inty = (boxc.y+boxa.y+boxa.h)/2;
 		
 	    var ctx=treeCanvasCtx(treediv);
-        ctx.beginPath();
-        var startx = boxa.x+boxa.w + (boxb.x- boxa.x-boxa.w)/2;
-        var inty = (boxc.y+boxa.y+boxa.h)/2;
-        ctx.moveTo(startx,boxa.y+boxa.h/2);
-        ctx.lineTo(startx,inty);
-        ctx.lineTo(boxc.x+boxc.w/2,inty);
-        ctx.lineTo(boxc.x+boxc.w/2,boxc.y);
-        ctx.strokeStyle = 'black';
+	    lines(ctx, [{x:startx,			y:boxa.y+boxa.h/2},
+	                {x:startx,			y:inty},
+	                {x:boxc.x+boxc.w/2,	y:inty},
+	                {x:boxc.x+boxc.w/2,	y:boxc.y}]);
+	}
+	
+	function lines(ctx, tab){
+		 ctx.save();
+	    ctx.strokeStyle = 'rgba(0,0,0,1.0)';
+	    ctx.lineWidth = 1;
+    	ctx.beginPath();
+    	// round and +0.5 are used to avoid anti-aliasing
+        ctx.moveTo(Math.round(tab[0].x) + 0.5,Math.round(tab[0].y) + 0.5);
+        for ( var int = 1; int < tab.length; int++) {
+        	ctx.lineTo(Math.round(tab[int].x) + 0.5,Math.round(tab[int].y) + 0.5);
+		}
         ctx.stroke();
+        ctx.restore();
 	}
 	
 });

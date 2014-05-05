@@ -6,7 +6,7 @@
     <h2>Family Tree.</h2>
 	
 			<div id="family-tree-1" class="family-tree">
-			<canvas id="canvas"></canvas>
+			
 			<div id="generation_0" class="generation"></div>
 		</div>
 	
