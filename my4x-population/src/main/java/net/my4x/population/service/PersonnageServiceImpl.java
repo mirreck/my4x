@@ -5,18 +5,19 @@ import java.util.List;
 
 import net.my4x.population.model.Blason;
 import net.my4x.population.model.BlasonElement;
+import net.my4x.population.model.FakerDwarf;
 import net.my4x.population.model.Family;
 import net.my4x.population.model.Gender;
 import net.my4x.population.model.HeradicFigure;
 import net.my4x.population.model.HeraldicColor;
 import net.my4x.population.model.Personnage;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.github.javafaker.fr.FakerFr;
 import com.google.common.collect.Lists;
 
 @Service
@@ -24,7 +25,7 @@ public class PersonnageServiceImpl implements PersonnageService {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(PersonnageServiceImpl.class);
    
-   private FakerFr faker = new FakerFr();
+   private FakerDwarf faker = new FakerDwarf();
    
    private int currentYear = 1900;
    
@@ -94,7 +95,7 @@ public class PersonnageServiceImpl implements PersonnageService {
    }
    
    private Personnage generatePersonnage(Gender gender, int yearmin, int yearmax, List<Personnage> family, int generation, RecurseDirection dir){
-      return generatePersonnage(gender, yearmin, yearmax, family, generation, faker.lastName(), dir);
+      return generatePersonnage(gender, yearmin, yearmax, family, generation, StringUtils.capitalize(faker.lastName()), dir);
    }
    
    private Personnage generatePersonnage(Gender gender, int yearmin, int yearmax, List<Personnage> family, int generation, String lastName, RecurseDirection dir){

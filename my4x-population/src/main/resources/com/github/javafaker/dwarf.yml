@@ -1,0 +1,48 @@
+dwarf:
+  faker:
+    address:
+      country: ['Afghanistan', 'Afrique du sud', 'Albanie', 'AlgÃ©rie', 'Allemagne', 'Andorre', 'Angola', 'Anguilla', 'Antarctique', 'Antigua et Barbuda', 'Antilles nÃ©erlandaises', 'Arabie saoudite', 'Argentine', 'ArmÃ©nie', 'Aruba', 'Australie', 'Autriche', 'AzerbaÃ¯djan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Belgique', 'Belize', 'Benin', 'Bermudes (Les)', 'Bhoutan', 'BiÃ©lorussie', 'Bolivie', 'Bosnie-HerzÃ©govine', 'Botswana', 'Bouvet (ÃŽles)', 'Brunei', 'BrÃ©sil', 'Bulgarie', 'Burkina Faso', 'Burundi', 'Cambodge', 'Cameroun', 'Canada', 'Cap Vert', 'Cayman (ÃŽles)', 'Chili', 'Chine (RÃ©p. pop.)', 'Christmas (ÃŽle)', 'Chypre', 'Cocos (ÃŽles)', 'Colombie', 'Comores', 'Cook (ÃŽles)', 'CorÃ©e du Nord', 'CorÃ©e, Sud', 'Costa Rica', 'Croatie', 'Cuba', 'CÃ´te d\'Ivoire', 'Danemark', 'Djibouti', 'Dominique', 'Ã‰gypte', 'El Salvador', 'Ã‰mirats arabes unis', 'Ã‰quateur', 'Ã‰rythrÃ©e', 'Espagne', 'Estonie', 'Ã‰tats-Unis', 'Ethiopie', 'Falkland (ÃŽle)', 'Fidji (RÃ©publique des)', 'Finlande', 'France', 'FÃ©roÃ© (ÃŽles)', 'Gabon', 'Gambie', 'Ghana', 'Gibraltar', 'Grenade', 'Groenland', 'GrÃ¨ce', 'Guadeloupe', 'Guam', 'Guatemala', 'GuinÃ©e', 'GuinÃ©e Equatoriale', 'GuinÃ©e-Bissau', 'Guyane', 'Guyane franÃ§aise', 'GÃ©orgie', 'GÃ©orgie du Sud et Sandwich du Sud (ÃŽles)', 'HaÃ¯ti', 'Heard et McDonald (ÃŽles)', 'Honduras', 'Hong Kong', 'Hongrie', 'ÃŽles Mineures Ã‰loignÃ©es des Ã‰tats-Unis', 'Inde', 'IndonÃ©sie', 'Irak', 'Iran', 'Irlande', 'Islande', 'IsraÃ«l', 'Italie', 'JamaÃ¯que', 'Japon', 'Jordanie', 'Kazakhstan', 'Kenya', 'Kirghizistan', 'Kiribati', 'Koweit', 'La Barbad', 'Laos', 'Lesotho', 'Lettonie', 'Liban', 'Libye', 'LibÃ©ria', 'Liechtenstein', 'Lithuanie', 'Luxembourg', 'Macau', 'MacÃ©doine', 'Madagascar', 'Malaisie', 'Malawi', 'Maldives (ÃŽles)', 'Mali', 'Malte', 'Mariannes du Nord (ÃŽles)', 'Maroc', 'Marshall (ÃŽles)', 'Martinique', 'Maurice', 'Mauritanie', 'Mayotte', 'Mexique', 'MicronÃ©sie (Ã‰tats fÃ©dÃ©rÃ©s de)', 'Moldavie', 'Monaco', 'Mongolie', 'Montserrat', 'Mozambique', 'Myanmar', 'Namibie', 'Nauru', 'Nepal', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk (ÃŽles)', 'NorvÃ¨ge', 'Nouvelle CalÃ©donie', 'Nouvelle-ZÃ©lande', 'Oman', 'Ouganda', 'OuzbÃ©kistan', 'Pakistan', 'Palau', 'Panama', 'Papouasie-Nouvelle-GuinÃ©e', 'Paraguay', 'Pays-Bas', 'Philippines', 'Pitcairn (ÃŽles)', 'Pologne', 'PolynÃ©sie franÃ§aise', 'Porto Rico', 'Portugal', 'PÃ©rou', 'Qatar', 'Roumanie', 'Royaume-Uni', 'Russie', 'Rwanda', 'RÃ©p. DÃ©m. du Congo', 'RÃ©publique centrafricaine', 'RÃ©publique Dominicaine', 'RÃ©publique tchÃ¨que', 'RÃ©union (La)', 'Sahara Occidental', 'Saint Pierre et Miquelon', 'Saint Vincent et les Grenadines', 'Saint-Kitts et Nevis', 'Saint-Marin (RÃ©p. de)', 'Sainte HÃ©lÃ¨ne', 'Sainte Lucie', 'Samoa', 'Samoa', 'Seychelles', 'Sierra Leone', 'Singapour', 'Slovaquie', 'SlovÃ©nie', 'Somalie', 'Soudan', 'Sri Lanka', 'Suisse', 'Suriname', 'SuÃ¨de', 'Svalbard et Jan Mayen (ÃŽles)', 'Swaziland', 'Syrie', 'SÃ£o TomÃ© et PrÃ­ncipe (RÃ©p.)', 'SÃ©nÃ©gal', 'Tadjikistan', 'Taiwan', 'Tanzanie', 'Tchad', 'Territoire britannique de l\'ocÃ©an Indien', 'Territoires franÃ§ais du sud', 'Thailande', 'Timor', 'Togo', 'Tokelau', 'Tonga', 'TrinitÃ© et Tobago', 'Tunisie', 'TurkmÃ©nistan', 'Turks et CaÃ¯ques (ÃŽles)', 'Turquie', 'Tuvalu', 'Ukraine', 'Uruguay', 'Vanuatu', 'Vatican (Etat du)', 'Venezuela', 'Vierges (ÃŽles)', 'Vierges britanniques (ÃŽles)', 'Vietnam', 'Wallis et Futuna (ÃŽles)', 'Yemen', 'Yougoslavie', 'Zambie', 'ZaÃ¯re', 'Zimbabwe']
+      street_address_number: ['#####', '####', '###']
+      street_address: ['{{address.street_address_number}} {{address.street_name.formats}}']
+      street_prefix: ["AllÃ©e", "Voie", "Rue", "Avenue", "Boulevard", "Quai", "Passage", "Impasse", "Place"]
+      street_suffix: ["du {{address.street_suffix_du}}","de {{address.street_suffix_de}}","de la {{address.street_suffix_dela}}","des {{address.street_suffix_des}}"]
+      street_suffix_du: ["Moulin","Port","Printemps","Fleuve"]
+      street_suffix_de: ["Paris","Lille"]
+      street_suffix_dela: ["Poste","Mairie","Marne","Mer","RiviÃ¨re","Manche"]
+      street_suffix_des: ["ArmÃ©es","Fleurs","ChÃªnes","Peupliers","Tilleuls","Rosiers","Lilas","Cerisiers","Accacias"]
+      street_person_name: ['{{name.male_first_name}} {{last_name}}','{{name.female_first_name}} {{last_name}}','Saint-{{name.male_first_name}}','Sainte-{{name.female_first_name}}']
+      street_name:
+        formats: ['{{address.street_prefix}} {{address.street_suffix}}','{{address.street_prefix}} {{address.street_person_name}}']
+      secondary_address: ['Apt. ###', 'Suite ###']
+      postcode: ['#####']
+    city:
+      city_prefix: [North, East, West, South, New, Lake, Port]
+      city_suffix: [town, ton, land, ville, berg, burgh, borough, bury, view, port, mouth, stad, furt, chester, mouth, fort, haven, side, shire]
+      formats: ['{{city.city_prefix}}{{first_name}}{{city.city_suffix}}']     
+    company:
+      suffix: [Inc, and Sons, LLC, Group]
+    internet:
+      free_email: [gmail.com, yahoo.com, hotmail.com]
+      domain_suffix: [com, biz, info, name, net, org]
+    lorem:
+      words: [alias, consequatur, aut, perferendis, sit, voluptatem, accusantium, doloremque, aperiam, eaque, ipsa, quae, ab, illo, inventore, veritatis, et, quasi, architecto, beatae, vitae, dicta, sunt, explicabo, aspernatur, aut, odit, aut, fugit, sed, quia, consequuntur, magni, dolores, eos, qui, ratione, voluptatem, sequi, nesciunt, neque, dolorem, ipsum, quia, dolor, sit, amet, consectetur, adipisci, velit, sed, quia, non, numquam, eius, modi, tempora, incidunt, ut, labore, et, dolore, magnam, aliquam, quaerat, voluptatem, ut, enim, ad, minima, veniam, quis, nostrum, exercitationem, ullam, corporis, nemo, enim, ipsam, voluptatem, quia, voluptas, sit, suscipit, laboriosam, nisi, ut, aliquid, ex, ea, commodi, consequatur, quis, autem, vel, eum, iure, reprehenderit, qui, in, ea, voluptate, velit, esse, quam, nihil, molestiae, et, iusto, odio, dignissimos, ducimus, qui, blanditiis, praesentium, laudantium, totam, rem, voluptatum, deleniti, atque, corrupti, quos, dolores, et, quas, molestias, excepturi, sint, occaecati, cupiditate, non, provident, sed, ut, perspiciatis, unde, omnis, iste, natus, error, similique, sunt, in, culpa, qui, officia, deserunt, mollitia, animi, id, est, laborum, et, dolorum, fuga, et, harum, quidem, rerum, facilis, est, et, expedita, distinctio, nam, libero, tempore, cum, soluta, nobis, est, eligendi, optio, cumque, nihil, impedit, quo, porro, quisquam, est, qui, minus, id, quod, maxime, placeat, facere, possimus, omnis, voluptas, assumenda, est, omnis, dolor, repellendus, temporibus, autem, quibusdam, et, aut, consequatur, vel, illum, qui, dolorem, eum, fugiat, quo, voluptas, nulla, pariatur, at, vero, eos, et, accusamus, officiis, debitis, aut, rerum, necessitatibus, saepe, eveniet, ut, et, voluptates, repudiandae, sint, et, molestiae, non, recusandae, itaque, earum, rerum, hic, tenetur, a, sapiente, delectus, ut, aut, reiciendis, voluptatibus, maiores, doloribus, asperiores, repellat]
+    name:
+      male_first_name: [Nalri, Grunzad, Fimund, Thond, Herni, Dwinund, Runbur, Farbur, Klum, Gilum, Morkon, Hero, Dwinkon, Thrgol, Harlin, Dorim, Gomaim, Kldri, Bofdin, Fimgin, Klrund, Gomond, Duror, Habar, Dalar, Simri, Harim, Ragbur, Brogrim, Druond, Balbur, Grunin, Grurund, Fimgrim, Belmin, Fimtri, Dormin, Dorzad, Baror, Dalmin,Gomi, Bolain, Boli, Brobar, Dalaim, Bofar, Grobur, Moraim, Munak, Thrkk, Dur, Klin, Klkon, Morbur, Thortil, Thorar, Runak, Dimur, Harond, Dalil, Kldri, Fimdin, Hertil, Di, Calur, Dalunn, Grurim, Klo, Klgrim, Ovtil, Chaltil, Balri, Gilil, Brorund, Broim, Gardin, Bbur, Herbur, Kilor, Farin]
+      female_first_name: [Morila, Harondi, Thingrima, Gimrimi, Dili, Farria, Gilumma, Bumma, Ragbari, Gila, Gargoli, Calala, Norgrima, Gronia, Balgoli, Drutria, Garon, Bofmina, Klon, Ragili, Bolria, Nalgrima, Belbura, Klon, Klunni, Gilnia, Munia, Durola, Bulrundi, Runria, Broola, Kilmina, Storkka, Kilumma, Bofbura, Nalunni, Gruunni, Dwgini, Dwinina, Druola,Dwinon,Bgoli, Kilola, Nalbura, Garrundi, Balrimi, Garraka, Gimgari, Simgini, Klip, Gridina, Gorria, Norala, Bilon, Herondi, Runia, Dori, Dkka, Thnia, Bofona, Haola, Garkona, Gilzadi, Gorina, Gomdina, Chalraka, Runundi, Fimraka, Stornia, Ovbura, Groumma, Groraka, Grunia, Gilona, Drugari, Hadria, Bulola, Bofgrima, Bofia, Gordria]
+      suffix_cons: [fer, pierre, mithril, plomb, fonte, tonnerre] 
+      suffix_voy: [acier, or, argent]
+      prefix_nom: [pied, bras, main, tete, barbe, casque, marteau, hache]
+      prefix_verbe: [ecrase, casse]
+      title: [M, Mme, Mlle, Dr, Prof]
+      male_title: [M, Dr, Prof]
+      female_title: [Mme, Mlle, Dr, Prof]
+      last_name: ['{{name.prefix_nom}}de{{name.suffix_cons}}', '{{name.prefix_nom}}d{{name.suffix_voy}}', '{{name.prefix_verbe}}{{name.suffix_cons}}']
+      male_formats:{'{{name.male_title}} {{name.male_first_name}} {{last_name}}': 1,  '{{name.male_first_name}} {{last_name}}': 3}
+      female_formats:{'{{name.female_title}} {{name.female_first_name}} {{last_name}}': 1, '{{name.female_first_name}} {{last_name}}': 3}
+      formats:['{{name.male_formats}}', '{{name.female_formats}}']
+    phone_number:
+      formats: ['01########', '02########', '03########', '04########', '05########', '06########', '07########', '+33 1########', '+33 2########', '+33 3########', '+33 4########', '+33 5########', '+33 6########', '+33 7########']
+    measurements:
+      height: {'min': 150, 'max': 210}
+      eye_color: {bleu: 47, vert: 12, marron: 16, noir: 25}
+      

@@ -233,7 +233,7 @@ public class Level {
       }
       
       boolean eligible(){
-         return xsize() >= 3 && ysize() >= 3;
+         return xsize() >= 2 && ysize() >= 2;
       }
       @Override
       public String toString() {
@@ -258,7 +258,7 @@ public class Level {
                      createRoom(dims);
                      roomcreated = true;
                   } else if(index > 1){
-                     LOGGER.debug("x={} y={} no dims = {}",new Object[]{i,j,dims});
+                     //LOGGER.debug("x={} y={} no dims = {}",new Object[]{i,j,dims});
                   }
                }
             }
@@ -273,16 +273,18 @@ public class Level {
       Dims res = init;
       
       int width = init.xmax - init.xmin;
-      int newwidth = 2 + RandomUtils.nextInt(width-2);
+      int newwidth = 1 + RandomUtils.nextInt(width-1);
       newwidth = newwidth > max?max:newwidth;
       res.xmin = init.xmin + RandomUtils.nextInt(width-newwidth);
       res.xmax = res.xmin+newwidth;
       
       int height = init.ymax - init.ymin;
-      int newheight = 2 + RandomUtils.nextInt(height-2);
+      int newheight = 1 + RandomUtils.nextInt(height-1);
       newheight = newheight > max?max:newheight;
       res.ymin = init.ymin + RandomUtils.nextInt(height-newheight);
       res.ymax = res.ymin+newheight;
+//      res.xmax = res.xmin+2;
+//      res.ymax = res.ymin+2;
       
       return res;
    }
@@ -297,15 +299,15 @@ public class Level {
             right = true,
             up = true,
             down = true;
-      while(left || right ||up|| down){
-         if(left){
-            for (int i = res.ymin; i <= res.ymax; i++) {
-               left &= roomAllowed(res.xmin-1, i);
-            }
-            if(left){
-               res.xmin--;
-            }
-         }
+      while(right ||up){
+//         if(left){
+//            for (int i = res.ymin; i <= res.ymax; i++) {
+//               left &= roomAllowed(res.xmin-1, i);
+//            }
+//            if(left){
+//               res.xmin--;
+//            }
+//         }
          
          if(right){
             for (int i = res.ymin; i <= res.ymax; i++) {
@@ -324,14 +326,14 @@ public class Level {
                res.ymax++;;
             }
          }
-         if(down){
-            for (int i = res.xmin; i <= res.xmax; i++) {
-               down &= roomAllowed(i,res.ymin-1);
-            }
-            if(down){
-               res.ymin--;
-            }
-         }
+//         if(down){
+//            for (int i = res.xmin; i <= res.xmax; i++) {
+//               down &= roomAllowed(i,res.ymin-1);
+//            }
+//            if(down){
+//               res.ymin--;
+//            }
+//         }
          
       }
       return res;
