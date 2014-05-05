@@ -127,8 +127,10 @@ public class PersonnageServiceImpl implements PersonnageService {
    }
    private Blason randomBlason(){
       Blason b = new Blason();
-      b.add(new BlasonElement(HeradicFigure.BASE,randomHeraldicColor()));
-      b.add(new BlasonElement(randomHeradicFigure(),randomHeraldicColor()));
+      HeraldicColor maincolor = randomHeraldicColor();
+      
+      b.add(new BlasonElement(HeradicFigure.BASE,maincolor));
+      b.add(new BlasonElement(randomHeradicFigure(),faker.randomElement(maincolor.matchingColors())));
       return b;
    }
    

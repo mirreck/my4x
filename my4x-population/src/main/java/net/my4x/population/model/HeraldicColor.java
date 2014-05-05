@@ -9,17 +9,33 @@ public enum HeraldicColor {
    SANGUINE("C00000"),
    MURE("800040"),
    SABLE("000000"),
-   ARGENT("e0e0e0"),
-   OR("ffe000");
+   ARGENT("e0e0e0",ColorFamily.METAL),
+   OR("ffe000",ColorFamily.METAL);
+   
+   private enum ColorFamily{
+      EMAIL,METAL
+   };
    
    private String code;
+   private ColorFamily colorFamily = ColorFamily.EMAIL;
 
+   private HeraldicColor(String code, ColorFamily f) {
+      this.code = code;
+      this.colorFamily = f;
+   }
    private HeraldicColor(String code) {
       this.code = code;
    }
 
    public String getCode() {
       return code;
+   }
+   public HeraldicColor[] matchingColors(){
+      switch(this.colorFamily){
+         case EMAIL: return new HeraldicColor[]{ARGENT,OR};
+         case METAL: return new HeraldicColor[]{AZUR,GUEULES,ORANGE,SINOPLE,POURPRE,SANGUINE,MURE,SABLE};
+         default :return null;
+      }
    }
   
 }
