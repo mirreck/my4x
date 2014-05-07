@@ -260,7 +260,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		// compute map move
 		$( '#indoormap .currenttile #user').remove();
 		$( '#indoormap .currenttile').removeClass( "currenttile" );
-		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).append('<i id="user" class="icon-user">');
+		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).prepend('<i id="user" class="icon-user">');
 	};
 	
 	function reachablexy(level,x,y){
@@ -295,7 +295,10 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		}
 		if(tile == 'D'){
 			content = '<div class="door"></div>';
-		} 
+		}
+		if(tile == 'E'){
+			content = '<div class="door"></div>';
+		}
 		return content;
 	}
 	function tileMiniContent(tile){
@@ -305,6 +308,9 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		}
 		if(tile == 'D'){
 			content = '<i class="icon-ex-door"></i>';
+		}
+		if(tile == 'E'){
+			content = '<i class="icon-ex-door gueules"></i>';
 		} 
 		return content;
 	}
