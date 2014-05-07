@@ -10,6 +10,8 @@ import net.my4x.population.service.PersonnageService;
 import net.my4x.services.dungeon.DungeonService;
 import net.my4x.services.dungeon.model.Dungeon;
 import net.my4x.services.map.MapTileService;
+import net.my4x.talk.model.TalkStep;
+import net.my4x.talk.service.TalkService;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -36,6 +38,9 @@ public class MainController {
    @Autowired
    private PersonnageService personnageService;
    
+   @Autowired
+   private TalkService talkService;
+   
    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
    
 	@RequestMapping("home")
@@ -58,7 +63,15 @@ public class MainController {
       return "family";
    }   
 	
-	
+   @RequestMapping("rest/talk/{id}/{step}")
+   @ResponseBody
+   public TalkStep talk(@PathVariable("id") String id, @PathVariable("step") String step) {
+
+      LOGGER.debug("talk:"+id);
+      return talkService.talk(id, id, step);
+   }
+   
+   
    @RequestMapping("rest/dungeon/{id}")
    @ResponseBody
    public Dungeon dungeon(@PathVariable("id") String id) {

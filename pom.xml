@@ -117,5 +117,6 @@
   	<module>my4x-map</module>
   	<module>my4x-dungeon</module>
     <module>my4x-population</module>
+    <module>my4x-talk</module>
   </modules>
 </project>
