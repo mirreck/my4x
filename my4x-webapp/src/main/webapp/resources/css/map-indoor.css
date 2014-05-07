@@ -83,6 +83,25 @@
 			background-image : url(../images/indoor-tiles.png);
 			background-repeat:no-repeat;
 		}
+		
+		.container div.tile_wall div.door{
+			background-image : url(../images/indoor-tiles.png);
+			background-repeat:no-repeat;
+			height: 100px; 
+			width: 100px;
+		}
+		.container div.shE div.door{
+			background-position:-400px -400px;
+		}
+		.container div.shO div.door{
+			background-position:-400px 0px;
+		}
+		.container div.shN div.door{
+			background-position:0px -400px;
+		}
+		.container div.shS div.door{
+			background-position:0px 0px;
+		}
 		.shE{
 			background-position:0px -200px;
 		}
@@ -90,7 +109,7 @@
 			background-position:-100px -300px;
 		}
 		.shES{
-			background-position:0px -200px;
+			background-position:-100px -100px;
 		}
 		.shOS{
 			background-position:-300px -100px;

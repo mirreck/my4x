@@ -105,7 +105,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 				for (var x=0; x<level.width;x++)
 				{
 					var style = tileStyle(level.tiles[y*level.width+x]);
-					var content = tileContent(level.tiles[y*level.width+x]);
+					var content = tileMiniContent(level.tiles[y*level.width+x]);
 					var td = $('<td>').addClass(style).attr("id","mini_"+x+"_"+y+"_"+i);
 					td.append(content);
 					row.append(td);
@@ -267,11 +267,12 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		if(x<1 || y<1|| x>level.width-1 || y>level.height-1){
 			return false;
 		}
-		return reachable(level.tiles[y*level.width+x]);
+		var tile = level.tiles[y*level.width+x];
+		return tile ==' ' || tile =='X'|| tile =='S';
 	}
 	
 	function reachable(tile){
-		return tile ==' ' || tile =='X'|| tile =='S';
+		return tile ==' ' || tile =='X'|| tile =='S'|| tile =='D';
 	}
 	function tileStyle(tile){
 		var styleclass = "tile_wall";
@@ -288,6 +289,16 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	}
 	
 	function tileContent(tile){
+		var content = "";
+		if(tile == 'S'){
+			content = '<i class="icon-ex-stairs-down"></i>';
+		}
+		if(tile == 'D'){
+			content = '<div class="door"></div>';
+		} 
+		return content;
+	}
+	function tileMiniContent(tile){
 		var content = "";
 		if(tile == 'S'){
 			content = '<i class="icon-ex-stairs-down"></i>';
