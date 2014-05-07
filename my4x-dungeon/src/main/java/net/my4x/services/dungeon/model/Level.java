@@ -40,6 +40,7 @@ public class Level {
       }
       this.level = level;
       fillWithRooms();
+      fillWithDoors();
 //      setValue(new Pos(width/2,height-1), TileType.NORTH);
 //      setValue(new Pos(width/2,0), TileType.SOUTH);
 //      //randomize();
@@ -233,7 +234,7 @@ public class Level {
       }
       
       boolean eligible(){
-         return xsize() >= 2 && ysize() >= 2;
+         return xsize() >= 3 && ysize() >= 3;
       }
       @Override
       public String toString() {
@@ -267,21 +268,49 @@ public class Level {
        
    }
    
+   public void fillWithDoors(){
+      
+         for (int i = 0; i < width -5; i++) {
+            for (int j = 0; j < height -5; j++) {
+               if(isType(i, j, TileType.ROOM) && isType(i+1, j, TileType.WALL) && isType(i+2, j, TileType.WALL) && isType(i+3, j, TileType.ROOM)){
+                  setValue(i+1, j, TileType.DOOR);
+                  setValue(i+2, j, TileType.DOOR);
+               }
+               if(isType(i, j, TileType.ROOM) && isType(i, j+1, TileType.WALL) && isType(i, j+2, TileType.WALL) && isType(i, j+3, TileType.ROOM)){
+                  setValue(i, j+1, TileType.DOOR);
+                  setValue(i, j+2, TileType.DOOR);
+               }
+            }
+         }
+       
+   }
+   
 
    private Dims reduce(Dims init, int max){
       LOGGER.debug("reduce dims={}",init);
       Dims res = init;
       
       int width = init.xmax - init.xmin;
-      int newwidth = 1 + RandomUtils.nextInt(width-1);
+      //int newwidth = 2 + RandomUtils.nextInt(width-2);
+      int newwidth = width;
       newwidth = newwidth > max?max:newwidth;
-      res.xmin = init.xmin + RandomUtils.nextInt(width-newwidth);
+      if(newwidth < width){
+         res.xmin = init.xmin + RandomUtils.nextInt(width-newwidth);
+      } else {
+         res.xmin = init.xmin;
+      }
+     
       res.xmax = res.xmin+newwidth;
       
       int height = init.ymax - init.ymin;
-      int newheight = 1 + RandomUtils.nextInt(height-1);
+      //int newheight = 2 + RandomUtils.nextInt(height-2);
+      int newheight = height;
       newheight = newheight > max?max:newheight;
-      res.ymin = init.ymin + RandomUtils.nextInt(height-newheight);
+      if(newheight < height){
+         res.ymin = init.ymin + RandomUtils.nextInt(height-newheight);
+      } else {
+         res.ymin = init.ymin;
+      }
       res.ymax = res.ymin+newheight;
 //      res.xmax = res.xmin+2;
 //      res.ymax = res.ymin+2;
@@ -346,19 +375,19 @@ public class Level {
    public void createRoom(int xmin, int xmax, int ymin, int ymax){
       
       roomcount++;
-      for (int i = xmin; i <= xmax; i++) {
-         for (int j = ymin; j <= ymax; j++) {
+      for (int i = xmin+1; i <= xmax-1; i++) {
+         for (int j = ymin+1; j <= ymax-1; j++) {
             setValue(i,j, TileType.ROOM);
          }
       }
-      for (int i = xmin-1; i <= xmax+1; i++) {
-         setValue(i, ymin-1, TileType.WALL);
-         setValue(i, ymax+1, TileType.WALL);
+      for (int i = xmin; i <= xmax; i++) {
+         setValue(i, ymin, TileType.WALL);
+         setValue(i, ymax, TileType.WALL);
       }
       
-      for (int i = ymin-1; i <= ymax+1; i++) {
-         setValue(xmin-1,i, TileType.WALL);
-         setValue(xmax+1,i, TileType.WALL);
+      for (int i = ymin; i <= ymax; i++) {
+         setValue(xmin,i, TileType.WALL);
+         setValue(xmax,i, TileType.WALL);
       }
       rooms.add(new Room(roomcount, xmin, xmax, ymin, ymax, "Test"));
    }
