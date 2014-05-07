@@ -53,7 +53,8 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 				{
 					var styleclass = tileStyle(level.tiles[y*level.width+x]);
 					var content = tileContent(level.tiles[y*level.width+x]);
-					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="fa-stack '+styleclass+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+					var shape = tileShape(level, x, y);
+					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="fa-stack '+styleclass+' sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
 				}
 			}
 		}
@@ -62,6 +63,36 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			return parseInt($(a).attr( "data-level")) > parseInt($(b).attr("data-level")) ? 1 : -1;
 		}).appendTo('#indoormap');
 	};
+	function tileShape(level, x, y){
+		var res = "";
+		if(reachablexy(level,x+1,y)){
+			res += "E";
+		}
+		if(reachablexy(level,x-1,y)){
+			res += "O";
+		}
+		if(reachablexy(level,x,y+1)){
+			res += "N";
+		}
+		if(reachablexy(level,x,y-1)){
+			res += "S";
+		}
+		if(res == ""){
+			if(reachablexy(level,x+1,y+1)){
+				res += "ne";
+			}
+			if(reachablexy(level,x-1,y+1)){
+				res += "no";
+			}
+			if(reachablexy(level,x+1,y-1)){
+				res += "se";
+			}
+			if(reachablexy(level,x-1,y-1)){
+				res += "so";
+			}
+		}
+		return res;
+	}
 	function init_minimap(json){
 		for (var i=0;i<json.levels.length;i++){
 			var level = json.levels[i];
@@ -231,8 +262,16 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		$( '#indoormap .currenttile').removeClass( "currenttile" );
 		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).append('<i id="user" class="icon-user">');
 	};
+	
+	function reachablexy(level,x,y){
+		if(x<1 || y<1|| x>level.width-1 || y>level.height-1){
+			return false;
+		}
+		return reachable(level.tiles[y*level.width+x]);
+	}
+	
 	function reachable(tile){
-		return tile ==' ' || tile =='X'|| tile =='S'|| tile =='D';
+		return tile ==' ' || tile =='X'|| tile =='S';
 	}
 	function tileStyle(tile){
 		var styleclass = "tile_wall";
