@@ -1,6 +1,7 @@
 package net.my4x.services.dungeon.digger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.my4x.services.dungeon.model.Direction;
@@ -37,24 +38,29 @@ public class Digger {
    
    
    public void work() {
-      currentLevel().setValue(new Pos(dungeon.getLevel(z).getHeight()-1,0), TileType.ENTRACE);
-      
-      
-      currentLevel().setValue(position, TileType.ENTRACE);
-//      while(DiggerAction.DIGROOM.actionAvailable(this)){
-//         DiggerAction.DIGROOM.performAction(this);
+     
+//      
+//      currentLevel().setValue(position, TileType.ENTRACE);
+////      while(DiggerAction.DIGROOM.actionAvailable(this)){
+////         DiggerAction.DIGROOM.performAction(this);
+////      }
+//      
+//      DiggerAction action = nextAction();
+//      //LOGGER.debug("nextAction="+action);
+//      while (action != DiggerAction.STOP) {
+//         action.performAction(this);
+//         action = nextAction();
+//         //LOGGER.debug("nextAction="+action);
 //      }
+//      
       
-      DiggerAction action = nextAction();
-      //LOGGER.debug("nextAction="+action);
-      while (action != DiggerAction.STOP) {
-         action.performAction(this);
-         action = nextAction();
-         //LOGGER.debug("nextAction="+action);
+      currentLevel().createRoom(position.x-2, position.x+2,0,5);
+      Collection<Level> levels = dungeon.getLevels();
+      for (Level level : levels) {
+         level.fillWithDoors();
       }
+      currentLevel().setValue(position, TileType.ENTRACE);
       LOGGER.debug("digger finished at ="+this.getPosition());
-      currentLevel().setValue(position, TileType.DOOR);
-      
    }
    
    public Level currentLevel(){

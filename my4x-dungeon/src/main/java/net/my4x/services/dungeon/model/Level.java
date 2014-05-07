@@ -40,7 +40,6 @@ public class Level {
       }
       this.level = level;
       fillWithRooms();
-      fillWithDoors();
 //      setValue(new Pos(width/2,height-1), TileType.NORTH);
 //      setValue(new Pos(width/2,0), TileType.SOUTH);
 //      //randomize();
@@ -271,14 +270,22 @@ public class Level {
    public void fillWithDoors(){
       
          for (int i = 0; i < width -5; i++) {
-            for (int j = 0; j < height -5; j++) {
+            for (int j = 0; j < height; j++) {
                if(isType(i, j, TileType.ROOM) && isType(i+1, j, TileType.WALL) && isType(i+2, j, TileType.WALL) && isType(i+3, j, TileType.ROOM)){
-                  setValue(i+1, j, TileType.DOOR);
-                  setValue(i+2, j, TileType.DOOR);
+                  //if(RandomUtils.nextInt(4)>2){
+                     setValue(i+1, j, TileType.DOOR);
+                     setValue(i+2, j, TileType.DOOR);
+                  //}
                }
+            }
+         }
+         for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height -5; j++) {
                if(isType(i, j, TileType.ROOM) && isType(i, j+1, TileType.WALL) && isType(i, j+2, TileType.WALL) && isType(i, j+3, TileType.ROOM)){
+                  //if(RandomUtils.nextInt(4)>1){
                   setValue(i, j+1, TileType.DOOR);
                   setValue(i, j+2, TileType.DOOR);
+                  //}
                }
             }
          }
@@ -381,13 +388,21 @@ public class Level {
          }
       }
       for (int i = xmin; i <= xmax; i++) {
-         setValue(i, ymin, TileType.WALL);
-         setValue(i, ymax, TileType.WALL);
+         if(getValue(i, ymin)!= TileType.ROOM){
+            setValue(i, ymin, TileType.WALL);
+         }
+         if(getValue(i, ymax)!= TileType.ROOM){
+            setValue(i, ymax, TileType.WALL);
+         }
       }
       
       for (int i = ymin; i <= ymax; i++) {
-         setValue(xmin,i, TileType.WALL);
-         setValue(xmax,i, TileType.WALL);
+         if(getValue(xmin, i)!= TileType.ROOM){
+            setValue(xmin,i, TileType.WALL);
+         }
+         if(getValue(xmax, i)!= TileType.ROOM){
+            setValue(xmax,i, TileType.WALL);
+         }
       }
       rooms.add(new Room(roomcount, xmin, xmax, ymin, ymax, "Test"));
    }
