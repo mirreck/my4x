@@ -1,11 +1,18 @@
 package net.my4x.utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.commons.io.IOUtils;
 
 public class SVGUtils {
@@ -21,12 +28,5 @@ public class SVGUtils {
       // Save the image.
       t.transcode(input, output);
    }
-   public static void main(String[] args) throws IOException, TranscoderException {
-      InputStream is = SVGUtils.class.getResourceAsStream("in.svg");
-      OutputStream out = new FileOutputStream("C:\\tmp\\GEN\\out.png"); 
-      svgToPng(is,out);
-      IOUtils.closeQuietly(is);
-      IOUtils.closeQuietly(out);
-      
-   }
+   
 }
