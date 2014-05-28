@@ -25,7 +25,7 @@ public abstract class AbstractMap {
    
    public void checkCoordinates(int x, int y){
       if(x <0 || x >= width || y <0 || y >= height){
-         throw new IllegalArgumentException("erreur dans les coordonn�es");
+         throw new IllegalArgumentException("erreur dans les coordonnées");
       }
    }
    
