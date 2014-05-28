@@ -260,7 +260,9 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		// compute map move
 		$( '#indoormap .currenttile #user').remove();
 		$( '#indoormap .currenttile').removeClass( "currenttile" );
-		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).prepend('<i id="user" class="icon-user">');
+		
+		var pj = $('<span id="user" class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i></span>');
+		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).prepend(pj);
 	};
 	
 	function reachablexy(level,x,y){

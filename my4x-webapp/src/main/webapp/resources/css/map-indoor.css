@@ -1,166 +1,177 @@
-		div#indoormap {
-			float:left;
-		}
-		
-		
-		div#indoormap div {
-			-webkit-transition: translate .2s, scale 1s, opacity 1s;
-			-moz-transition: translate .2s, scale 1s, opacity 1s;
-			-o-transition: translate .2s, scale 1s, opacity 1s;
-			transition: translate .2s, scale 1s, opacity 1s;
-		}
-		
-		div.indoorback{
-			transform: scale(0.75);
-			-moz-transform: scale(0.75);
-			-webkit-transform: scale(0.75);
-			-ms-transform: scale(0.75);
-			opacity:0.3;
-			filter: alpha(opacity=30);
-		}
-		div.indoorcurrent{
-			transform: scale(1.0);
-			-moz-transform: scale(1.0);
-			-webkit-transform: scale(1.0);
-			-ms-transform: scale(1.0);
-			opacity:1.0;
-			filter: alpha(opacity=100);
-		}
-		div.indoorfront{
-			transform: scale(1.25);
-			-moz-transform: scale(1.25);
-			-webkit-transform: scale(1.25);
-			-ms-transform: scale(1.25);
-			opacity:0.0;
-			filter: alpha(opacity=0);
-		}
-		div.indoorfloor .container > div {
-			-moz-user-select: none;
-			height: 100px; 
-			width: 100px;
-			font-size: 100px;
-			line-height: 100px;
-			position: absolute;
-			left: 0px;
-			top: 0px;
-		}
-		div.indoorfloor .container img{
-			max-width: none !important;
-		}
-		div.indoormap {
-			position:relative;
-			
-		}
-		div.indoormap, div.indoorfloor{
-			height: 700px; 
-			width: 700px;
-			display:block;
-			overflow: hidden;
-		}
-		
-		
-		div.indoorfloor{
-			position: absolute;
-			left: 0px;
-			top: 0px;
-		}
-		td.currenttile {		
-			background-color : #F00 !important;
-		}
-		div.currenttile i#user{
-			color : #F00 !important;
-		}
-		.tile_floor {
-			background-color : #AAE;
-		}
-		.tile_room {
-			background-color : #BBF;
-		}
-		.tile_wall {
-			background-color : #999;
-		}
-		.container div.tile_wall {
-			background-image : url(../images/indoor-tiles.png);
-			background-repeat:no-repeat;
-		}
-		
-		.container div.tile_wall div.door{
-			background-image : url(../images/indoor-tiles.png);
-			background-repeat:no-repeat;
-			height: 100px; 
-			width: 100px;
-		}
-		.container div.shE div.door{
-			background-position:-400px -400px;
-		}
-		.container div.shO div.door{
-			background-position:-400px 0px;
-		}
-		.container div.shN div.door{
-			background-position:0px -400px;
-		}
-		.container div.shS div.door{
-			background-position:0px 0px;
-		}
-		.shE{
-			background-position:0px -200px;
-		}
-		.shEN{
-			background-position:-100px -300px;
-		}
-		.shES{
-			background-position:-100px -100px;
-		}
-		.shOS{
-			background-position:-300px -100px;
-		}
-		.shON{
-			background-position:-300px -300px;
-		}
-		.shse{
-			background-position:-100px 0px;
-		}
-		.shne{
-			background-position:0px -300px;
-		}
-		.shso{
-			background-position:-300px 0px;
-		}
-		.shno{
-			background-position:-400px -300px;
-		}
-		
-		.shO{
-			background-position:-400px -200px;
-		}
-		.shS{
-			background-position:-200px 0px;
-		}
-		.shN{
-			background-position:-200px -400px;
-		}
-		.tile_rock {
-			background-color : #555;
-		}
-		div#indoorminimap{
-			position:relative;
-			float:left;
-			padding:10px;
-		}
-		table.mini {
-    		border-spacing: 0px;
-    		border-collapse: collapse;
-			border :none;
-			padding:0px;
-			spacing:0px;
-		}
-		
-		table.mini td {
-			height: 5px; 
-			width: 5px;
-			font-size: 5px;
-			line-height: 5px;
-			border :none;
-			padding:0px;
-		}
-		
+div#indoormap {
+	float:left;
+}
+
+
+div#indoormap div {
+	-webkit-transition: translate .2s, scale 1s, opacity 1s;
+	-moz-transition: translate .2s, scale 1s, opacity 1s;
+	-o-transition: translate .2s, scale 1s, opacity 1s;
+	transition: translate .2s, scale 1s, opacity 1s;
+}
+
+div.indoorback{
+	transform: scale(0.75);
+	-moz-transform: scale(0.75);
+	-webkit-transform: scale(0.75);
+	-ms-transform: scale(0.75);
+	opacity:0.3;
+	filter: alpha(opacity=30);
+}
+div.indoorcurrent{
+	transform: scale(1.0);
+	-moz-transform: scale(1.0);
+	-webkit-transform: scale(1.0);
+	-ms-transform: scale(1.0);
+	opacity:1.0;
+	filter: alpha(opacity=100);
+}
+div.indoorfront{
+	transform: scale(1.25);
+	-moz-transform: scale(1.25);
+	-webkit-transform: scale(1.25);
+	-ms-transform: scale(1.25);
+	opacity:0.0;
+	filter: alpha(opacity=0);
+}
+div.indoorfloor .container > div {
+	-moz-user-select: none;
+	height: 100px; 
+	width: 100px;
+	font-size: 100px;
+	line-height: 100px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+div.indoorfloor .container img{
+	max-width: none !important;
+}
+div.indoormap {
+	position:relative;
+	
+}
+div.indoormap, div.indoorfloor{
+	height: 700px; 
+	width: 700px;
+	display:block;
+	overflow: hidden;
+}
+
+
+div.indoorfloor{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+td.currenttile {		
+	background-color : #F00 !important;
+}
+div.currenttile i#user{
+	color : #F00 !important;
+}
+.tile_floor {
+	background-color : #AAE;
+}
+.tile_room {
+	background-color : #BBF;
+}
+.tile_wall {
+	background-color : #999;
+}
+.container div.tile_wall {
+	background-image : url(../images/indoor-tiles.png);
+	background-repeat:no-repeat;
+}
+
+.container div.tile_wall div.door{
+	background-image : url(../images/indoor-tiles.png);
+	background-repeat:no-repeat;
+	height: 100px; 
+	width: 100px;
+}
+.container div.shE div.door{
+	background-position:-400px -400px;
+}
+.container div.shO div.door{
+	background-position:-400px 0px;
+}
+.container div.shN div.door{
+	background-position:0px -400px;
+}
+.container div.shS div.door{
+	background-position:0px 0px;
+}
+.shE{
+	background-position:0px -200px;
+}
+.shEN{
+	background-position:-100px -300px;
+}
+.shES{
+	background-position:-100px -100px;
+}
+.shOS{
+	background-position:-300px -100px;
+}
+.shON{
+	background-position:-300px -300px;
+}
+.shse{
+	background-position:-100px 0px;
+}
+.shne{
+	background-position:0px -300px;
+}
+.shso{
+	background-position:-300px 0px;
+}
+.shno{
+	background-position:-400px -300px;
+}
+
+.shO{
+	background-position:-400px -200px;
+}
+.shS{
+	background-position:-200px 0px;
+}
+.shN{
+	background-position:-200px -400px;
+}
+.tile_rock {
+	background-color : #555;
+}
+div#indoorminimap{
+	position:relative;
+	float:left;
+	padding:10px;
+}
+table.mini {
+  		border-spacing: 0px;
+  		border-collapse: collapse;
+	border :none;
+	padding:0px;
+	spacing:0px;
+}
+
+table.mini td {
+	height: 5px; 
+	width: 5px;
+	font-size: 5px;
+	line-height: 5px;
+	border :none;
+	padding:0px;
+}
+#user{
+	font-size:60px;
+	width:100px;
+	height:100px;
+	text-align:center;
+	line-height:100px;
+    position: absolute;	
+}
+
+#user i{
+	line-height:100px;
+}
