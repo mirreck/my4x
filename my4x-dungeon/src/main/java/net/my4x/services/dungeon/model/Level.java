@@ -14,6 +14,8 @@ public class Level {
    
    private int index;
    
+   private Dungeon dungeon;
+   
    private static final Logger LOGGER = LoggerFactory.getLogger(Level.class);
    
    
@@ -29,7 +31,7 @@ public class Level {
    private int roomcount = 0;
    
    
-   public Level(int width, int height, int level, int index){
+   public Level(Dungeon dungeon,int width, int height, int level, int index){
       LOGGER.debug("width :"+width);
       LOGGER.debug("height :"+height);
       this.width = width;
@@ -39,7 +41,8 @@ public class Level {
          Arrays.fill(tileMap[i], TileType.ROCK);
       }
       this.level = level;
-      fillWithRooms();
+      this.dungeon = dungeon;
+      //fillWithRooms();
 //      setValue(new Pos(width/2,height-1), TileType.NORTH);
 //      setValue(new Pos(width/2,0), TileType.SOUTH);
 //      //randomize();
@@ -326,7 +329,8 @@ public class Level {
    }
    
    private boolean roomAllowed(int x, int y){
-      return isType(x, y, TileType.ROCK) && !isBorder(x, y);
+      boolean res = isType(x, y, TileType.ROCK);
+      return res;
    }
    
    private Dims growAsSquare(Dims init){
@@ -335,15 +339,21 @@ public class Level {
             right = true,
             up = true,
             down = true;
-      while(right ||up){
-//         if(left){
-//            for (int i = res.ymin; i <= res.ymax; i++) {
-//               left &= roomAllowed(res.xmin-1, i);
-//            }
-//            if(left){
-//               res.xmin--;
-//            }
-//         }
+      while(right ||up|| left|| down){
+         if(left){
+            for (int i = res.ymin; i <= res.ymax; i++) {
+               
+               boolean roomAllowed = roomAllowed(res.xmin-1, i);
+               left &= roomAllowed;
+            }
+            if(left){
+               res.xmin--;
+            }
+            if(res.xmax -res.xmin > 5){
+               left = false;
+               right= false;
+            }
+         }
          
          if(right){
             for (int i = res.ymin; i <= res.ymax; i++) {
@@ -351,6 +361,10 @@ public class Level {
             }
             if(right){
                res.xmax++;
+            }
+            if(res.xmax -res.xmin > 5){
+               left = false;
+               right= false;
             }
          }
          
@@ -361,19 +375,88 @@ public class Level {
             if(up){
                res.ymax++;;
             }
+            if(res.ymax -res.ymin > 5){
+               up = false;
+               down= false;
+            }
          }
-//         if(down){
-//            for (int i = res.xmin; i <= res.xmax; i++) {
-//               down &= roomAllowed(i,res.ymin-1);
-//            }
-//            if(down){
-//               res.ymin--;
-//            }
-//         }
+         if(down){
+            for (int i = res.xmin; i <= res.xmax; i++) {
+               down &= roomAllowed(i,res.ymin-1);
+            }
+            if(down){
+               res.ymin--;
+            }
+            if(res.ymax -res.ymin > 5){
+               up = false;
+               down= false;
+            }
+         }
          
       }
       return res;
    }
+   public void createRoomRecursive(Dims dims) {
+      //LOGGER.debug("createRoomRecursive dims={}",dims);
+      createRoomRecursive(dims.xmin, dims.xmax, dims.ymin, dims.ymax);
+   }
+   public void createRoomRecursive(int xmin, int xmax, int ymin, int ymax) {
+      createRoom(xmin, xmax, ymin, ymax);
+      roomFrom(xmin + (xmax-xmin)/2, ymax, xmin + (xmax-xmin)/2, ymax+1);
+      roomFrom(xmin + (xmax-xmin)/2, ymin, xmin + (xmax-xmin)/2, ymin-1);
+      roomFrom(xmin, ymin+(ymax-ymin)/2, xmin-1, ymin+(ymax-ymin)/2);
+      roomFrom(xmax, ymin+(ymax-ymin)/2, xmax+1, ymin+(ymax-ymin)/2);
+      if(upperLevel() != null){
+         roomFromLevel(xmin + (xmax-xmin)/2, ymin+(ymax-ymin)/2, upperLevel());
+      } else if(lowerLevel() != null){
+         roomFromLevel(xmin + (xmax-xmin)/2, ymin+(ymax-ymin)/2, lowerLevel());
+      }
+   }
+   private void roomFrom(int doorx, int doory, int x, int y) {
+      if(isType(x, y, TileType.ROCK)){
+         Dims dims = growAsSquare(new Dims(x, y));
+         if(dims.eligible()){
+            //dims = reduce(dims,5);
+            createRoomRecursive(dims);
+            setValue(doorx, doory, TileType.DOOR);
+            setValue(x, y, TileType.DOOR);
+            
+//            for (int i = 0; i < width; i++) {
+//               for (int j = 0; j < height -5; j++) {
+//                  if(isType(i, j, TileType.ROOM) && isType(i, j+1, TileType.WALL) && isType(i, j+2, TileType.WALL) && isType(i, j+3, TileType.ROOM)){
+//                     //if(RandomUtils.nextInt(4)>1){
+//                     setValue(i, j+1, TileType.DOOR);
+//                     setValue(i, j+2, TileType.DOOR);
+//                     //}
+//                  }
+//               }
+//            }
+            
+         }
+      }
+   }
+
+   private void roomFromLevel(int x, int y, Level level) {
+      if(level.isType(x, y, TileType.ROCK)){
+         Dims dims = level.growAsSquare(new Dims(x, y));
+         if(dims.eligible()){
+            //dims = reduce(dims,5);
+            level.createRoomRecursive(dims);
+            setValue(x, y, TileType.STAIRS);
+            level.setValue(x, y, TileType.STAIRS);
+         }
+      }
+   }
+
+   private Level upperLevel(){
+      return this.dungeon.getLevel(this.level +1);
+   }
+   
+   private Level lowerLevel(){
+      return this.dungeon.getLevel(this.level +1);
+   }
+   
+
    public void createRoom(Dims dims){
       LOGGER.debug("createRoom dims={}",dims);
       createRoom(dims.xmin, dims.xmax, dims.ymin, dims.ymax);
@@ -502,6 +585,10 @@ public class Level {
    public int getIndex() {
       return index;
    }
+
+
+
+
 
 
 }

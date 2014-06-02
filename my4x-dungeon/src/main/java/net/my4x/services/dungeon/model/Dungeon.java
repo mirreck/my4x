@@ -21,7 +21,7 @@ public class Dungeon {
       entrace = new Pos(width/2,0,0);
       int index = 1;
       for (int i = minLevel; i <= maxLevel; i++) {
-         levels.put(new Integer(i), new Level(width, width,i,index++));
+         levels.put(new Integer(i), new Level(this,width, width,i,index++));
       }
    }
 

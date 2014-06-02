@@ -53,12 +53,11 @@ public class Digger {
 //         //LOGGER.debug("nextAction="+action);
 //      }
 //      
-      
-      currentLevel().createRoom(position.x-2, position.x+2,0,5);
-      Collection<Level> levels = dungeon.getLevels();
-      for (Level level : levels) {
-         level.fillWithDoors();
-      }
+      currentLevel().createRoomRecursive(position.x-2, position.x+2,0,5);
+//      Collection<Level> levels = dungeon.getLevels();
+//      for (Level level : levels) {
+//         level.fillWithDoors();
+//      }
       currentLevel().setValue(position, TileType.ENTRACE);
       LOGGER.debug("digger finished at ="+this.getPosition());
    }
