@@ -261,7 +261,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		$( '#indoormap .currenttile #user').remove();
 		$( '#indoormap .currenttile').removeClass( "currenttile" );
 		
-		var pj = $('<span id="user" class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i></span>');
+		var pj = $('<span id="user" class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i><i class="icon-ex-pj_hair sable"></i></span>');
 		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).prepend(pj);
 	};
 	
