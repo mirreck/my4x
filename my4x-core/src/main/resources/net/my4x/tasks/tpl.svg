@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink='http://www.w3.org/1999/xlink'
-      version="1.1" width="500" height="500">
+      version="1.1" width="600" height="600">
   <title>Exemple simple de figure SVG</title>
   <desc>Cette figure est constituée d'un rectangle,
    d'un segment de droite et d'un cercle.</desc>
@@ -23,7 +23,26 @@
             <stop stop-color = "white" offset = "100%"/>
     </linearGradient>
     ##defs##
+
+	<path id="clipPathDoorShape" d="M-1000,-1000L1000,-1000L1000,1000L-1000,1000ZM19,81L81,81L91,39A80,80 0 0,0 9,39Z" style="stroke:black;fill:none"/>
+	
+    <clipPath id="clipPathDoors">
+    	<use x="0" y="0" width="100" height="100" xlink:href="#clipPathDoorShape" transform = "translate(300 0)"/>
+	</clipPath>
+	<clipPath id="clipPathDoors2">
+    	<use x="0" y="0" width="100" height="100" xlink:href="#clipPathDoorShape" transform = "translate(0 300) rotate(-90 50 50)"/>
+	</clipPath>
+		<clipPath id="clipPathDoors3">
+    	<use x="0" y="0" width="100" height="100" xlink:href="#clipPathDoorShape" transform = "translate(500 300) rotate(90 50 50)"/>
+	</clipPath>
+		<clipPath id="clipPathDoors4">
+    	<use x="0" y="0" width="100" height="100" xlink:href="#clipPathDoorShape" transform = "translate(300 500) rotate(180 50 50)"/>
+	</clipPath>
    </defs>
+   <g style="clip-path: url(#clipPathDoors);">
+	<g style="clip-path: url(#clipPathDoors2);">
+	<g style="clip-path: url(#clipPathDoors3);">
+	<g style="clip-path: url(#clipPathDoors4);">
 ##content##
-   
+   </g> </g>  </g> </g>  
 </svg>

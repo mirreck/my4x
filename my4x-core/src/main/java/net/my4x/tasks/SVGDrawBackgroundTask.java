@@ -11,8 +11,9 @@ public class SVGDrawBackgroundTask {
       InputStream is = SVGDrawBackgroundTask.class.getResourceAsStream("tpl.svg");
       String filecontent = IOUtils.toString(is);
       String content = "";
-      int[][] points = new int[][]{{200,100},{300,100},{300,200},{400,200},{400,300},{300,300},{300,400},{200,400}
-      ,{200,300},{100,300},{100,200},{200,200}};
+      int w = 200;
+      int[][] points = new int[][]{{200,100},{200+w,100},{200+w,200},{300+w,200},{300+w,200+w},{200+w,200+w},{200+w,300+w},{200,300+w}
+      ,{200,200+w},{100,200+w},{100,200},{200,200}};
       int[][] add = new int[][]{{-1,-1},{1,-1},{1,-1},{1,-1},{1,1},{1,1},{1,1},{-1,1}
       ,{-1,1},{-1,1},{-1,-1},{-1,-1}};
       String[] fills = new String[]{
@@ -36,14 +37,14 @@ public class SVGDrawBackgroundTask {
                +"L"+computePointList2[i][0]+","+computePointList2[i][1]
                +"L"+computePointList2[i+1][0]+","+computePointList2[i+1][1]
                +"L"+computePointList1[i+1][0]+","+computePointList1[i+1][1]
-               +"Z\" style=\"stroke:black;fill:"+fills[i]+"\"/>";
+               +"Z\" style=\"stroke:black;fill:"+fills[i]+"\"/>\n";
       }
       int j = computePointList2.length -1;
       content += "<path d=\"M"+computePointList1[j][0]+","+computePointList1[j][1]
             +"L"+computePointList2[j][0]+","+computePointList2[j][1]
             +"L"+computePointList2[0][0]+","+computePointList2[0][1]
             +"L"+computePointList1[0][0]+","+computePointList1[0][1]
-            +"Z\" style=\"stroke:black;fill:"+fills[j]+"\"/>";
+            +"Z\" style=\"stroke:black;fill:"+fills[j]+"\"/>\n";
       
       
       
@@ -60,19 +61,19 @@ public class SVGDrawBackgroundTask {
 //      }
       String defs ="<clipPath id=\"clipPathDoor\">" +
             "<path d=\"M20,80L10,40A80,80 0 0,1 90,40L80,80Z\" style=\"stroke:black;fill:none\"/>"
-            +"</clipPath>";
+            +"</clipPath>\n";
       defs += "<g id=\"door\">";
       // DOOR
-      defs += "<path d=\"M20,65L10,25A80,80 0 0,1 90,25L80,65Z\" style=\"stroke:black;fill:url(#sn);clip-path: url(#clipPathDoor);\"/>";
-      defs += "<path d=\"M20,80L10,40A80,80 0 0,1 90,40L80,80Z\" style=\"stroke:black;fill:none\"/>";
-      defs += "<path d=\"M20,80L80,80L80,65L20,65Z\" style=\"stroke:black;fill:#777777\"/>";
-      defs += "</g>";
+      defs += "<path d=\"M20,65L10,25A80,80 0 0,1 90,25L80,65Z\" style=\"stroke-width:2;stroke:black;fill:url(#sn);clip-path: url(#clipPathDoor);\"/>";
+      defs += "<path d=\"M20,80L10,40A80,80 0 0,1 90,40L80,80Z\" style=\"stroke-width:2;stroke:black;fill:none\"/>";
+      defs += "<path d=\"M20,80L80,80L80,65L20,65Z\" style=\"stroke-width:2;stroke:black;fill:#777777\"/>\n";
+      defs += "</g>\n";
       
       
-      content += "<use xlink:href=\"#door\" x=\"0\" y=\"0\" />";
-      content += "<use xlink:href=\"#door\" x=\"400\" y=\"0\"  transform = \"rotate(90 450 50)\"/>";
-      content += "<use xlink:href=\"#door\" x=\"0\" y=\"400\"  transform = \"rotate(180 50 450)\"/>";
-      content += "<use xlink:href=\"#door\" x=\"400\" y=\"400\"  transform = \"rotate(-90 450 450)\"/>";
+      content += "<use xlink:href=\"#door\" x=\"0\" y=\"0\" />\n";
+      content += "<use xlink:href=\"#door\" x=\"500\" y=\"0\"  transform = \"rotate(90 550 50)\"/>\n";
+      content += "<use xlink:href=\"#door\" x=\"0\" y=\"500\"  transform = \"rotate(180 50 550)\"/>\n";
+      content += "<use xlink:href=\"#door\" x=\"500\" y=\"500\"  transform = \"rotate(-90 550 550)\"/>\n";
       filecontent= filecontent.replaceAll("##content##", content);
       filecontent= filecontent.replaceAll("##defs##", defs);
       System.out.println("RES="+content);

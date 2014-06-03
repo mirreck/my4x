@@ -287,6 +287,12 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		if(tile == 'X'){
 			styleclass = "tile_room";
 		} 
+		if(tile == 'D'){
+			styleclass = 'tile_wall door';
+		}
+		if(tile == 'E'){
+			styleclass = 'tile_wall door';
+		}
 		return styleclass;
 	}
 	
