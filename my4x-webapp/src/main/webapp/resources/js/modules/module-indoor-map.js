@@ -54,7 +54,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 					var styleclass = tileStyle(level.tiles[y*level.width+x]);
 					var content = tileContent(level.tiles[y*level.width+x]);
 					var shape = tileShape(level, x, y);
-					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="fa-stack '+styleclass+' sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="'+styleclass+' sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
 				}
 			}
 		}
@@ -282,6 +282,9 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			styleclass = "tile_rock";
 		}
 		if(tile == ' '){
+			styleclass = "tile_floor";
+		}
+		if(tile == 'S'){
 			styleclass = "tile_floor";
 		}
 		if(tile == 'X'){
