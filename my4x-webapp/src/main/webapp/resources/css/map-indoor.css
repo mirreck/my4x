@@ -34,6 +34,14 @@ div.indoorfront{
 	opacity:0.0;
 	filter: alpha(opacity=0);
 }
+div.indoorfloor div.bglayer {
+		position: absolute;
+	left: 0px;
+	top: 0px;
+	width:100%;
+	height:100%;
+	background-color : #000;
+}
 div.indoorfloor .container > div {
 	-moz-user-select: none;
 	height: 100px; 
@@ -79,12 +87,12 @@ div.currenttile i#user{
 .tile_wall {
 	background-color : #999;
 }
-.container div.tile_wall {
+#bottomlayer div.tile_wall {
 	background-image : url(../images/indoor-tiles.png);
 	background-repeat:no-repeat;
 }
 
-.container div.tile_wall div.door{
+#toplayer div.door {
 	background-image : url(../images/indoor-tiles.png);
 	background-repeat:no-repeat;
 	height: 100px; 
@@ -105,17 +113,17 @@ div.currenttile i#user{
 	background-position:-500px 0px;
 }
 
-.container div.shN div.door{
+#toplayer div.shN.door{
 	background-position:-300px -500px;
 }
-.container div.shN.door{
+#bottomlayer div.shN.door{
 	background-position:0px -500px;
 }
 
-.container div.shS div.door{
+#toplayer div.shS.door{
 	background-position:-300px 0px;
 }
-.container div.shS.door{
+#bottomlayer div.shS.door{
 	background-position:0px 0px;
 }
 .shE{
@@ -179,15 +187,11 @@ table.mini td {
 	border :none;
 	padding:0px;
 }
-#user{
+#pj{
 	font-size:60px;
 	width:100px;
 	height:100px;
 	text-align:center;
 	line-height:100px;
     position: absolute;	
-}
-
-#user i{
-	line-height:100px;
 }

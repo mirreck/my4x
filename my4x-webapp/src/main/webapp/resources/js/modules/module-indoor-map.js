@@ -41,7 +41,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		for (var i=0;i<json.levels.length;i++){
 			var level = json.levels[i];
 			level.index = i;
-			$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="container"></div></div>' );
+			$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="bglayer"></div><div id="bottomlayer" class="container"></div><div id="middlelayer" class="container"></div><div id="toplayer" class="container"></div></div>' );
 			$( "#floor_"+i ).data( "level", i);
 			$( "#floor_"+i ).attr( "data-level", level.level);
 			//console.log( " WIDTH: " + level.width);
@@ -50,13 +50,21 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 			for (var y=level.height-1;y>=0;y--)
 			{
 				for (var x=0; x<level.width;x++)
-				{
-					var styleclass = tileStyle(level.tiles[y*level.width+x]);
-					var content = tileContent(level.tiles[y*level.width+x]);
+				{	
+					var tile = level.tiles[y*level.width+x];
+					var styleclass = tileStyle(tile);
+					var content = tileBottomContent(tile);
+					var topcontent = tileTopContent(tile);
 					var shape = tileShape(level, x, y);
-					$( "#floor_"+i+" .container" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="'+styleclass+' sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+					$( "#floor_"+i+" #bottomlayer" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="'+styleclass+' sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
+					if(topcontent != ''){
+						$( "#floor_"+i+" #toplayer" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="door sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;"></i></div>' );
+					}
 				}
 			}
+			
+			var pj = $('<div id="pj" ><span class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i><i class="icon-ex-pj_hair or"></i></span></div>');
+			$( "#floor_"+i+" #middlelayer" ).append(pj);
 		}
 		
 		$('#indoormap > div ').sort(function(a, b){
@@ -258,11 +266,12 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	};
 	function updateMain(pos, index){
 		// compute map move
-		$( '#indoormap .currenttile #user').remove();
-		$( '#indoormap .currenttile').removeClass( "currenttile" );
+		//$( '#indoormap .currenttile #user').remove();
+		//$( '#indoormap .currenttile').removeClass( "currenttile" );
 		
-		var pj = $('<span id="user" class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i><i class="icon-ex-pj_hair sable"></i></span>');
-		$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).prepend(pj);
+		//var pj = $('<span id="user" class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i><i class="icon-ex-pj_hair sable"></i></span>');
+		//$( '#indoormap #tile_'+pos.x+"_"+pos.y+"_"+getLevel(pos.z).index).addClass( "currenttile" ).prepend(pj);
+		$(".indoorcurrent #pj").css("transform","translate( "+(pos.x*100)+"px,"+((getLevel(pos.z).height-pos.y)*100)+"px)");
 	};
 	
 	function reachablexy(level,x,y){
@@ -299,19 +308,19 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		return styleclass;
 	}
 	
-	function tileContent(tile){
-		var content = "";
+	function tileBottomContent(tile){
 		if(tile == 'S'){
-			content = '<i class="icon-ex-stairs-down"></i>';
+			return '<i class="icon-ex-stairs-down"></i>';
 		}
-		if(tile == 'D'){
-			content = '<div class="door"></div>';
-		}
-		if(tile == 'E'){
-			content = '<div class="door"></div>';
-		}
-		return content;
+		return "";
 	}
+	function tileTopContent(tile){
+		if(tile == 'D'|| tile == 'E'){
+			return '<div class="door"></div>';
+		}
+		return "";
+	}
+	
 	function tileMiniContent(tile){
 		var content = "";
 		if(tile == 'S'){
