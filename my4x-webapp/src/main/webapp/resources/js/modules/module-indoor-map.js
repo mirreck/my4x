@@ -38,6 +38,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	
 	
 	function init_map(json){
+		var pnjindex= 1;
 		for (var i=0;i<json.levels.length;i++){
 			var level = json.levels[i];
 			level.index = i;
@@ -59,6 +60,13 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 					$( "#floor_"+i+" #bottomlayer" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="'+styleclass+' sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;">'+content+'</i></div>' );
 					if(topcontent != ''){
 						$( "#floor_"+i+" #toplayer" ).append( '<div id="tile_'+x+'_'+y+'_'+i+'" class="door sh'+shape+'" style="left: '+x*100+'px;top: '+(level.height-y)*100+'px;"></i></div>' );
+					}
+					if(tile == ' ' && Math.floor((Math.random() * 10) + 1) > 8){
+						var pnj = $('<div id="pnj_'+pnjindex+'" class="pnj" ><span class="fa-stack"><i class="icon-ex-pj_p sable"></i><i class="icon-ex-pj_h argent"></i><i class="icon-ex-pj_f sable"></i><i class="icon-ex-pj_hair orange"></i></span></div>');
+						
+						$( "#floor_"+i+" #middlelayer" ).append(pnj);
+						$('#pnj_'+pnjindex).css("transform","translate( "+(x*100)+"px,"+((level.height-y)*100)+"px)");
+						pnjindex++;
 					}
 				}
 			}
@@ -127,16 +135,32 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		}).appendTo('#indoorminimap');
 	};
 	
-	
+	function bumpAnim(element, name){
+		element.bind('animationend webkitAnimationEnd oAnimationEnd', function(){
+			element.removeClass(name+"_anim").css('animation-name', '');;
+		});
+		
+		element.addClass(name+"_anim").css('animation-name', name);
+	}
 
 	// SET key events
 	function init_key_events(){
 		$( "body" ).keyboardEvent($.KeyCodes.UP, function(){
-			updateToPosition(checkPosition(movePos(currentPosition, 0,1, 0)));
+				var pos = checkPosition(movePos(currentPosition, 0,1, 0));
+				if(pos.x == currentPosition.x && pos.y == currentPosition.y && pos.z == currentPosition.z){
+					bumpAnim($(".indoorcurrent #pj span"), 'bumpn');
+				} else {
+					updateToPosition(pos);
+				}
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.DOWN, function(){
-			updateToPosition(checkPosition(movePos(currentPosition, 0,-1, 0)));
+			var pos = checkPosition(movePos(currentPosition, 0,-1, 0));
+			if(pos.x == currentPosition.x && pos.y == currentPosition.y && pos.z == currentPosition.z){
+				bumpAnim($(".indoorcurrent #pj span"), 'bumps');
+			} else {
+				updateToPosition(pos);
+			}
 			}
 		);
 		$( "body" ).keyboardEvent($.KeyCodes.LEFT, function(){

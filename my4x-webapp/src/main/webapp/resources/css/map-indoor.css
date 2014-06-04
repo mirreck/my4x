@@ -4,10 +4,17 @@ div#indoormap {
 
 
 div#indoormap div {
-	-webkit-transition: translate .2s, scale 1s, opacity 1s;
-	-moz-transition: translate .2s, scale 1s, opacity 1s;
-	-o-transition: translate .2s, scale 1s, opacity 1s;
-	transition: translate .2s, scale 1s, opacity 1s;
+	-webkit-transition: translate 0.25s, scale 1s, opacity 1s;
+	-moz-transition: translate 0.25s, scale 1s, opacity 1s;
+	-o-transition: translate 0.25s, scale 1s, opacity 1s;
+	transition: translate 0.25s, scale 1s, opacity 1s;
+}
+
+div#pj {
+	-webkit-transition: all 0.25s !important;
+	-moz-transition: all 0.25s !important;
+	-o-transition: all 0.25s !important;
+	transition: all 0.25s !important;
 }
 
 div.indoorback{
@@ -99,17 +106,17 @@ div.currenttile i#user{
 	width: 100px;
 	position: absolute;
 }
-.container div.shE div.door{
+#toplayer div.shE.door{
 	background-position:0px -300px;
 }
-.container div.shE.door{
+#bottomlayer div.shE.door{
 	background-position:-500px -500px;
 }
 
-.container div.shO div.door{
+#toplayer div.shO.door{
 	background-position:-500px -300px;
 }
-.container div.shO.door{
+#bottomlayer div.shO.door{
 	background-position:-500px 0px;
 }
 
@@ -194,4 +201,74 @@ table.mini td {
 	text-align:center;
 	line-height:100px;
     position: absolute;	
+}
+
+.pnj {
+	font-size:50px !important;
+	width:100px !important;
+	height:100px !important;
+	text-align:center !important;
+	line-height:100px !important;
+    position: absolute !important;	
+}
+
+
+.bumpn_anim
+{
+	-webkit-animation: bumpn 250ms ease 1;
+	-moz-animation: bumpn 250ms ease 1;
+	-ms-animation: bumpn 250ms ease 1;
+	-o-animation: bumpn 250ms ease 1;
+	animation: bumpn 250ms ease 1;
+}
+
+/* animation */
+@-webkit-keyframes bumpn {
+	50% { transform: translateY(-15px); }
+}
+
+@-moz-keyframes bumpn {
+	50% {transform: translateY(-15px); }
+}
+
+@-ms-keyframes bumpn {
+	50% { transform: translateY(-15px); }
+}
+
+@-o-keyframes bumpn {
+	50% { transform: translateY(-15px); }
+}
+
+@keyframes bumpn {
+	50% { transform: translateY(-15px); }
+}
+
+.bumps_anim
+{
+	-webkit-animation: bumps 250ms ease 1;
+	-moz-animation: bumps 250ms ease 1;
+	-ms-animation: bumps 250ms ease 1;
+	-o-animation: bumps 250ms ease 1;
+	animation: bumps 250ms ease 1;
+}
+
+/* animation */
+@-webkit-keyframes bumps {
+	50% { transform: translateY(15px); }
+}
+
+@-moz-keyframes bumps {
+	50% {transform: translateY(15px); }
+}
+
+@-ms-keyframes bumps {
+	50% { transform: translateY(15px); }
+}
+
+@-o-keyframes bumps {
+	50% { transform: translateY(15px); }
+}
+
+@keyframes bumps {
+	50% { transform: translateY(15px); }
 }
