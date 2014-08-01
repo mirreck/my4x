@@ -5,6 +5,7 @@ import java.util.Random;
 import com.google.common.base.Joiner;
 
 public class TextUtils {
+    
    public static String translate(String original, String charset, double inflatefactor){
       String[] words = original.split(" ");
       String[] newwords = new String[words.length];

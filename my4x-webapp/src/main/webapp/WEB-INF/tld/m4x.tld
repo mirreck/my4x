@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<display-name>m4x tags Library</display-name>
+	<tlib-version>3.3</tlib-version>
+	<short-name>m4x</short-name>
+	<uri>http://mirreck.github.io/m4x/tags</uri>
+
+	<tag>
+		<name>include-all-js</name>
+		<tag-class>net.my4x.taglib.IncludeAllJsTag</tag-class>
+		<body-content>empty</body-content>
+        <attribute>
+            <name>pattern</name>
+            <required>yes</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>basePath</name>
+            <required>yes</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>excludes</name>
+            <required>no</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>prefix</name>
+            <required>no</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>suffix</name>
+            <required>no</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+	</tag>
+
+
+    <tag>
+        <name>include-all-css</name>
+        <tag-class>net.my4x.taglib.IncludeAllCssTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>pattern</name>
+            <required>yes</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>basePath</name>
+            <required>yes</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>excludes</name>
+            <required>no</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>prefix</name>
+            <required>no</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>suffix</name>
+            <required>no</required>
+            <rtexprvalue>no</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

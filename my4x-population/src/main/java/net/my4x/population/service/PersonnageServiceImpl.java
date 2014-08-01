@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.github.mirreck.RandomUtils;
 import com.google.common.collect.Lists;
 
 @Service
@@ -83,7 +84,7 @@ public class PersonnageServiceImpl implements PersonnageService {
       generateChildren(father, mother, family);
    }
    private void generateChildren(Personnage father, Personnage mother, List<Personnage> family){
-      int childnum =  faker.intInInterval(0, 3);
+      int childnum =  RandomUtils.intInInterval(0, 3);
       int birthYear = new DateTime(mother.getBirthDate()).getYear();
       for (int i = 0; i <  childnum; i++) {
          
@@ -99,13 +100,13 @@ public class PersonnageServiceImpl implements PersonnageService {
    }
    
    private Personnage generatePersonnage(Gender gender, int yearmin, int yearmax, List<Personnage> family, int generation, String lastName, RecurseDirection dir){
-      Personnage p = new Personnage(gender,faker.firstName(toGender(gender)),lastName, faker.randomDate(yearmin, yearmax));
+      Personnage p = new Personnage(gender,faker.firstName(toGender(gender)),lastName, faker.date(yearmin, yearmax));
       int birthYear = new DateTime(p.getBirthDate()).getYear();
-      int deathYear = birthYear + faker.intInInterval(50, 95);
+      int deathYear = birthYear + RandomUtils.intInInterval(50, 95);
       p.setGeneration(generation);
       p.setBlason(randomBlason());
       if(deathYear < currentYear) {
-         p.setDeathDate(faker.randomDate(deathYear-1, deathYear));
+         p.setDeathDate(faker.date(deathYear-1, deathYear));
       }
       if(dir == RecurseDirection.UP && generation < 2){
          generateParents(p, family);
@@ -117,20 +118,20 @@ public class PersonnageServiceImpl implements PersonnageService {
    }
 
    private Gender randomGender(){
-      return faker.randomElement(Gender.values());
+      return RandomUtils.randomElement(Gender.values());
    }
    private HeraldicColor randomHeraldicColor(){
-      return faker.randomElement(HeraldicColor.values());
+      return RandomUtils.randomElement(HeraldicColor.values());
    }
    private HeradicFigure randomHeradicFigure(){
-      return faker.randomElement(HeradicFigure.primaryFigures());
+      return RandomUtils.randomElement(HeradicFigure.primaryFigures());
    }
    private Blason randomBlason(){
       Blason b = new Blason();
       HeraldicColor maincolor = randomHeraldicColor();
       
       b.add(new BlasonElement(HeradicFigure.BASE,maincolor));
-      b.add(new BlasonElement(randomHeradicFigure(),faker.randomElement(maincolor.matchingColors())));
+      b.add(new BlasonElement(randomHeradicFigure(),RandomUtils.randomElement(maincolor.matchingColors())));
       return b;
    }
    

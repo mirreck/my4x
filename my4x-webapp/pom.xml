@@ -1,116 +1,218 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>my4x</groupId>
-    <artifactId>my4x</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>my4x-webapp</artifactId>
-  <packaging>war</packaging>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <springframework.version>3.1.0.RELEASE</springframework.version>
-  </properties>
-  <dependencies>
-  
-  <dependency>
-      <groupId>my4x</groupId>
-      <artifactId>my4x-map</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-  
-    <dependency>
-      <groupId>my4x</groupId>
-      <artifactId>my4x-dungeon</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-  
-      <dependency>
-      <groupId>my4x</groupId>
-      <artifactId>my4x-population</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    
-          <dependency>
-      <groupId>my4x</groupId>
-      <artifactId>my4x-talk</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-  
-    <!-- SPRING -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>${springframework.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>my4x</groupId>
+        <artifactId>my4x</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>my4x-webapp</artifactId>
+    <packaging>war</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springframework.version>3.1.0.RELEASE</springframework.version>
+		<generated.directory>${basedir}/src/generated</generated.directory>
+    </properties>
+    <dependencies>
 
+        <dependency>
+            <groupId>my4x</groupId>
+            <artifactId>my4x-map</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
-<dependency>
-    <groupId>org.codehaus.jackson</groupId>
-    <artifactId>jackson-core-lgpl</artifactId>
-    <version>1.8.1</version>
-</dependency>
+        <dependency>
+            <groupId>my4x</groupId>
+            <artifactId>my4x-dungeon</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
-<dependency>
-    <groupId>org.codehaus.jackson</groupId>
-    <artifactId>jackson-mapper-lgpl</artifactId>
-    <version>1.8.1</version>
-</dependency>
+        <dependency>
+            <groupId>my4x</groupId>
+            <artifactId>my4x-population</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
-  <!-- Logging -->
-  <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.6.1</version>
-  </dependency>
+        <dependency>
+            <groupId>my4x</groupId>
+            <artifactId>my4x-talk</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.3</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+		<plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <configuration>
+              <target>
 
-  <dependency>
-    <groupId>ch.qos.logback</groupId>
-    <artifactId>logback-classic</artifactId>
-    <version>0.9.27</version>
-  </dependency>
+				<copy todir="${generated.directory}/webapp/resources/font" flatten="true">
+					<fileset dir="${project.basedir}/src/main/webapp/resources/lib">
+						<include name="**/*.ttf"/>
+						<include name="**/*.woff"/>
+						<include name="**/*.eot"/>
+						<include name="**/*.otf"/>
+						<include name="**/*.svg"/>
+					</fileset>
+				</copy>
+				<copy todir="${generated.directory}/webapp/resources/lib/images" flatten="true">
+					<fileset dir="${project.basedir}/src/main/webapp/resources/lib">
+						<include name="**/*.png"/>
+					</fileset>
+				</copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+		
+		<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>${generated.directory}/webapp</directory>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.12.v20130726</version>
+				<configuration>
+				  <webAppConfig>
+					<resourceBases>
+					  <resourceBase>${basedir}/src/main/webapp</resourceBase>
+					  <resourceBase>${generated.directory}/webapp</resourceBase>
+					</resourceBases>
+				  </webAppConfig>
+				  <scanIntervalSeconds>5</scanIntervalSeconds>
+				</configuration>
+			</plugin>
 
-  <dependency>
-    <groupId>ch.qos.logback</groupId>
-    <artifactId>logback-core</artifactId>
-    <version>0.9.27</version>
-  </dependency>
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.2</version>
+				<configuration>
+                  <charset>UTF-8</charset>
+				  <webappTargetDir>${generated.directory}/webapp</webappTargetDir>
+                  <jsEngine>CLOSURE</jsEngine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>3rdparty-minify</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <!-- Minifying 3party CSS-->
+                            <cssSourceDir>resources/lib</cssSourceDir>
+                            <cssTargetDir>resources-minified/lib</cssTargetDir>
+                            <cssSourceFiles>
+                                <cssSourceFile>font-awesome/css/font-awesome.css</cssSourceFile>
+                                <cssSourceFile>font-extend/css/font-extend.css</cssSourceFile>
+                                <cssSourceFile>leaflet/leaflet.css</cssSourceFile>
+                                <cssSourceFile>jquery-ui/css/smoothness/jquery-ui-1.10.4.custom.min.css</cssSourceFile>
+                                <cssSourceFile>bootstrap/css/bootstrap.min.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <cssFinalFile>3rdparty-styles.css</cssFinalFile>
 
-  <dependency>
-    <groupId>commons-logging</groupId>
-    <artifactId>commons-logging</artifactId>
-    <version>1.1.1</version>
-  </dependency>
-  </dependencies>
+                            <!-- Minifying polyfills JS-->
+                            <jsSourceDir>resources/lib</jsSourceDir>
+                            <jsTargetDir>resources-minified/lib</jsTargetDir>
+                            <jsSourceFiles>
+                                <jsSourceFile>polyfills/html5shiv-3.7.2-6/html5shiv.js</jsSourceFile>
+                                <jsSourceFile>polyfills/respond.js/respond.js</jsSourceFile>
+                            </jsSourceFiles>
+                            <jsFinalFile>polyfills.js</jsFinalFile>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>app-minify</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <!-- Minifying application CSS-->
+                            <cssSourceDir>resources/css</cssSourceDir>
+                            <cssTargetDir>resources-minified/css</cssTargetDir>
+                            <cssSourceIncludes>
+                                <cssSourceInclude>**.css</cssSourceInclude>
+                            </cssSourceIncludes>
+                            <cssFinalFile>app-styles.css</cssFinalFile>
+
+                            <!-- Minifying application JS-->
+                            <jsSourceDir>js</jsSourceDir>
+                            <jsSourceFiles>
+                                <jsSourceFile>file-1.js</jsSourceFile>
+                                <jsSourceFile>file-n.js</jsSourceFile>
+                            </jsSourceFiles>
+                            <jsFinalFile>script.js</jsFinalFile>
+
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+<!--
+            <plugin>
+                <groupId>com.github.bringking</groupId>
+                <artifactId>requirejs-maven-plugin</artifactId>
+                <version>2.0.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>optimize</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+
+                    <nodeExecutable>
+                        D:\TOOLS\nodejs\node.exe
+                    </nodeExecutable>
+
+                    <configFile>
+                        ${basedir}/src/main/config/buildconfig.js
+                    </configFile>
+
+                    <optimizerFile>
+                        ${basedir}/src/main/scripts/r.js
+                    </optimizerFile>
+
+                    <optimizerParameters>
+                        <parameter>optimize=uglify</parameter>
+                        <parameter>baseUrl=./src/main/webapp/resources/js</parameter>
+                    </optimizerParameters>
+
+                    <filterConfig>
+                        true
+                    </filterConfig>
+
+                    <skip>
+                        false
+                    </skip>
+                </configuration>
+            </plugin>
+-->
+        </plugins>
+    </build>
 </project>

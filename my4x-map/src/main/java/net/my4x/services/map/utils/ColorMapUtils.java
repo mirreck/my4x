@@ -8,9 +8,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import net.my4x.services.map.MapException;
 import net.my4x.services.map.model.Color;
 import net.my4x.services.map.model.ColorMap;
-import net.my4x.services.map.model.Direction;
 import net.my4x.services.map.model.HeightMap;
 import net.my4x.services.map.model.Pos;
 import net.my4x.services.map.model.WaterMap;
@@ -37,7 +37,7 @@ public class ColorMapUtils {
          ImageIO.write(image, "png", file);
       }
       catch (IOException e) {
-         e.printStackTrace();
+         throw new MapException(e);
       }
    }
 

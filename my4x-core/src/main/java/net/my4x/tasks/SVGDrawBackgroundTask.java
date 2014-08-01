@@ -1,5 +1,6 @@
 package net.my4x.tasks;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +8,7 @@ import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
 
 public class SVGDrawBackgroundTask {
-   public static void generateSVG(String outPath) throws IOException{
+   public static void generateSVG(File outputFile) throws IOException{
       InputStream is = SVGDrawBackgroundTask.class.getResourceAsStream("tpl.svg");
       String filecontent = IOUtils.toString(is);
       String content = "";
@@ -77,7 +78,7 @@ public class SVGDrawBackgroundTask {
       filecontent= filecontent.replaceAll("##content##", content);
       filecontent= filecontent.replaceAll("##defs##", defs);
       System.out.println("RES="+content);
-      FileOutputStream output = new FileOutputStream(outPath);
+      FileOutputStream output = new FileOutputStream(outputFile);
       IOUtils.write(filecontent, output);
       IOUtils.closeQuietly(output);
       IOUtils.closeQuietly(is);

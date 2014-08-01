@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 @Controller
 public class MainController {
    
@@ -45,6 +46,7 @@ public class MainController {
    
 	@RequestMapping("home")
     public ModelAndView home() {
+	    
 		ModelAndView mav = new ModelAndView("home");
         return mav;
     }

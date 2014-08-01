@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import net.my4x.services.map.MapException;
 import net.my4x.services.map.model.HeightMap;
 
 import org.apache.commons.io.IOUtils;
@@ -37,7 +38,7 @@ public class HeightMapUtils {
          IOUtils.closeQuietly(fos);
       }
       catch (IOException e) {
-         throw new RuntimeException(e);
+         throw new MapException("Unable to save file",e);
       }
 
    }
@@ -64,7 +65,7 @@ public class HeightMapUtils {
          return map;
       }
       catch (IOException e) {
-         throw new RuntimeException(e);
+         throw new MapException(e);
       }
    }
 }

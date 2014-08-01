@@ -1,5 +1,6 @@
 package net.my4x.tasks;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,17 +15,14 @@ import org.junit.Test;
 
 public class SVGDrawBackgroundTaskTest {
 
-   
-   
-   private static final String TMP_OUT_SVG = "C:\\tmp\\GEN\\out.svg";
-   private static final String OUT = "C:\\PROJETS\\PERSO\\TEST\\my4x\\my4x-webapp\\src\\main\\webapp\\resources\\images\\indoor-tiles.png";
-   
    @Test
    public void test() throws IOException, TranscoderException {
+       File outSvgFile = File.createTempFile("out", "svg");
+      SVGDrawBackgroundTask.generateSVG(outSvgFile);
+      InputStream is = new FileInputStream(outSvgFile);
       
-      SVGDrawBackgroundTask.generateSVG(TMP_OUT_SVG);
-      InputStream is = new FileInputStream(TMP_OUT_SVG);
-      OutputStream out = new FileOutputStream(OUT); 
+      File outPngFile = File.createTempFile("out", "png");
+      OutputStream out = new FileOutputStream(outPngFile); 
       SVGUtils.svgToPng(is,out);
       IOUtils.closeQuietly(is);
       IOUtils.closeQuietly(out);

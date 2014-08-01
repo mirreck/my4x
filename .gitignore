@@ -2,3 +2,17 @@ target/
 /.project
 /.classpath
 /.settings
+workspace.xml
+artifacts
+copyright
+libraries
+scopes
+.name
+compiler.xml
+encodings.xml
+misc.xml
+modules.xml
+uiDesigner.xml
+vcs.xml
+/my4x-core/*.iml
+*.iml

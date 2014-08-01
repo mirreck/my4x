@@ -1,5 +1,6 @@
 package net.my4x.utils;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,12 +15,11 @@ public class SVGUtilsTest {
    
 
 
-   private static final String OUT = "C:\\PROJETS\\PERSO\\TEST\\my4x\\my4x-webapp\\src\\main\\webapp\\resources\\images\\indoor-tiles.png";
    @Test
    public void test() throws IOException, TranscoderException {
-      
+       File outSvgFile = File.createTempFile("out", "svg");
       InputStream is = SVGUtils.class.getResourceAsStream("in.svg");
-      OutputStream out = new FileOutputStream(OUT); 
+      OutputStream out = new FileOutputStream(outSvgFile); 
       SVGUtils.svgToPng(is,out);
       IOUtils.closeQuietly(is);
       IOUtils.closeQuietly(out);

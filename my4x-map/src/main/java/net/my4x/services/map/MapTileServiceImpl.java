@@ -66,7 +66,7 @@ public class MapTileServiceImpl implements MapTileService {
          return generateHeightTile(file, p);
       }
       catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new MapException(e);
       }
    }
 
@@ -81,7 +81,7 @@ public class MapTileServiceImpl implements MapTileService {
          return generateWaterTile(file, p);
       }
       catch (IOException e) {
-         throw new RuntimeException(e);
+         throw new MapException(e);
       }
    }
    
