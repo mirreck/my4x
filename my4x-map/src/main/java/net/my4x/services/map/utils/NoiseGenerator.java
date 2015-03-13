@@ -15,20 +15,23 @@ public class NoiseGenerator {
    
    private static final Logger LOGGER = LoggerFactory.getLogger(ColorMapUtils.class);
    
-   private static final NoiseAlgorithm algo = new PerlinNoise();
-   //private static final NoiseAlgorithm algo = new SimplexNoiseImpl();
+   //private static final NoiseAlgorithm algo = new PerlinNoise();
+   private static final NoiseAlgorithm algo = new SimplexNoiseImpl();
    
    
    public static void generateZones(ZoneMap map, double frequency) {
       for (int i = 0; i < map.getWidth(); i++) {
          for (int j = 0; j < map.getHeight(); j++) {
             //float d1 = 10.0f;//(float) noise(frequency * i / (float) map.getWidth(), frequency * j / (float) map.getHeight(), 0);
-            double x = frequency * i / map.getWidth();
-            double y = frequency * j / map.getHeight();
+            double x = (frequency) * i / map.getWidth();
+            double y = (frequency) * j / map.getHeight();
             //LOGGER.debug("noisefor x="+x+" y="+y);
-            double d2 =  algo.noise(x, y);
-            double d1 =  algo.noise(x+555, y+555);
-            int res = d1>0?(d2>0?1:2):(d2>0?3:4);
+            double d1 =  algo.noise(x, y);
+            double d2 =  algo.noise(x+ 555, y+555);
+            double d3 =  algo.noise(x, y+555);
+            double d4 =  algo.noise(x+555, y);
+            double max = MathUtils.max(d1,d2,d3,d4);
+            int res =d1 == max?1:d2 == max?2:d3 == max?3:4;
             map.setValue(i, j, res);
          }
       }

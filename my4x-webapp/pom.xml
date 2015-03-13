@@ -46,6 +46,17 @@
     </dependencies>
     <build>
         <plugins>
+                    <plugin>
+                <groupId>net.my4x</groupId>
+                <artifactId>webfont-maven-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+
+                <configuration>
+                    <fontforge.binary>D:\TOOLS\FontForge\fontforge.bat</fontforge.binary>
+                </configuration>
+            </plugin>
+        
+        
 		<plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <version>1.7</version>

@@ -16,7 +16,7 @@ public class ZoneMapTest {
          ZoneMap map = new ZoneMap(150, 150);
          NoiseGenerator.generateZones(map,frequency);
 
-         File file = new File("C:\\tmp\\GEN\\test_map_2z"+frequency+".png");
+         File file = new File("C:\\tmp\\GEN2\\test_map_2z"+frequency+".png");
          ColorMapUtils.exportMapImage(ColorMapUtils.colorize(map), file);
       }
       
