@@ -1,5 +1,7 @@
-package net.my4x.card.model;
+package net.my4x.card.model.character;
 
+import net.my4x.card.model.Card;
+import net.my4x.card.model.CardType;
 import net.my4x.common.model.Element;
 import net.my4x.common.model.Job;
 

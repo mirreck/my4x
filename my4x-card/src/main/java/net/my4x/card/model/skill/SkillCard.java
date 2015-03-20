@@ -1,5 +1,7 @@
-package net.my4x.card.model;
+package net.my4x.card.model.skill;
 
+import net.my4x.card.model.Card;
+import net.my4x.card.model.CardType;
 import net.my4x.common.model.Element;
 
 public class SkillCard extends Card {

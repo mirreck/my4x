@@ -2,9 +2,9 @@ package net.my4x.card.service;
 
 import net.my4x.card.model.Card;
 import net.my4x.card.model.CardModel;
-import net.my4x.card.model.CharacterCard;
 import net.my4x.card.model.Pack;
 import net.my4x.card.model.PackType;
+import net.my4x.card.model.character.CharacterCard;
 import net.my4x.card.repository.CardModelRepository;
 import net.my4x.common.model.Element;
 import net.my4x.common.model.Job;
