@@ -6,20 +6,21 @@
     <artifactId>my4x</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springframework.version>4.1.5.RELEASE</springframework.version>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <guava.version>17.0</guava.version>
-        <joda-time.version>2.3</joda-time.version>
-        <commons-logging.version>1.1.1</commons-logging.version>
-        <jstl.version>1.2</jstl.version>
-        <commons-io.version>2.4</commons-io.version>
-        <logback.version>1.1.2</logback.version>
-        <slf4j-api.version>1.7.7</slf4j-api.version>
-        <java-fake-factory.version>1.0.2</java-fake-factory.version>
-        <jackson.version>1.9.13</jackson.version>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<springframework.version>4.1.5.RELEASE</springframework.version>
+		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<guava.version>18.0</guava.version>
+		<joda-time.version>2.7</joda-time.version>
+		<commons-logging.version>1.1.1</commons-logging.version>
+		<jstl.version>1.2</jstl.version>
+		<commons-io.version>2.4</commons-io.version>
+		<logback.version>1.1.2</logback.version>
+		<slf4j-api.version>1.7.10</slf4j-api.version>
+		<java-fake-factory.version>1.0.2</java-fake-factory.version>
+		<jackson.version>1.9.13</jackson.version>
+		<spring-data-jpa.version>1.8.0.RELEASE</spring-data-jpa.version>
+	</properties>
 
     <dependencies>
 
@@ -45,22 +46,21 @@
             <version>${springframework.version}</version>
         </dependency>
         
-        <dependency>
-    <groupId>org.springframework.data</groupId>
-    <artifactId>spring-data-jpa</artifactId>
-    <version>1.7.2.RELEASE</version>
-</dependency>
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-entitymanager</artifactId>
-    <version>4.3.8.Final</version>
-</dependency>
-
-        <dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>1.4.186</version>
-</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data-jpa.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-entitymanager</artifactId>
+		    <version>4.3.8.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.186</version>
+		</dependency>
         <!-- WEB -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -115,11 +115,11 @@
             <version>${logback.version}</version>
         </dependency>
 
-        <dependency>
+<!--         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>${commons-logging.version}</version>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -133,11 +133,34 @@
             <version>${joda-time.version}</version>
         </dependency>
 
+		        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.10-FINAL</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.10-FINAL</version>
+        </dependency>
+		
+				<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.15</version>
+		</dependency>
+		
 
         <dependency>
             <groupId>com.github.mirreck</groupId>
             <artifactId>java-fake-factory</artifactId>
             <version>${java-fake-factory.version}</version>
+            <exclusions>
+                <exclusion>
+                <artifactId>org.slf4j</artifactId>
+                <groupId>sl4j-simple</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- TEST DEPENDECIES -->
@@ -145,7 +168,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
 
@@ -157,6 +180,7 @@
         </dependency>
     </dependencies>
     <build>
+        <pluginManagement>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -165,7 +189,8 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-        </plugins>
+            </plugins>
+        </pluginManagement>
     </build>
 
 

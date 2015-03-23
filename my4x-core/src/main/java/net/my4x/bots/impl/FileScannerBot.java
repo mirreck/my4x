@@ -61,14 +61,14 @@ public class FileScannerBot extends AbstractIterBot<File, File> {
 				}
 			}
 		}
-		// LOG.error("list= {}", res);
+		LOG.error("accepted list= {}", res);
 		return res;
 	}
 
 	protected boolean accept(final File file) {
 
 		final String extention = file.getName().substring(file.getName().lastIndexOf('.') + 1);
-		// LOG.error("input= {} ext={}", file.getName(), extention);
+		LOG.error("input= {} ext={}", file.getName(), extention);
 		return accepted.contains(extention);
 
 	}
