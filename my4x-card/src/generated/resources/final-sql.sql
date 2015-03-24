@@ -1,0 +1,10 @@
+INSERT INTO story(id,name,condition) VALUES ("1","friends","aaa");
+INSERT INTO skills(id,name,level) VALUES ("1","run","0");
+INSERT INTO skills(id,name,level) VALUES ("2","cooking","1");
+INSERT INTO skills(id,name,level) VALUES ("3","punch","1");
+INSERT INTO skills(id,name,level) VALUES ("4","kick","1");
+INSERT INTO cardmodel(Id,name,rarity) VALUES ("1","test","1");
+INSERT INTO cardmodel(Id,name,rarity) VALUES ("2","skdhfksd","2");
+INSERT INTO cardmodel(Id,name,rarity) VALUES ("3","sdf","3");
+INSERT INTO cardmodel(Id,name,rarity) VALUES ("4","sdf","4");
+INSERT INTO cardmodel(Id,name,rarity) VALUES ("5","sdf","5");

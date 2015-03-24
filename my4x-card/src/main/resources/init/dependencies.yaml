@@ -1,0 +1,4 @@
+cardmodel: [skills, story]
+skills: [perso]
+perso: [story, name]
+story: [name]

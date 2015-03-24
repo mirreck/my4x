@@ -21,6 +21,6 @@ public class GenerateInitSql {
 	}
 
 	public static void run(final String src, final String dst) {
-		new GenerateSqlTask(src, dst);
+		new GenerateSqlTask(src, dst).generate();
 	}
 }

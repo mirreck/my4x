@@ -25,8 +25,10 @@ public class SqlScriptBot extends AbstractBot<TableData, List<String>> implement
 		final List<String> lines = super.go();
 		try {
 			final File targetFile = new File(targetDir, this.input.getName() + ".sql");
+			targetFile.getParentFile().mkdirs();
+			targetFile.createNewFile();
 			final FileOutputStream fos = new FileOutputStream(targetFile);
-			IOUtils.write(StringUtils.join(lines, ";\n"), fos);
+			IOUtils.write(StringUtils.join(lines, ";\n") + ";\n", fos);
 			IOUtils.closeQuietly(fos);
 			return lines;
 		} catch (final Exception e) {

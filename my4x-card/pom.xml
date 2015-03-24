@@ -19,9 +19,6 @@
 			<artifactId>my4x-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-
-
-
 	</dependencies>
 	<build>  
  <plugins>  

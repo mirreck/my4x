@@ -160,6 +160,10 @@
                 <artifactId>org.slf4j</artifactId>
                 <groupId>sl4j-simple</groupId>
                 </exclusion>
+                <exclusion>
+                	<artifactId>slf4j-simple</artifactId>
+                	<groupId>org.slf4j</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 

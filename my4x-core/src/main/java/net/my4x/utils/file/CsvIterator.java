@@ -15,10 +15,10 @@ public class CsvIterator {
 
 	private static final String REGEX = "(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
-	private static final String DEFAULT_SEPARATOR = ";";
+	private static final String[] DEFAULT_SEPARATORS = { ";", "\t" };
 	private final File source;
 
-	private final String separator;
+	private String separator = null;
 
 	public CsvIterator(final File source, final String separator) {
 		super();
@@ -29,7 +29,6 @@ public class CsvIterator {
 	public CsvIterator(final File source) {
 		super();
 		this.source = source;
-		this.separator = DEFAULT_SEPARATOR;
 	}
 
 	public List<String[]> list() {
@@ -42,6 +41,9 @@ public class CsvIterator {
 
 			while (in.ready()) {
 				final String str = in.readLine();
+				if (separator == null) {
+					separator = detectSeparator(str);
+				}
 				result.add(str.split(separator + REGEX));
 			}
 			in.close();
@@ -53,4 +55,13 @@ public class CsvIterator {
 		return result;
 	}
 
+	private String detectSeparator(final String line) {
+		for (final String sep : DEFAULT_SEPARATORS) {
+			final String[] split = line.split(sep + REGEX);
+			if (split.length > 1) {
+				return sep;
+			}
+		}
+		return DEFAULT_SEPARATORS[0];
+	}
 }
