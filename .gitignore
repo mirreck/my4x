@@ -16,3 +16,9 @@ uiDesigner.xml
 vcs.xml
 /my4x-core/*.iml
 *.iml
+/my4x-card/.gradle
+/my4x-card/build
+/my4x-common/.gradle
+/my4x-common/build
+/my4x-core/build
+/my4x-core/.gradle
