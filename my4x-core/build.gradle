@@ -7,10 +7,20 @@ repositories {
 }
 
 dependencies {
+	compile 'com.github.mirreck:java-fake-factory:1.0.2'
+	compile 'org.slf4j:slf4j-api:1.7.10'
+	compile 'ch.qos.logback:logback-classic:1.1.2'
+	compile 'ch.qos.logback:logback-core:1.1.2'
+	compile 'commons-io:commons-io:2.4'
+	compile 'commons-lang:commons-lang:2.6'
 	compile 'org.apache.poi:poi:3.10-FINAL'
 	compile 'org.apache.poi:poi-ooxml:3.10-FINAL'
 	compile 'com.google.guava:guava:18.0'
 	compile 'org.yaml:snakeyaml:1.15'
+	compile 'org.apache.xmlgraphics:batik-rasterizer:1.7'
+	compile 'org.apache.xmlgraphics:batik-transcoder:1.7'
+	compile 'org.apache.xmlgraphics:batik-codec:1.7'
+//	compile 'com.ibm.icu:icu4j:53.1'
     testCompile 'junit:junit:4.12'
     testCompile 'org.easytesting:fest-assert:1.4'
 }

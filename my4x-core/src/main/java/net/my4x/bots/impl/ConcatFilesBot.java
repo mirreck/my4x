@@ -15,9 +15,9 @@ import net.my4x.bots.Bot;
 import net.my4x.tasks.GenerateSqlTask;
 
 import org.apache.commons.io.IOUtils;
-import org.ho.yaml.Yaml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -86,8 +86,12 @@ public class ConcatFilesBot extends AbstractBot<List<File>, File> implements Bot
 	}
 
 	public Bot<List<File>, ?> withDependencies(final File file) {
+		FileInputStream fileInputStream = null;
 		try {
-			final Object yaml = Yaml.load(file);
+			final Yaml yamlSrc = new Yaml();
+			fileInputStream = new FileInputStream(file);
+			final Object yaml = yamlSrc.load(IOUtils.toString(fileInputStream));
+
 			if (!(yaml instanceof Map<?, ?>)) {
 				LOG.info("dependencies not well formed", yaml.getClass());
 			}
@@ -97,6 +101,10 @@ public class ConcatFilesBot extends AbstractBot<List<File>, File> implements Bot
 
 		} catch (final FileNotFoundException e) {
 			throw new RuntimeException(e);
+		} catch (final IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			IOUtils.closeQuietly(fileInputStream);
 		}
 		return this;
 	}

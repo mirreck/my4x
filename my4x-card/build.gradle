@@ -5,8 +5,8 @@ repositories {
 }
 
 dependencies {
-	compile 'my4x:my4x-common:0.0.1-SNAPSHOT'
-    compile 'my4x:my4x-core:0.0.1-SNAPSHOT'
+	compile project(':my4x-common')
+    compile project(':my4x-core')
     testCompile 'junit:junit:4.12'
     testCompile 'org.easytesting:fest-assert:1.4'
 }

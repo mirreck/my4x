@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+	compile 'org.apache.poi:poi:3.10-FINAL'
+	compile 'org.apache.poi:poi-ooxml:3.10-FINAL'
+	compile 'com.google.guava:guava:18.0'
+	compile 'org.yaml:snakeyaml:1.15'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.easytesting:fest-assert:1.4'
+}

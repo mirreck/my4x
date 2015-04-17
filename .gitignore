@@ -22,3 +22,4 @@ vcs.xml
 /my4x-common/build
 /my4x-core/build
 /my4x-core/.gradle
+/.gradle
