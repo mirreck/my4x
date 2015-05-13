@@ -38,8 +38,9 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 	
 	
 	function init_map(json){
+	debugger;
 		var pnjindex= 1;
-		for (var i=0;i<json.levels.length;i++){
+		for (var i=json.minLevel;i<=json.maxLevel;i++){
 			var level = json.levels[i];
 			level.index = i;
 			$( "#indoormap" ).append( '<div class="indoorfloor indoorcurrent" id="floor_'+i+'"><div class="bglayer"></div><div id="bottomlayer" class="container"></div><div id="middlelayer" class="container"></div><div id="toplayer" class="container"></div></div>' );
@@ -110,7 +111,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		return res;
 	}
 	function init_minimap(json){
-		for (var i=0;i<json.levels.length;i++){
+		for (var i=json.minLevel;i<=json.maxLevel;i++){
 			var level = json.levels[i];
 			$( "#indoorminimap" ).append( '<div id="minifloor_'+i+'">'+level.level+'</div>' );
 			$( "#minifloor_"+i ).attr( "data-level", level.level);
@@ -215,6 +216,10 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		return pos;
 	}
 	function getLevel(z){
+		var level = jsonData.levels[z];
+		if(level){
+			return level;
+		}
 		for (var i=0;i<jsonData.levels.length;i++){
 			var level = jsonData.levels[i];
 			if(level.level == z){
@@ -224,8 +229,7 @@ require(["jquery","modules/jquery-keyboard-plugin"], function($,K) {
 		return null;
 	}
 	function setCurrentFloor(newfloor){
-		
-		for (var i=0;i<jsonData.levels.length;i++){
+		for (var i=jsonData.minLevel;i<=jsonData.maxLevel;i++){
 			var level = jsonData.levels[i];
 			if(level.level < newfloor){
 				$( "#floor_"+i ).addClass( "indoorback" ).removeClass( "indoorfront indoorcurrent" );

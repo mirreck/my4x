@@ -12,6 +12,8 @@ import net.my4x.population.service.PersonnageService;
 import net.my4x.services.map.MapTileService;
 import net.my4x.talk.model.TalkStep;
 import net.my4x.talk.service.TalkService;
+import net.my4x.webapp.mapper.DungeonMapper;
+import net.my4x.webapp.model.DungeonDTO;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -74,9 +76,9 @@ public class MainController {
    }
    
    
-   @RequestMapping("rest/dungeon/{id}")
+   @RequestMapping(value = "rest/dungeon/{id}", produces = "application/json; charset=utf-8")    
    @ResponseBody
-   public Dungeon dungeon(@PathVariable("id") String id) {
+   public DungeonDTO dungeon(@PathVariable("id") String id) {
 
       LOGGER.debug("generating dungeon:"+id);
       
@@ -84,7 +86,7 @@ public class MainController {
       
       LOGGER.debug("generated:"+dun.toString());
       
-      return dun;
+      return DungeonMapper.map(dun);
    }
 	
    @RequestMapping("rest/family/{id}")

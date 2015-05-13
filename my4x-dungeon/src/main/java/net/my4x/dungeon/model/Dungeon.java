@@ -1,11 +1,18 @@
 package net.my4x.dungeon.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Dungeon {
+public class Dungeon implements Serializable{
    
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
    private int minLevel;
    private int maxLevel;
    

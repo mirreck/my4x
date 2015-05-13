@@ -1,22 +1,32 @@
 package net.my4x.dungeon.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.math.RandomUtils;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+@JsonAutoDetect
+public class Level implements Serializable{
+   
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 
-public class Level {
+	private int index;
    
-   private int index;
+   private transient  Dungeon dungeon;
    
-   private Dungeon dungeon;
-   
-   private static final Logger LOGGER = LoggerFactory.getLogger(Level.class);
+   private transient static final Logger LOGGER = LoggerFactory.getLogger(Level.class);
    
    
    
@@ -552,14 +562,15 @@ public class Level {
    }
    
    // for json serialization
+   @JsonValue
    public String getTiles(){
-      StringBuilder sb = new StringBuilder();
-      for (TileType[] line : tileMap) {
-         for (TileType tile : line) {
-            sb.append(tile.code);
-         }
-      }
-      return sb.toString();
+		   StringBuilder sb = new StringBuilder();
+		      for (TileType[] line : tileMap) {
+		         for (TileType tile : line) {
+		            sb.append(tile.code);
+		         }
+		      }
+		      return sb.toString();
    }
    
    public int getWidth() {
