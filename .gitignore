@@ -23,3 +23,9 @@ vcs.xml
 /my4x-core/build
 /my4x-core/.gradle
 /.gradle
+/my4x-battle/build
+/my4x-dungeon/build
+/my4x-map/build
+/my4x-population/build
+/my4x-talk/build
+/my4x-webapp/build

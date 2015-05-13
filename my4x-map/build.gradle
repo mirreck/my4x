@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+	compile project(':my4x-common')
+    compile project(':my4x-core')
+	compile libraries.database
+    testCompile libraries.test
+}

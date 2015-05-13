@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+jettyRun.contextPath = '' 
+jettyRun.httpPort = 8880
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+	compile project(':my4x-common')
+    compile project(':my4x-core')
+	compile project(':my4x-map')
+	compile project(':my4x-dungeon')
+	compile project(':my4x-talk')
+	compile project(':my4x-population')
+	compile libraries.web
+    testCompile libraries.test
+}
