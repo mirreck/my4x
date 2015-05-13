@@ -1,4 +1,4 @@
-package net.my4x.services.dungeon.digger;
+package net.my4x.dungeon.services.digger;
 
 public class DiggerOrder implements Comparable<DiggerOrder>{
 

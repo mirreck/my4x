@@ -135,8 +135,8 @@ public class PersonnageServiceImpl implements PersonnageService {
       return b;
    }
    
-   private com.github.javafaker.domain.Gender toGender(Gender gender) {
-      return com.github.javafaker.domain.Gender.valueOf(gender.name());
+   private com.github.mirreck.domain.Gender toGender(Gender gender) {
+      return com.github.mirreck.domain.Gender.valueOf(gender.name());
    }
    
 

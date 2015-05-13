@@ -1,6 +1,8 @@
-package net.my4x.services.dungeon;
+package net.my4x.dungeon.services;
 
-import net.my4x.services.dungeon.model.Dungeon;
+import net.my4x.dungeon.model.Dungeon;
+import net.my4x.dungeon.services.DungeonService;
+import net.my4x.dungeon.services.DungeonServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,9 @@
-package net.my4x.services.dungeon.digger;
+package net.my4x.dungeon.services.digger;
 
-import net.my4x.services.dungeon.model.Direction;
-import net.my4x.services.dungeon.model.Level;
-import net.my4x.services.dungeon.model.Pos;
-import net.my4x.services.dungeon.model.TileType;
+import net.my4x.dungeon.model.Direction;
+import net.my4x.dungeon.model.Level;
+import net.my4x.dungeon.model.Pos;
+import net.my4x.dungeon.model.TileType;
 
 
 public enum DiggerAction {

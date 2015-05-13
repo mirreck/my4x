@@ -2,6 +2,7 @@ package net.my4x.card.service;
 
 import java.io.InputStream;
 
+import net.my4x.card.CardConfig;
 import net.my4x.card.TestConfig;
 import net.my4x.card.model.Pack;
 import net.my4x.card.model.PackType;
@@ -17,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.yaml.snakeyaml.Yaml;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = CardConfig.class)
 public class CardServiceImplTest {
 	private static final Logger LOG = LoggerFactory.getLogger(CardServiceImplTest.class.getName());
 	@Autowired

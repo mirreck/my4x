@@ -1,6 +1,6 @@
-package net.my4x.services.dungeon.model.realtime;
+package net.my4x.dungeon.services.model.realtime;
 
-import net.my4x.services.dungeon.model.Pos;
+import net.my4x.dungeon.model.Pos;
 
 public class State {
    private String elementUuid;

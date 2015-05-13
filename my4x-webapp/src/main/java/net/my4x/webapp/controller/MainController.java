@@ -5,10 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.my4x.dungeon.model.Dungeon;
+import net.my4x.dungeon.services.DungeonService;
 import net.my4x.population.model.Family;
 import net.my4x.population.service.PersonnageService;
-import net.my4x.services.dungeon.DungeonService;
-import net.my4x.services.dungeon.model.Dungeon;
 import net.my4x.services.map.MapTileService;
 import net.my4x.talk.model.TalkStep;
 import net.my4x.talk.service.TalkService;

@@ -11,7 +11,7 @@
     <!--[if lt IE 9]>
     <script src="resources/lib/polyfills.js"></script>
     <![endif]-->
-<m4x:include-all-js basePath="/resources/lib/" pattern=".js" excludes="polyfills,.min." />
+<m4x:include-all-js basePath="/resources/lib/" pattern=".js" excludes="polyfills,.min.,require" />
 
 <m4x:include-all-js basePath="/resources/lib/polyfills" pattern=".js" prefix="<!--[if lt IE 9]>" suffix=" <![endif]-->"/>
 

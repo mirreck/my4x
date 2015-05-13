@@ -1,4 +1,4 @@
-package net.my4x.services.dungeon.model;
+package net.my4x.dungeon.model;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

@@ -1,0 +1,12 @@
+cardmodel: 
+	dependencies: [skills, story]
+	realname: prefix_cardmodel
+	rows:
+		id: {type: long}
+		active: {type: long, default: 0}
+skills: 
+	dependencies: [perso]
+perso: 
+	dependencies: [story, name]
+story: 
+	dependencies: [name]

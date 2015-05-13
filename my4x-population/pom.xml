@@ -12,11 +12,4 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  <dependencies>
-    <dependency>
-      <groupId>com.github.jfaker</groupId>
-    <artifactId>jfaker</artifactId>
-    <version>0.1-SNAPSHOT</version>
-    </dependency>
-  </dependencies>
 </project>

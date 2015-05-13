@@ -30,8 +30,8 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     inkscape:window-height="988"
-     inkscape:window-width="1680"
+     inkscape:window-height="838"
+     inkscape:window-width="1440"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -41,9 +41,9 @@
      showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="0.771"
-     inkscape:cx="452.62675"
-     inkscape:cy="479.25625"
+     inkscape:zoom="0.38914477"
+     inkscape:cx="1508.2882"
+     inkscape:cy="-385.3663"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:current-layer="svg5496"
@@ -117,7 +117,6 @@
          id="glyph3777"
          unicode="u"
          d="m 225.71875,201.09375 695.375,811.24995 c 0.0544,-0.2927 0.15625,-0.5659 0.15625,-0.875 l 0,-410.24995 c 0,-0.7664 -0.18767,-1.4809 -0.5,-2.125 0.30169,-7.5463 0.5,-15.1297 0.5,-22.75 C 921.25,315.41305 742.7723,96.1725 501.25,34 393.37488,61.76914 298.1545,120.93712 225.71875,201.09375 z" />
-      
     </font>
   </defs>
   <g
@@ -148,4 +147,10 @@
      d="m 86.125,17.656298 c -2.70267,0 -4.875,2.1723 -4.875,4.875 l 0,410.250002 c 0,0.7664 0.18767,1.4809 0.5,2.125 -0.30169,7.5463 -0.5,15.1297 -0.5,22.75 0,260.9307 178.47772,480.1712 420.00002,542.3437 241.5223,-62.1725 420,-281.413 420,-542.3437 0,-7.6203 -0.1983,-15.2037 -0.5,-22.75 0,-0.01 0,-0.023 0,-0.031 0.3049,-0.6379 0.5,-1.3371 0.5,-2.0938 l 0,-410.250002 c 0,-2.7026 -2.1723,-4.875 -4.875,-4.875 l -830.25002,0 z M 83.40625,436.8125 c 0.25945,0.175 0.52048,0.3457 0.8125,0.4688 -0.29202,-0.1231 -0.5578,-0.289 -0.8125,-0.4688 z m 835.68757,0 c -0.2547,0.1798 -0.5205,0.3457 -0.8125,0.4688 0.292,-0.1231 0.553,-0.2938 0.8125,-0.4688 z"
      id="path3798-2"
      inkscape:connector-curvature="0" />
+  <path
+     style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:15;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+     d="m 540,1200 c -121.50264,0 -220,89.5431 -220,200 l 0,130.6875 c -23.93113,13.797 -40,39.5955 -40,69.3125 l 0,240 c 0,44.32 35.68,80 80,80 l 360,0 c 44.32,0 80,-35.68 80,-80 l 0,-240 c 0,-29.717 -16.06887,-55.5155 -40,-69.3125 L 760,1400 c 0,-110.4569 -98.49736,-200 -220,-200 z m 0,80 c 77.31986,0 140,62.6801 140,140 l 0,100 -280,0 0,-100 c 0,-77.3199 62.68014,-140 140,-140 z"
+     id="rect3001"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sscsssssscssssccss" />
 </svg>

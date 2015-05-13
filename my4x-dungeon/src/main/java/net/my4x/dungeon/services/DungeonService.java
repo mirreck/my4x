@@ -1,6 +1,6 @@
-package net.my4x.services.dungeon;
+package net.my4x.dungeon.services;
 
-import net.my4x.services.dungeon.model.Dungeon;
+import net.my4x.dungeon.model.Dungeon;
 
 public interface DungeonService {
    Dungeon load();

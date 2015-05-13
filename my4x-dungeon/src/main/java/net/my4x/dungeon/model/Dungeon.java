@@ -1,4 +1,4 @@
-package net.my4x.services.dungeon.model;
+package net.my4x.dungeon.model;
 
 import java.util.Collection;
 import java.util.HashMap;

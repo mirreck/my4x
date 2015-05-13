@@ -1,10 +1,10 @@
-package net.my4x.services.dungeon;
+package net.my4x.dungeon.services;
 
 import org.springframework.stereotype.Service;
 
-import net.my4x.services.dungeon.model.Pos;
-import net.my4x.services.dungeon.model.realtime.Action;
-import net.my4x.services.dungeon.model.realtime.Status;
+import net.my4x.dungeon.model.Pos;
+import net.my4x.dungeon.services.model.realtime.Action;
+import net.my4x.dungeon.services.model.realtime.Status;
 
 @Service
 public class RealtimeIndoorServiceImpl implements RealtimeIndoorService{

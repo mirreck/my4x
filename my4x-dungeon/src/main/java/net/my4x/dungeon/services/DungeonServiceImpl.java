@@ -1,7 +1,7 @@
-package net.my4x.services.dungeon;
+package net.my4x.dungeon.services;
 
-import net.my4x.services.dungeon.digger.Digger;
-import net.my4x.services.dungeon.model.Dungeon;
+import net.my4x.dungeon.model.Dungeon;
+import net.my4x.dungeon.services.digger.Digger;
 
 import org.springframework.stereotype.Service;
 
