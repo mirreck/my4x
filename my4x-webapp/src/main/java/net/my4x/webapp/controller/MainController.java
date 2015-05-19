@@ -7,9 +7,9 @@ import java.io.InputStream;
 
 import net.my4x.dungeon.model.Dungeon;
 import net.my4x.dungeon.services.DungeonService;
+import net.my4x.map.service.MapTileService;
 import net.my4x.population.model.Family;
 import net.my4x.population.service.PersonnageService;
-import net.my4x.services.map.MapTileService;
 import net.my4x.talk.model.TalkStep;
 import net.my4x.talk.service.TalkService;
 import net.my4x.webapp.mapper.DungeonMapper;
@@ -76,7 +76,7 @@ public class MainController {
    }
    
    
-   @RequestMapping(value = "rest/dungeon/{id}", produces = "application/json; charset=utf-8")    
+   @RequestMapping(value = "rest/dungeon/{id}",headers = {"Accept=text/xml, application/json"}, produces = "application/json; charset=utf-8")    
    @ResponseBody
    public DungeonDTO dungeon(@PathVariable("id") String id) {
 
@@ -89,7 +89,7 @@ public class MainController {
       return DungeonMapper.map(dun);
    }
 	
-   @RequestMapping("rest/family/{id}")
+   @RequestMapping(value = "rest/family/{id}", produces="application/json")
    @ResponseBody
    public Family family(@PathVariable("id") String id) {
       

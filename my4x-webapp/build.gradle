@@ -1,12 +1,32 @@
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'jetty'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath (group: 'com.sahlbach.gradle', name: 'gradle-jetty-eclipse-plugin', version: '1.9.+')
+    }
+}
+apply plugin: 'jettyEclipse'
 
-jettyRun.contextPath = '' 
-jettyRun.httpPort = 8880
+jettyEclipse {
+  httpPort = 8880
+  contextPath = '' 
+  automaticReload = true
+  scanIntervalInSeconds = 5
+  daemon = false 
+}
 
 repositories {
     mavenLocal()
+}
+
+configurations {
+    provided
+}
+sourceSets {
+    main { compileClasspath += configurations.provided }
 }
 
 dependencies {
@@ -17,5 +37,7 @@ dependencies {
 	compile project(':my4x-talk')
 	compile project(':my4x-population')
 	compile libraries.web
+	provided "javax:javaee-api:6.0"
+	provided "javax:javaee-web-api:6.0"
     testCompile libraries.test
 }

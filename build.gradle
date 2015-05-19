@@ -20,9 +20,9 @@ ext {
 		],
 		web: [
 			"org.springframework:spring-webmvc:$springVersion",
-			"javax.servlet:servlet-api:2.3",
-			"org.codehaus.jackson:jackson-core-lgpl:1.9.13",
-        	"org.codehaus.jackson:jackson-mapper-lgpl:1.9.13"
+			"com.fasterxml.jackson.core:jackson-core:2.2.3",
+			"com.fasterxml.jackson.core:jackson-databind:2.2.3",
+			"com.fasterxml.jackson.core:jackson-annotations:2.2.3"
 		],
 		json: [
 			"org.codehaus.jackson:jackson-core-lgpl:1.9.13",
