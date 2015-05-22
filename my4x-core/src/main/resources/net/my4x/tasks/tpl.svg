@@ -2,9 +2,8 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink='http://www.w3.org/1999/xlink'
       version="1.1" width="600" height="600">
-  <title>Exemple simple de figure SVG</title>
-  <desc>Cette figure est constituée d'un rectangle,
-   d'un segment de droite et d'un cercle.</desc>
+  <title>SVG File title</title>
+  <desc>svg file description</desc>
    <defs>
  	<linearGradient id = "ns" x1 = "0%" y1 = "0%" x2 = "0%" y2 = "100%">
             <stop stop-color = "black" offset = "0%"/>

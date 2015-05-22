@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>my4x</groupId>
+    <artifactId>my4x</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>my4x-utilities</groupId>
+  <artifactId>my4x-utilities</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>my4x-utilities</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+   <dependencies>
+  <dependency>
+    <groupId>org.apache.xmlgraphics</groupId>
+    <artifactId>batik-rasterizer</artifactId>
+    <version>1.7</version>
+  </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-transcoder</artifactId>
+      <version>1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-codec</artifactId>
+      <version>1.7</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>53.1</version>
+	</dependency>
+
+
+
+
+
+    <!-- OpenGL
+  <dependency>
+    <groupId>org.jogamp.gluegen</groupId>
+    <artifactId>gluegen-rt-main</artifactId>
+    <version>2.1.5-01</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jogamp.jogl</groupId>
+    <artifactId>jogl-all-main</artifactId>
+    <version>2.1.5-01</version>
+  </dependency> -->
+  </dependencies>
+</project>
