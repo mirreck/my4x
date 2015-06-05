@@ -18,11 +18,14 @@ public class SVGBuilder {
 	
 	public SVGWriter build(){
 		String svg = getTemplate();
+		StringBuilder defs = new StringBuilder();
+		svg = svg.replaceAll("\\{\\{defs\\}\\}", defs.toString());
+		
 		StringBuilder content = new StringBuilder();
 		for (SVGElementBuilder elt : elements) {
 			content.append(elt.build());
 		}
-		svg.replaceAll("\\{\\{content\\}\\}", content.toString());
+		svg = svg.replaceAll("\\{\\{content\\}\\}", content.toString());
 		return new SVGWriter(svg);
 	}
 	
@@ -44,4 +47,11 @@ public class SVGBuilder {
 	public static SVGPathBuilder path(String id){
 		return new SVGPathBuilder(id);
 	}
+	public static SVGCircleBuilder circle(String id){
+		return new SVGCircleBuilder(id);
+	}
+	public static SVGLineBuilder line(String id){
+		return new SVGLineBuilder(id);
+	}
+	
 }

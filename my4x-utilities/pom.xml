@@ -7,7 +7,7 @@
     <artifactId>my4x</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>my4x-utilities</groupId>
+  <groupId>my4x</groupId>
   <artifactId>my4x-utilities</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>my4x-utilities</name>

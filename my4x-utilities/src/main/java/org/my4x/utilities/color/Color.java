@@ -29,5 +29,8 @@ public class Color {
 		this.rgb = rgb;
 		this.hsl = hsl;
 	}
+	public String cssCode(){
+		return String.format("%02X", rgb.r) + String.format("%02X", rgb.g) + String.format("%02X", rgb.b);
+	}
 
 }

@@ -16,7 +16,7 @@
 		<commons-io.version>2.4</commons-io.version>
 		<logback.version>1.1.2</logback.version>
 		<slf4j-api.version>1.7.10</slf4j-api.version>
-		<java-fake-factory.version>1.0.2</java-fake-factory.version>
+		<java-fake-factory.version>1.0.3-SNAPSHOT</java-fake-factory.version>
 		<jackson.version>1.9.13</jackson.version>
 		<spring-data-jpa.version>1.8.0.RELEASE</spring-data-jpa.version>
 	</properties>
