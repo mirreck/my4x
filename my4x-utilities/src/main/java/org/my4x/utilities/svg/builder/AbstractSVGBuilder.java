@@ -1,4 +1,4 @@
-package org.my4x.utilities.svg;
+package org.my4x.utilities.svg.builder;
 
 import org.apache.commons.lang.StringUtils;
 

@@ -13,4 +13,8 @@ public class Point {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public boolean sameAs(Point other) {
+		return this.x == other.x && this.y == other.y;
+	}
 }

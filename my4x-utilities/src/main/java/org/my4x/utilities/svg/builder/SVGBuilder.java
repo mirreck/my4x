@@ -1,4 +1,4 @@
-package org.my4x.utilities.svg;
+package org.my4x.utilities.svg.builder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.my4x.utilities.svg.SVGWriter;
 
 public class SVGBuilder {
 	

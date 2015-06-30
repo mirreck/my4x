@@ -1,19 +1,20 @@
-package org.my4x.utilities.svg;
+package org.my4x.utilities.svg.builder;
 
-public class SVGLineBuilder  extends AbstractSVGBuilder<SVGLineBuilder> {
 
+public class SVGPolygonBuilder  extends AbstractSVGBuilder<SVGPolygonBuilder> {
+
+	private static final String POLYGON = "polygon";
 	private int[] points;
 	
-	public SVGLineBuilder(String id) {
+	public SVGPolygonBuilder(String id) {
 		super(id);
 	}
 
 	@Override
 	public String build() {
-		// <polyline points="20,20 40,25 60,40 80,120 120,140 200,180"
-
+		// <polygon points="20,20 40,25 60,40 80,120 120,140 200,180"
 		// style="stroke:black;fill:none"/>
-		StringBuilder sb = new StringBuilder("<polyline ");
+		StringBuilder sb = new StringBuilder("<" + tagName() + " ");
 		applyId(sb);
 		sb.append("points=\"");
 		for (int i = 0; i < points.length; i+=2) {
@@ -29,7 +30,11 @@ public class SVGLineBuilder  extends AbstractSVGBuilder<SVGLineBuilder> {
 		sb.append("/>");
 		return sb.toString();
 	}
-	public SVGLineBuilder withPoints(int... points) {
+
+	protected String tagName() {
+		return POLYGON;
+	}
+	public SVGPolygonBuilder withPoints(int... points) {
 		this.points = points;
 		return this;
 	}

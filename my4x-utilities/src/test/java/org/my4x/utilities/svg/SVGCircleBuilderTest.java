@@ -2,6 +2,7 @@ package org.my4x.utilities.svg;
 
 import org.fest.assertions.Assertions;
 import org.junit.Test;
+import org.my4x.utilities.svg.builder.SVGCircleBuilder;
 
 public class SVGCircleBuilderTest {
 

@@ -1,4 +1,5 @@
-package org.my4x.utilities.svg;
+package org.my4x.utilities.svg.builder;
+
 
 
 public class SVGPathBuilder  extends AbstractSVGBuilder<SVGPathBuilder> {

@@ -1,7 +1,7 @@
 package org.my4x.utilities.svg;
 
-import static org.my4x.utilities.svg.SVGBuilder.path;
-import static org.my4x.utilities.svg.SVGBuilder.svg;
+import static org.my4x.utilities.svg.builder.SVGBuilder.path;
+import static org.my4x.utilities.svg.builder.SVGBuilder.svg;
 
 import java.io.File;
 import java.io.FileWriter;

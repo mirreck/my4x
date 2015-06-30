@@ -1,6 +1,6 @@
 package net.my4x.tasks;
 
-import static org.my4x.utilities.svg.SVGBuilder.*;
+import static org.my4x.utilities.svg.builder.SVGBuilder.*;
 import static java.lang.Math.*;
 
 import java.io.File;
@@ -16,8 +16,8 @@ import org.my4x.utilities.geometry.GeometryUtils;
 import org.my4x.utilities.geometry.Point;
 import org.my4x.utilities.geometry.Polygon;
 import org.my4x.utilities.geometry.Segment;
-import org.my4x.utilities.svg.SVGBuilder;
-import org.my4x.utilities.svg.SVGElementBuilder;
+import org.my4x.utilities.svg.builder.SVGBuilder;
+import org.my4x.utilities.svg.builder.SVGElementBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

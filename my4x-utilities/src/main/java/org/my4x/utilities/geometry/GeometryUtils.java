@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.my4x.utilities.geometry.delaunay.Delaunay;
+
 import com.google.common.collect.Lists;
 
 
@@ -98,7 +100,17 @@ public class GeometryUtils {
 		return poly;
 	}
 	
-	
+	public static List<Polygon> delaunay(final List<Point> srcPoints){
+		if(srcPoints.size() < 3){
+			throw new IllegalArgumentException("at least 3 points required");
+		}
+		List<Polygon> polygons = Lists.newArrayList();
+		Delaunay del = new Delaunay(srcPoints.get(0),srcPoints.get(1),srcPoints.get(2));
+		for (int i = 3; i < srcPoints.size(); i++) {
+			del.insertPoint(srcPoints.get(i));
+		}
+		return polygons;
+	}
 	
 	public static Point minX(List<Point> points) {
 		Point min = points.get(0);
