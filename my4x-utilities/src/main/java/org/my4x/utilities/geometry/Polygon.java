@@ -35,6 +35,11 @@ public class Polygon {
 					public boolean hasNext() {
 						return index < points.size();
 					}
+					@Override
+					public void remove() {
+						// TODO Auto-generated method stub
+						
+					}
 				};
 			}
 		};

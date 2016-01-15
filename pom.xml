@@ -19,6 +19,7 @@
 		<java-fake-factory.version>1.0.3-SNAPSHOT</java-fake-factory.version>
 		<jackson.version>1.9.13</jackson.version>
 		<spring-data-jpa.version>1.8.0.RELEASE</spring-data-jpa.version>
+		<org.projectlombok-version>1.16.6</org.projectlombok-version>
 	</properties>
 
     <dependencies>
@@ -125,7 +126,11 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok-version}</version>
+		</dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>

@@ -16,6 +16,10 @@ public enum WallShape {
       this.code = code;
    }
 
+   public static WallShape forPositions(boolean n, boolean s, boolean e, boolean w) {
+	   return fromCode((n?"N":"")+(s?"S":"")+(e?"E":"")+(w?"W":""));
+   }
+   
    public static WallShape fromCode(String val) {
       if(StringUtils.isBlank(val)){
          return PILLAR;

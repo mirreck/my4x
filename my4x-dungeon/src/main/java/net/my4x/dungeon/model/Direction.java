@@ -1,33 +1,27 @@
 package net.my4x.dungeon.model;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
+
 public enum Direction {
    N, S, E, O;
+   static Map<Direction, Direction> counterclockwise = ImmutableMap.of(
+		   N, O, 
+		   S, E, 
+		   E, N, 
+		   O, S);
+   static Map<Direction, Direction> clockwise = ImmutableMap.of(
+		   N, E, 
+		   S, O, 
+		   E, S, 
+		   O, N);
    public Direction left() {
-      switch (this) {
-         case N:
-            return O;
-         case S:
-            return E;
-         case E:
-            return N;
-         case O:
-         default:
-            return S;
-      }
+	  return counterclockwise.get(this);
    }
 
    public Direction right() {
-      switch (this) {
-         case N:
-            return E;
-         case S:
-            return O;
-         case E:
-            return S;
-         case O:
-         default:
-            return N;
-      }
+	   return clockwise.get(this);
    }
 
    public Pos next(Pos current, int diffa, int difft) {

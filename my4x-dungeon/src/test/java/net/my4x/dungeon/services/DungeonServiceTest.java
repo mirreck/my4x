@@ -1,17 +1,14 @@
 package net.my4x.dungeon.services;
 
+import lombok.extern.slf4j.Slf4j;
 import net.my4x.dungeon.model.Dungeon;
-import net.my4x.dungeon.services.DungeonService;
-import net.my4x.dungeon.services.DungeonServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class DungeonServiceTest {
 
-   private static final Logger LOGGER = LoggerFactory.getLogger(DungeonServiceTest.class);
    
    private DungeonService service;
    
@@ -23,7 +20,7 @@ public class DungeonServiceTest {
    @Test
    public void test() {
       Dungeon dun = service.load();
-      LOGGER.debug(dun.toString());
+      log.debug(dun.toString());
    }
 
 }

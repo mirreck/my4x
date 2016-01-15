@@ -12,6 +12,8 @@ import org.codehaus.jackson.annotate.JsonValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 
 @JsonAutoDetect
 public class Level implements Serializable{
@@ -497,7 +499,8 @@ public class Level implements Serializable{
             setValue(xmax,i, TileType.WALL);
          }
       }
-      rooms.add(new Room(roomcount, xmin, xmax, ymin, ymax, "Test"));
+     
+      rooms.add( Room.builder().name("Test").index(roomcount).box(new Box(xmin, xmax, ymin, ymax)).build());
    }
    
    public Pos digroom(Pos position, Direction dir) {
