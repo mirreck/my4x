@@ -6,6 +6,9 @@ import static org.my4x.utilities.svg.builder.SVGBuilder.svg;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
 
 import org.apache.commons.io.IOUtils;
 import org.fest.assertions.Assertions;
@@ -30,11 +33,10 @@ public class SVGBuilderTest {
 		Assertions.assertThat(svg).isNotEmpty();
 		
 		LOG.info("svg content:"+ svg);
-		File dir = new File("D:\\TEMP\\SVG");
-		if(!dir.exists()){
-			dir.mkdirs();
-		}
-		File file = File.createTempFile("test-generation-svg", ".svg",dir);
+		Path dir = Files.createTempDirectory("SVG");
+		//File dir = new File("D:\\TEMP\\SVG");
+
+		File file = File.createTempFile("test-generation-svg", ".svg",dir.toFile());
 		FileWriter writer = new FileWriter(file);
 		IOUtils.write(svg, writer);
 		IOUtils.closeQuietly(writer);

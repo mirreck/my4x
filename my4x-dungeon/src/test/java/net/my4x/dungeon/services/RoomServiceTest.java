@@ -1,16 +1,13 @@
 package net.my4x.dungeon.services;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import net.my4x.dungeon.model.Direction;
 import net.my4x.dungeon.model.Position;
 import net.my4x.dungeon.model.Room;
-import net.my4x.dungeon.services.RoomService.Options;
 import net.my4x.dungeon.utils.RoomUtils;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.google.common.collect.Lists;
 
 @Slf4j
 public class RoomServiceTest {

@@ -1,13 +1,33 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.4"
+    }
+}
+
+apply plugin: "net.ltgt.apt"
 apply plugin: 'java'
 
 repositories {
     mavenLocal()
 }
-
+ext {
+    lombok_version = "1.16.20"
+}
 dependencies {
 	compile project(':my4x-common')
     compile project(':my4x-core')
 	compile libraries.spring
 	compile libraries.json
+
+
+    testCompileOnly "org.projectlombok:lombok:${lombok_version}"
     testCompile libraries.test
+    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    apt "org.projectlombok:lombok:${lombok_version}"
+    testApt "org.projectlombok:lombok:${lombok_version}"
 }

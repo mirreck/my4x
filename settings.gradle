@@ -1,1 +1,10 @@
-include ":my4x-core", ":my4x-common", ":my4x-card", ":my4x-talk", ":my4x-battle", ":my4x-population", ":my4x-map", ":my4x-dungeon", ":my4x-webapp"
+include ":my4x-core",
+        ":my4x-common",
+        ":my4x-utilities",
+        ":my4x-card",
+        ":my4x-talk",
+        ":my4x-battle",
+        ":my4x-population",
+        ":my4x-map",
+        ":my4x-dungeon",
+        ":my4x-webapp"

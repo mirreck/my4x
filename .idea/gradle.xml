@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="C:/TOOLS/gradle-4.9" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/my4x-battle" />
+            <option value="$PROJECT_DIR$/my4x-card" />
+            <option value="$PROJECT_DIR$/my4x-common" />
+            <option value="$PROJECT_DIR$/my4x-core" />
+            <option value="$PROJECT_DIR$/my4x-dungeon" />
+            <option value="$PROJECT_DIR$/my4x-map" />
+            <option value="$PROJECT_DIR$/my4x-population" />
+            <option value="$PROJECT_DIR$/my4x-talk" />
+            <option value="$PROJECT_DIR$/my4x-utilities" />
+            <option value="$PROJECT_DIR$/my4x-webapp" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

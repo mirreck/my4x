@@ -29,20 +29,7 @@ public class RoomService {
 	public enum DigStrategy {
 		CAVE, SQUARE, ROUND, GROW;
 	}
-	
-	@Builder(builderMethodName = "hiddenBuilder")
-	public static class Options {
-		// mandatory
-		Position start;
-		Direction dir;
-		public static OptionsBuilder builder(Position start, Direction dir) {
-			return hiddenBuilder().dir(dir).start(start).strategy(DigStrategy.CAVE);
-		}
-		int widthX;
-		int heightY;
-		List<Position> exits;
-		DigStrategy strategy = DigStrategy.CAVE;
-	}
+
 
 	public Room create(Options opts) {
 

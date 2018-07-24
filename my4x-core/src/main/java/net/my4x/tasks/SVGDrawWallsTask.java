@@ -6,6 +6,8 @@ import static java.lang.Math.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
@@ -81,11 +83,9 @@ public static void perform() throws IOException {
 			.toString();
 		
 		LOG.info("svg content:"+ svg);
-		File dir = new File("D:\\TEMP\\SVG");
-		if(!dir.exists()){
-			dir.mkdirs();
-		}
-		File file =new File(dir,"test-walls.svg");
+
+		Path dir = Files.createTempDirectory("SVG");
+		File file =new File(dir.toFile(),"test-walls.svg");
 		FileWriter writer = new FileWriter(file);
 		IOUtils.write(svg, writer);
 		IOUtils.closeQuietly(writer);
