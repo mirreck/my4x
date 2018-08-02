@@ -1,0 +1,16 @@
+version 'unspecified'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+ext {
+    lombok_version = "1.16.20"
+}
+dependencies {
+
+    testCompile libraries.test
+}

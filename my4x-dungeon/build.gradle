@@ -24,9 +24,8 @@ dependencies {
 	compile libraries.spring
 	compile libraries.json
 
-
-    testCompileOnly "org.projectlombok:lombok:${lombok_version}"
     testCompile libraries.test
+    testCompileOnly "org.projectlombok:lombok:${lombok_version}"
     compileOnly "org.projectlombok:lombok:${lombok_version}"
     apt "org.projectlombok:lombok:${lombok_version}"
     testApt "org.projectlombok:lombok:${lombok_version}"
