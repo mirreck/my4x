@@ -25,9 +25,21 @@ public class PointWrapper<T> {
         public Wraped add(T toAdd){
             return wrap(addition.apply(val, toAdd));
         }
+        public Wraped add(Double f, T toAdd){
+            //System.out.println("this="+this.val+" +f= "+f+" *toAdd="+toAdd);
+            return wrap(addition.apply(val, multiplication.apply(toAdd, f)));
+        }
+
         public Wraped minus(T toAdd){
             return wrap(addition.apply(val, multiplication.apply(toAdd,-1.0)));
         }
+        public Wraped minus(Double f, T toAdd){
+            //System.out.println("this="+this.val+" +f= "+f+" *toAdd="+toAdd);
+            T apply = multiplication.apply(toAdd, -1.0 * f);
+            return wrap(addition.apply(val, apply));
+        }
+
+
         public T val(){return val;}
     }
 }

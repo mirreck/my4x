@@ -84,7 +84,7 @@ public abstract class AbstractInterpolator<T> implements Interpolator<T> {
 
         Double k1 = list.get(index).key;
         Double k2 = list.get(index+1).key;
-        Double f = (k2 - key) / (k2 - k1);
+        Double f = (key - k1) / (k2 - k1);
         return interpolate(p1, dp1,p2,dp2,f);
     }
 
