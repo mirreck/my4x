@@ -12,5 +12,6 @@ ext {
 }
 dependencies {
 
+    compile libraries.commons
     testCompile libraries.test
 }

@@ -9,6 +9,9 @@ ext {
 	hibernateVersion = "4.3.8.Final"
 
 	libraries = [
+		commons: [
+				"commons-io:commons-io:2.6"
+		],
 		spring: [ 
 			"org.springframework:spring-core:$springVersion",
 			"org.springframework:spring-context:$springVersion"

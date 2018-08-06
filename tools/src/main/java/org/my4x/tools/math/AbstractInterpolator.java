@@ -64,28 +64,17 @@ public abstract class AbstractInterpolator<T> implements Interpolator<T> {
         int index = list.floorIndex(key);
         if(index <1){
             // first points
-            System.out.println("first points index = "+index);
+            //System.out.println("first points index = "+index);
             return interpolateFirst(key);
         }
 
         if(index > list.size()-3){
             // last points
-            System.out.println("last points = "+index);
+            //System.out.println("last points = "+index);
             return interpolateLast(key);
         }
 
-        T p0 = list.get(index-1).val;
-        T p1 = list.get(index).val;
-        T p2 = list.get(index+1).val;
-        T p3 = list.get(index+2).val;
-
-        T dp1 = d(p0, p2);
-        T dp2 = d(p1, p3);
-
-        Double k1 = list.get(index).key;
-        Double k2 = list.get(index+1).key;
-        Double f = (key - k1) / (k2 - k1);
-        return interpolate(p1, dp1,p2,dp2,f);
+       return interpolateIndex(index,key);
     }
 
     protected T interpolateFirst(Double key){
@@ -108,6 +97,24 @@ public abstract class AbstractInterpolator<T> implements Interpolator<T> {
         Double f = (key - kv1.key) / (kv2.key - kv1.key);
         return interpolate(kv1.val, dp1,kv2.val,dp2,f);
     }
+
+
+
+    protected T interpolateIndex(int index, Double key){
+        T p0 = list.get(index-1).val;
+        T p1 = list.get(index).val;
+        T p2 = list.get(index+1).val;
+        T p3 = list.get(index+2).val;
+
+        T dp1 = d(p0, p2);
+        T dp2 = d(p1, p3);
+
+        Double k1 = list.get(index).key;
+        Double k2 = list.get(index+1).key;
+        Double f = (key - k1) / (k2 - k1);
+        return interpolate(p1, dp1,p2,dp2,f);
+    }
+
 
     private T d(T p1, T p2){
         return wrapper.wrap(p2).minus(p1).val();
