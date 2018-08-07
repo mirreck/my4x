@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/game" />
+            <option value="$PROJECT_DIR$/game/map" />
             <option value="$PROJECT_DIR$/my4x-battle" />
             <option value="$PROJECT_DIR$/my4x-card" />
             <option value="$PROJECT_DIR$/my4x-common" />

@@ -2,22 +2,18 @@ package org.my4x.tools.math;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.my4x.tools.image.Color;
 import org.my4x.tools.image.ColoredPoint;
 import org.my4x.tools.image.Image2D;
 import org.my4x.tools.io.FileUtils;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.my4x.tools.image.ColoredPoint.*;
+import static org.fest.assertions.Assertions.*;
+import static org.my4x.tools.io.FileUtils.*;
 
 
 public class InterpolatorImplTest {
@@ -115,6 +111,10 @@ public class InterpolatorImplTest {
         return DoubleStream.iterate(min, d -> d + step).limit(new Double(max/step).longValue()).boxed();
     }
 
+    private Stream<Integer> iStream(Integer min, Integer max){
+        return IntStream.iterate(min, d -> d + 1).limit(max).boxed();
+    }
+
     @Test
     public void should_draw_nice_2D_curves() throws IOException {
         Interpolator<ColoredPoint> inter
@@ -123,21 +123,17 @@ public class InterpolatorImplTest {
                 (p, f)-> new ColoredPoint(intval(p.x*f), intval(p.y*f)).toWhite(),
                 (a, b) -> new ColoredPoint(a.x+b.x, a.y+b.y).toWhite());
 
-        inter.addPoint(-100.0,new ColoredPoint(30,10).toWhite());
-        inter.addPoint(00.0,new ColoredPoint(10,10).toWhite());
-        inter.addPoint(25.0,new ColoredPoint(10,30).toWhite());
-        inter.addPoint(50.0,new ColoredPoint(30,30).toWhite());
-        inter.addPoint(75.0,new ColoredPoint(30,10).toWhite());
-        inter.addPoint(100.0,new ColoredPoint(10,10).toWhite());
-        inter.addPoint(125.0,new ColoredPoint(10,30).toWhite());
 
-        Stream<ColoredPoint> ps = FileUtils.loadObjects("/points.txt", t -> new ColoredPoint(Integer.valueOf(t[0]), Integer.valueOf(t[1])).toRed());
+        points(inputStream(this,"/points.txt"))
+                .map(line -> inter.addPoint(Double.valueOf(line[0]), new ColoredPoint(Integer.parseInt(line[1]),Integer.parseInt(line[2])).toWhite()));
+
+        Stream<ColoredPoint> ps = points(inputStream(this,"/points.txt")).map(this::lineToColorPoint);
 
         File tempFile = File.createTempFile("test_2D", ".png");
 
 
-        Stream<ColoredPoint> axisX = IntStream.range(0, 100).boxed().map(i -> new ColoredPoint(i, 50).toWhite());
-        Stream<ColoredPoint> axisY = IntStream.range(0, 100).boxed().map(i -> new ColoredPoint(50, i).toWhite());
+        Stream<ColoredPoint> axisX = iStream(0, 100).map(i -> new ColoredPoint(i, 50).toWhite());
+        Stream<ColoredPoint> axisY = iStream(0, 100).map(i -> new ColoredPoint(50, i).toWhite());
         Stream<ColoredPoint> pointStream =
                 dStream(0.0, 100.0,0.5)
                 .map(inter::eval);
@@ -154,5 +150,7 @@ public class InterpolatorImplTest {
 
     }
 
-
+    private ColoredPoint lineToColorPoint(String[] line) {
+        return new ColoredPoint(Integer.valueOf(line[1]), Integer.valueOf(line[2])).toRed();
+    }
 }
